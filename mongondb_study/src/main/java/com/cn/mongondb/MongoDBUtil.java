@@ -16,9 +16,9 @@ import com.mongodb.client.model.Filters;
 
 public class MongoDBUtil {
 
-	private static final String host = "127.0.0.1";
+	private final static String host = "127.0.0.1";
 
-	private static final String dbName = "my_mongodb";
+	private final static String dbName = "my_mongodb";
 
 	private final static String username = "root";
 
