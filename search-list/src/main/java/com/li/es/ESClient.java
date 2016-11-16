@@ -26,13 +26,13 @@ public class ESClient {
 
 	public static void main(String[] args) throws UnknownHostException {
 
-		try {
-			/* 创建客户端 */
+		/*try {
+			 创建客户端 
 			// client startup
 			
-		     Settings settings = Settings.settingsBuilder().put("cluster.name","elastictest").put("client.transport.sniff", true).build();
+		     Settings settings = Settings.settingsBuilder().put("cluster.name","elastictest").build();
 			Client client = TransportClient.builder().settings(settings).build()
-					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.1.125"), 9200));
+					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.1.125"), 9300));
 
 			XContentBuilder builder = XContentFactory.jsonBuilder().startObject().field("user", "kimchy")
 					.field("postDate", new Date()).field("message", "trying out Elasticsearch").endObject();
@@ -50,16 +50,17 @@ public class ESClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		/*
-		 * ElasticSearchHandler handler = new ElasticSearchHandler();
-		 * handler.init(); handler.createIndex("ww", "www", "1", getData());
-		 * QueryBuilder queryBuilder = QueryBuilders.boolQuery().must(new
-		 * QueryStringQueryBuilder("感冒").field("username")); List<Map<String,
-		 * Object>> list = handler.queryForObject("ww", "www", queryBuilder,
-		 * null, null, 0, 0); for(Map<String, Object> map :list){
-		 * System.out.println(map); }
-		 */
+*/
+		
+		ElasticSearchHandler handler = new ElasticSearchHandler();
+		handler.init();
+		handler.createIndex("ww", "www", "1", getData());
+		QueryBuilder queryBuilder = QueryBuilders.boolQuery().must(new QueryStringQueryBuilder("感冒").field("username"));
+		List<Map<String, Object>> list = handler.queryForObject("ww", "www", queryBuilder, null, null, 0, 0);
+		for (Map<String, Object> map : list) {
+			System.out.println(map);
+		}
+		
 	}
 
 	public static List<String> getData() {

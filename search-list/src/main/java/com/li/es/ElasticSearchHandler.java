@@ -33,8 +33,8 @@ public class ElasticSearchHandler {
 	public void init() {
 		if (null == client) {
 			try {
-				//Settings settings = Settings.settingsBuilder().put("cluster.name", "lichuan").build();
-				//client = TransportClient.builder().settings(settings).build();
+				Settings settings = Settings.settingsBuilder().put("cluster.name", "elastictest").build();
+				client = TransportClient.builder().settings(settings).build();
 				client.addTransportAddress(
 						new InetSocketTransportAddress(InetAddress.getByName("192.168.1.125"), 9300));
 				
