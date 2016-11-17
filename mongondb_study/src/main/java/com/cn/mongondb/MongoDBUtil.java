@@ -89,6 +89,11 @@ public class MongoDBUtil {
 	public static void findMongonDB() {
 		db = client.getDatabase(dbName);
 		MongoCollection<Document> collection = db.getCollection("test");
+		
+		//myDoc = collection.find(exists("i")).sort(descending("i")).first();
+		//collection.find(and(gt("i", 50), lte("i", 100))).forEach(printBlock);
+		//
+		
 		FindIterable<Document> findIterable = collection.find();
 		MongoCursor<Document> mongoCursor = findIterable.iterator();
 		while (mongoCursor.hasNext()) {
