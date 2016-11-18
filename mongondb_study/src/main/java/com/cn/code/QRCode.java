@@ -19,7 +19,11 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-
+/**
+ * 
+ * 代码从网上找的。
+ *
+ */
 public class QRCode {
 	
 	private static final int QRCOLOR = 0xFF000000; // 默认是黑色
