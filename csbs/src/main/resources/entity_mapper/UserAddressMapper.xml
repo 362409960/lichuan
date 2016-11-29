@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.order.dao.UserAddressDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.order.model.UserAddress" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="modifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="shipName" property="shipname" jdbcType="VARCHAR" />
+    <result column="shipArea" property="shiparea" jdbcType="VARCHAR" />
+    <result column="shipAreaPath" property="shipareapath" jdbcType="VARCHAR" />
+    <result column="shipZipCode" property="shipzipcode" jdbcType="VARCHAR" />
+    <result column="shipPhone" property="shipphone" jdbcType="VARCHAR" />
+    <result column="shipMobile" property="shipmobile" jdbcType="VARCHAR" />
+    <result column="defaultShipArea" property="defaultshiparea" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, createDate, modifyDate, shipName, shipArea, shipAreaPath, shipZipCode, shipPhone, 
+    shipMobile, defaultShipArea, user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_address
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_user_address
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.app.order.model.UserAddress" >
+    insert into t_user_address (id, createDate, modifyDate, 
+      shipName, shipArea, shipAreaPath, 
+      shipZipCode, shipPhone, shipMobile, 
+      defaultShipArea, user_id)
+    values (#{id,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}, 
+      #{shipname,jdbcType=VARCHAR}, #{shiparea,jdbcType=VARCHAR}, #{shipareapath,jdbcType=VARCHAR}, 
+      #{shipzipcode,jdbcType=VARCHAR}, #{shipphone,jdbcType=VARCHAR}, #{shipmobile,jdbcType=VARCHAR}, 
+      #{defaultshiparea,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.order.model.UserAddress" >
+    insert into t_user_address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="modifydate != null" >
+        modifyDate,
+      </if>
+      <if test="shipname != null" >
+        shipName,
+      </if>
+      <if test="shiparea != null" >
+        shipArea,
+      </if>
+      <if test="shipareapath != null" >
+        shipAreaPath,
+      </if>
+      <if test="shipzipcode != null" >
+        shipZipCode,
+      </if>
+      <if test="shipphone != null" >
+        shipPhone,
+      </if>
+      <if test="shipmobile != null" >
+        shipMobile,
+      </if>
+      <if test="defaultshiparea != null" >
+        defaultShipArea,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shipname != null" >
+        #{shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="shiparea != null" >
+        #{shiparea,jdbcType=VARCHAR},
+      </if>
+      <if test="shipareapath != null" >
+        #{shipareapath,jdbcType=VARCHAR},
+      </if>
+      <if test="shipzipcode != null" >
+        #{shipzipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="shipphone != null" >
+        #{shipphone,jdbcType=VARCHAR},
+      </if>
+      <if test="shipmobile != null" >
+        #{shipmobile,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultshiparea != null" >
+        #{defaultshiparea,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.order.model.UserAddress" >
+    update t_user_address
+    <set >
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shipname != null" >
+        shipName = #{shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="shiparea != null" >
+        shipArea = #{shiparea,jdbcType=VARCHAR},
+      </if>
+      <if test="shipareapath != null" >
+        shipAreaPath = #{shipareapath,jdbcType=VARCHAR},
+      </if>
+      <if test="shipzipcode != null" >
+        shipZipCode = #{shipzipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="shipphone != null" >
+        shipPhone = #{shipphone,jdbcType=VARCHAR},
+      </if>
+      <if test="shipmobile != null" >
+        shipMobile = #{shipmobile,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultshiparea != null" >
+        defaultShipArea = #{defaultshiparea,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.order.model.UserAddress" >
+    update t_user_address
+    set createDate = #{createdate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      shipName = #{shipname,jdbcType=VARCHAR},
+      shipArea = #{shiparea,jdbcType=VARCHAR},
+      shipAreaPath = #{shipareapath,jdbcType=VARCHAR},
+      shipZipCode = #{shipzipcode,jdbcType=VARCHAR},
+      shipPhone = #{shipphone,jdbcType=VARCHAR},
+      shipMobile = #{shipmobile,jdbcType=VARCHAR},
+      defaultShipArea = #{defaultshiparea,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

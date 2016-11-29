@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.shop.goods.dao.DeliveryTypeDAO">
+
+	 <resultMap id="resultMap" type="cloud.shop.goods.entity.DeliveryType">
+        <result column="id" property="id" jdbcType="VARCHAR"  />       
+        <result column="name" property="name" jdbcType="VARCHAR"  /> 
+        <result column="type" property="type" jdbcType="VARCHAR"  />   
+    </resultMap>
+	
+	<insert id="save" parameterType="cloud.shop.goods.entity.DeliveryType"> 
+		insert into t_delivery_type
+		( 
+			id,name,type
+		) 
+		value
+		( 
+			#{id},#{name},#{type}
+		) 
+	</insert>
+	
+	<update id="update" parameterType="cloud.shop.goods.entity.DeliveryType"> 
+		update t_delivery_type
+		 <set>
+        	<if test="null != name">
+				name = #{name},
+			</if>								
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM t_delivery_type WHERE id = #{id}
+	</delete>
+	
+	<sql id="allColumns"> 
+		id,name
+	</sql>
+	
+	<select id="getDeliveryTypeList" parameterType="cloud.shop.goods.entity.DeliveryType" resultMap="resultMap" >
+        SELECT <include refid="allColumns" /> FROM t_delivery_type  WHERE 1=1  
+       <if test="null != name and name != ''">
+			AND name = #{name}
+		</if>
+		 <if test="null != id and id != ''">
+			AND id = #{id}
+		</if>
+	
+    </select>
+    
+   
+    
+   
+</mapper>

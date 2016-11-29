@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.system.dao.SysUserDAO" >
+ 	
+    <resultMap id="resultMap" type="cloud.app.system.vo.SysUserVO">
+        <result column="ID" property="id" jdbcType="VARCHAR"  />
+        <result column="USER_CODE" property="userCode" jdbcType="VARCHAR"  />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR"  />
+        <result column="USER_PASSWORD" property="userPassword" jdbcType="VARCHAR"  />
+        <result column="EMAIL" property="email" jdbcType="VARCHAR"  />
+        <result column="PHONE" property="phone" jdbcType="VARCHAR"  />
+        <result column="LAST_LOGIN_IP" property="lastLoginIp" jdbcType="VARCHAR"  />
+        <result column="LAST_LOGIN_TIME" property="lastLoginTime" jdbcType="TIMESTAMP"  />
+        <result column="LAST_LOGOUT_TIME" property="lastLogoutTime" jdbcType="TIMESTAMP"  />
+        <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR"  />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"  />
+        <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"  />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"  />
+        <result column="STATE" property="state" jdbcType="VARCHAR"  />
+        
+        
+        <result column="pid" property="pid" jdbcType="VARCHAR"  />
+        <result column="user_nickname" property="user_nickname" jdbcType="VARCHAR"  />
+        <result column="sex" property="sex" jdbcType="VARCHAR"  />
+        <result column="address" property="address" jdbcType="VARCHAR"  />
+        <result column="departmentid" property="departmentid" jdbcType="VARCHAR"  />
+        <result column="departmentname" property="departmentname" jdbcType="VARCHAR"  />
+        <result column="post" property="post" jdbcType="VARCHAR"  />
+        <result column="count" property="count" jdbcType="VARCHAR"  />
+        <result column="role" property="role" jdbcType="VARCHAR"  />
+        <result column="picture" property="picture" jdbcType="VARCHAR"  />
+        <result column="remark" property="remark" jdbcType="VARCHAR"  />
+        <result column="birthday" property="birthday" jdbcType="VARCHAR"  />
+        <result column="province_no" property="province_no" jdbcType="VARCHAR"  />
+        <result column="city_no" property="city_no" jdbcType="VARCHAR"  />
+        <result column="district_no" property="district_no" jdbcType="VARCHAR"  />
+        <result column="qq" property="qq" jdbcType="VARCHAR"  />
+        <result column="postcode" property="postcode" jdbcType="VARCHAR"  />
+		
+    </resultMap>
+    
+	  <select id="getSysUserList" parameterType="cloud.app.system.vo.SysUserVO" resultMap="resultMap" >
+        SELECT * FROM ST_USER WHERE STATE = '0' AND (CREATE_USER = #{createUser} OR USER_CODE = #{userCode})
+		<if test="null != userName and userName != ''">
+			AND USER_NAME like '%${userName}%'
+		</if>
+		<if test="null != userPassword and userPassword != ''">
+			AND USER_PASSWORD = #{userPassword}
+		</if>
+		<if test="null != state and state != ''">
+			AND STATE = #{state}
+		</if>
+		<if test="null != departmentid and departmentid != ''">
+			AND departmentid in 
+			<foreach item="item" index="index" collection="departmentid" open="(" separator="," close=")">  
+				#{item}
+			</foreach>
+		</if>
+		order by create_time desc
+		<if test="null != pageIndex">
+			<if test="null != pageSize">
+				limit #{pageIndex},#{pageSize}
+			</if>
+		</if>
+    </select>
+
+	<select id="sysUserCount" parameterType="cloud.app.system.vo.SysUserVO" resultType="int" >
+        SELECT count(1) FROM ST_USER WHERE STATE = '0' AND (CREATE_USER = #{createUser} OR USER_CODE = #{userCode})
+		<if test="null != userName and userName != ''">
+			AND USER_NAME like '%${userName}%'
+		</if>
+		<if test="null != userPassword and userPassword != ''">
+			AND USER_PASSWORD = #{userPassword}
+		</if>
+		<if test="null != departmentid and departmentid != ''">
+			AND departmentid in 
+			<foreach item="item" index="index" collection="departmentid" open="(" separator="," close=")">  
+				#{item}
+			</foreach>
+		</if>
+    </select>
+
+
+    <update id="updateUser" parameterType="cloud.app.system.vo.SysUserVO">
+        UPDATE ST_USER
+        <set>
+			<if test="null != userName">
+				USER_NAME = #{userName},
+			</if>
+			<if test="null != userPassword">
+				USER_PASSWORD = #{userPassword},
+			</if>
+			<if test="null != email">
+				EMAIL = #{email},
+			</if>
+			<if test="null != phone">
+				PHONE = #{phone},
+			</if>
+			<if test="null != lastLoginIp">
+				LAST_LOGIN_IP = #{lastLoginIp},
+			</if>
+			<if test="null != lastLoginTime and lastLoginTime != ''">
+				LAST_LOGIN_TIME = #{lastLoginTime},
+			</if>
+			<if test="null != lastLogoutTime and lastLogoutTime != ''">
+				LAST_LOGOUT_TIME = #{lastLogoutTime},
+			</if>
+			<if test="null != updateUser">
+				UPDATE_USER = #{updateUser},
+			</if>
+			<if test="null != state">
+				STATE = #{state},
+			</if>
+			<if test="null != postcode">
+				postcode = #{postcode},
+			</if>
+			<if test="null != departmentid">
+				departmentid = #{departmentid},
+			</if>
+			<if test="null != departmentname">
+				departmentname = #{departmentname},
+			</if>
+			<if test="null != updateTime">
+				update_time = #{updateTime},
+			</if>
+			<if test="null != address">
+				address = #{address},
+			</if>
+			<if test="sex != null ">sex = #{sex},</if>
+			<if test="remark != null ">remark = #{remark},</if>
+			<if test="qq != null ">qq = #{qq},</if>
+			province_no = #{province_no},
+			city_no = #{city_no},
+			district_no = #{district_no},
+			UPDATE_TIME = now()
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="getMenuByUserId" resultType="cloud.app.system.po.STMenu" parameterType="java.util.HashMap">
+        SELECT DISTINCT M.* FROM ST_MENU M 
+            WHERE  M.PID = #{pid} AND M.ID IN (SELECT DISTINCT A.MENU_ID FROM ST_ROLE_MENU A WHERE A.ROLE_ID IN(  SELECT B.ROLE_ID FROM ST_USER_ROLE B WHERE B.USER_ID = #{userId}) 
+                  UNION SELECT C.MENU_ID FROM ST_USER_MENU C WHERE C.USER_ID = #{userId}) ORDER BY M.SHOW_INDEX ASC
+    </select>
+ 
+    <select id="getSysUserByDepartmentid" parameterType="cloud.app.system.vo.SysUserVO" resultMap="resultMap" >
+        SELECT * FROM ST_USER WHERE 1 = 1
+		<if test="null != departmentid and departmentid != ''">
+			AND departmentid = #{departmentid}
+		</if>
+		order by create_time desc
+    </select>
+    
+    <update id="updateUserPwd" parameterType="cloud.app.system.vo.SysUserVO">
+        UPDATE ST_USER
+        <set>
+        	<if test="null != userPassword">
+				user_password = #{userPassword},
+			</if>
+			<if test="null != updateTime">
+				update_time = #{updateTime},
+			</if>
+        </set>
+        WHERE ID =  #{id}
+    </update>
+    
+    <insert id="insertUser" parameterType="cloud.app.system.vo.SysUserVO">
+       INSERT INTO ST_USER(ID,USER_CODE,USER_NAME,USER_PASSWORD,EMAIL,PHONE,CREATE_USER,CREATE_TIME,postcode,QQ,PROVINCE_NO,city_no,district_no,remark,DEPARTMENTID,DEPARTMENTNAME,address)
+       VALUES(#{id},#{userCode},#{userName},#{userPassword},#{email},#{phone},#{createUser},now(),#{postcode},#{qq},#{province_no},#{city_no},#{district_no},#{remark},#{departmentid},#{departmentname},#{address})
+    </insert>
+    
+	  <delete id="deleteById" parameterType="string">
+	      DELETE FROM ST_USER WHERE ID = #{id}
+	  </delete>
+	  
+	  <select id="getInfoById" parameterType="string" resultMap="resultMap" >
+	      SELECT * FROM ST_USER WHERE ID = #{id}
+	  </select>
+	  
+	  <select id="getUserInfoById" parameterType="string" resultMap="resultMap" >
+	      SELECT * FROM ST_USER WHERE ID = #{id}
+	  </select>
+	  
+	 <select id="selectUserByRoleId" parameterType="string" resultType="cloud.app.system.po.STUserRole" >
+	      SELECT * FROM st_user_role WHERE user_id = #{userId}
+	 </select>
+	 
+	  <select id="selectUserByMenuId" parameterType="java.lang.String" resultType="cloud.app.system.po.STUserMenu"> 
+		   SELECT * FROM st_user_menu WHERE user_id = #{userId}
+	  </select>
+	  
+	  <select id="selectUser_Role" parameterType="cloud.app.system.po.STUserRole" resultType="cloud.app.system.po.STUserRole">
+	      SELECT * FROM ST_USER_ROLE WHERE user_id = #{user_id} and role_id = #{role_id}
+	  </select>
+	  
+	  <insert id="insertUser_Role" parameterType="cloud.app.system.po.STUserRole">
+       INSERT INTO ST_USER_ROLE(id,user_id,role_id)
+       VALUES(#{id},#{user_id},#{role_id})
+    </insert>
+    
+	  <delete id="deleteUser_Role" parameterType="cloud.app.system.po.STUserRole">
+	      DELETE FROM ST_USER_ROLE WHERE user_id = #{user_id} AND role_id = #{role_id}
+	  </delete>
+	  
+	  <delete id="deleteUser_RoleByUserId" parameterType="cloud.app.system.po.STUserRole">
+	      DELETE FROM ST_USER_ROLE WHERE user_id = #{user_id}
+	  </delete>
+	  
+	  <select id="selectUser_Menu" parameterType="cloud.app.system.po.STUserMenu" resultType="cloud.app.system.po.STUserMenu">
+	      SELECT * FROM ST_USER_Menu WHERE user_id = #{user_id} and menu_id = #{menu_id}
+	  </select>
+	  
+	  <insert id="insertUser_Menu" parameterType="cloud.app.system.po.STUserMenu">
+       INSERT INTO ST_USER_Menu(id,user_id,menu_id)
+       VALUES(#{id},#{user_id},#{menu_id})
+    </insert>
+    
+    <insert id="insertUser_Menu_List" useGeneratedKeys="true" parameterType="java.util.List">   
+	   	INSERT INTO ST_USER_Menu(id,user_id,menu_id)
+      	VALUES
+	    <foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.id},#{item.user_id},#{item.menu_id})
+	    </foreach>
+	</insert>
+    
+	  <delete id="deleteUser_Menu" parameterType="cloud.app.system.po.STUserMenu">
+	      DELETE FROM ST_USER_Menu WHERE user_id = #{user_id} AND menu_id = #{menu_id}
+	  </delete>
+	  
+	  <delete id="deleteUser_MenuById" parameterType="java.lang.String">
+	      DELETE FROM ST_USER_Menu WHERE id = #{id}
+	  </delete>
+	  
+	  <delete id="deleteUser_MenuByUserId" parameterType="cloud.app.system.po.STUserMenu">
+	      <!-- DELETE FROM ST_USER_Menu WHERE id = #{id} AND user_id = #{user_id} -->
+	      DELETE FROM ST_USER_Menu WHERE user_id = #{user_id}
+	  </delete>
+	  
+	  <select id="selectUserRole" parameterType="java.lang.String" resultType="java.lang.String">
+	      SELECT DISTINCT T.ROLE_ID FROM ST_USER_ROLE T WHERE USER_ID = #{id}
+	  </select>
+	  
+	  <select id="selectUserMenu" parameterType="java.lang.String" resultType="java.lang.String">
+	      SELECT DISTINCT MENU_ID FROM ST_USER_MENU WHERE USER_ID = #{id}
+	  </select>
+	  
+	  <delete id="deleteUserMenuByUserId" parameterType="string">
+	      DELETE FROM ST_USER_MENU WHERE USER_ID = #{id}
+	  </delete>
+	  
+	  <insert id="addUserMenu" parameterType="cloud.app.system.po.STUserMenu">
+	      INSERT INTO ST_USER_MENU(ID,USER_ID,MENU_ID)
+	       values(#{id},#{user_id},#{menu_id})
+	  </insert>
+	  
+	  
+	<select id="queryProvince" resultType="cloud.app.system.po.Province">
+		SELECT * FROM province
+	</select>
+	
+	<select id="queryCity" parameterType="cloud.app.system.po.City" resultType="cloud.app.system.po.City">
+		select * from city where 1 = 1
+		<if test="null != cityUpId">
+			and cityUpId = #{cityUpId}
+		</if>
+	</select>
+	
+	<select id="queryDistrict" parameterType="cloud.app.system.po.District" resultType="cloud.app.system.po.District">
+		select * from district where 1 = 1
+		<if test="null != districtUpId">
+			and districtUpId = #{districtUpId}
+		</if>
+	</select>
+	
+	<select id="getCtityNameById" parameterType="java.lang.String" resultType="java.lang.String">
+		select cityName from city where 1 = 1 and cityId = #{cityId}
+	</select>
+	
+	<select id="getUserByName" parameterType="string" resultType="cloud.app.system.vo.SysUserVO"> 
+		SELECT * FROM ST_USER WHERE user_code = #{name}
+	</select>
+	
+</mapper>

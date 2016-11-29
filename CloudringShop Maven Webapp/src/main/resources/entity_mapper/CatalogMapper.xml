@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.shop.system.dao.CatalogDAO">
+
+	<resultMap id="CatalogMap" type="cloud.shop.system.po.Catalog">
+		<result property="pkid" column="pkid" />
+		<result property="catalogName" column="catalog_name" />
+		<result property="note" column="note" />
+		<result property="createUser" column="create_user" />
+		<result property="createTime" column="create_time" />
+		<result property="updateUser" column="update_user" />
+		<result property="updateTime" column="update_time" />
+		<result property="state" column="state" />
+	</resultMap>
+	
+	<sql id="allColumns"> 
+		PKID,CATALOG_NAME,NOTE,CREATE_USER,CREATE_TIME, UPDATE_USER,UPDATE_TIME,STATE
+	</sql>
+	
+	<select id="getCatalogList" parameterType="cloud.shop.system.po.Catalog" resultMap="CatalogMap" >
+        SELECT <include refid="allColumns" /> FROM ST_DIC_CATALOG  WHERE 1=1 
+		<if test="null != pkid and pkid != ''">
+			AND pkid = #{pkid}
+		</if>
+		<if test="null != catalogName and catalogName != ''">
+			AND catalog_name like #{catalogName}
+		</if>
+		<if test="null != note and note != ''">
+			AND note = #{note}
+		</if>
+		<if test="null != state and state != ''">
+			AND state = #{state}
+		</if>
+		limit #{pageIndex},#{pageSize}
+    </select>
+
+	<select id="catalogCount" parameterType="cloud.shop.system.po.Catalog" resultType="int" >
+        SELECT count(1) FROM ST_DIC_CATALOG  WHERE STATE = '0'
+		<if test="null != pkid and pkid != ''">
+			AND pkid = #{pkid}
+		</if>
+		<if test="null != catalogName and catalogName != ''">
+			AND catalog_name like #{catalogName}
+		</if>
+		<if test="null != note and note != ''">
+			AND note = #{note}
+		</if>
+		<if test="null != state and state != ''">
+			AND state = #{state}
+		</if>
+    </select>
+	
+	<select id="view" parameterType="java.lang.String" resultMap="CatalogMap"> 
+		SELECT <include refid="allColumns" /> FROM  ST_DIC_CATALOG WHERE PKID = #{pkid} 
+	</select>
+	
+	<insert id="insertCatalog" parameterType="cloud.shop.system.po.Catalog"> 
+		insert into st_dic_catalog
+		( 
+			PKID,CATALOG_NAME,NOTE,CREATE_USER,CREATE_TIME, UPDATE_USER,STATE
+		) 
+		value
+		( 
+			#{pkid},#{catalogName},#{note},#{createUser},now(),#{updateUser},#{state}
+		) 
+	</insert>
+	
+	<update id="updateCatalog" parameterType="cloud.shop.system.po.Catalog"> 
+		update st_dic_catalog
+		 <set>
+        	<if test="null != catalogName">
+				catalog_name = #{catalogName},
+			</if>
+			<if test="null != note">
+				note = #{note},
+			</if>
+			<if test="null != updateUser">
+				update_user = #{updateUser},
+			</if>
+			update_time = now()
+		</set>
+		where pkid = #{pkid}
+	</update>
+	
+	<delete id="deleteCatalog" parameterType="java.lang.String">
+		DELETE FROM ST_DIC_CATALOG WHERE PKID = #{pkid}
+	</delete>
+	
+	<sql id="dynamicWhere">
+		<if test="null != pkid">
+			and pkid = #{pkid}
+		</if>
+		<if test="null != catalogName">
+			and catalog_name = #{catalogName}
+		</if>
+		<if test="null != note">
+			and note = #{note}
+		</if>
+		<if test="null != createUser">
+			and create_user = #{createUser}
+		</if>
+		<if test="null != createTime">
+			and create_time = #{createTime}
+		</if>
+		<if test="null != updateUser">
+			and update_user = #{updateUser}
+		</if>
+		<if test="null != updateTime">
+			and update_time = #{updateTime}
+		</if>
+		<if test="null != state">
+			and state = #{state}
+		</if>
+		<!-- <isNotNull prepend="and" property="createTime"> 
+			<![CDATA[ datediff(day,create_time,'$createTime$ 00:00:00') = 0 ]]>
+		</isNotNull> -->
+	</sql>
+
+	<!-- <select id="select" parameterType="java.util.HashMap" resultType="cloud.app.system.po.Catalog" > 
+		SELECT PKID,CATALOG_NAME AS CATALOGNAME,NOTE,CREATE_USER,CREATE_TIME, UPDATE_USER,UPDATE_TIME,STATE  FROM ST_DIC_CATALOG
+		where 1=1
+		<if test="null != pkid">
+			and pkid = #{pkid}
+		</if>
+		<if test="null != catalogName">
+			and catalog_name = #{catalogName}
+		</if>
+		<if test="null != note">
+			and note = #{note}
+		</if>
+		<if test="null != createUser">
+			and create_user = #{createUser}
+		</if>
+		<if test="null != createTime">
+			and create_time = #{createTime}
+		</if>
+		<if test="null != updateUser">
+			and update_user = #{updateUser}
+		</if>
+		<if test="null != updateTime">
+			and update_time = #{updateTime}
+		</if>
+		<if test="null != state">
+			and state = #{state}
+		</if>
+		<dynamic prepend="order by">
+			fieldSort = #{fieldSort}
+            <isNotEmpty property="fieldSort"> $fieldSort$ </isNotEmpty>
+        </dynamic>
+         limit #{skip}, #{pageSize}
+        <dynamic prepend="">
+            <isNotNull property="skip">
+                <isNotNull property="pageSize">
+                    limit #skip#, #pageSize#
+                </isNotNull>
+            </isNotNull>
+        </dynamic>
+        
+	</select> -->
+	
+	<select id="selectCheck" parameterType="java.lang.String" resultType="cloud.shop.system.po.Catalog">
+		SELECT PKID,CATALOG_NAME AS CATALOGNAME,NOTE,CREATE_USER,CREATE_TIME, UPDATE_USER,UPDATE_TIME,STATE FROM ST_DIC_CATALOG WHERE CATALOG_NAME = #{name}
+    </select>
+
+	<select id="selectCheckId" parameterType="java.lang.String" resultType="cloud.shop.system.po.Catalog" >
+		SELECT PKID,CATALOG_NAME AS CATALOGNAME,NOTE,CREATE_USER,CREATE_TIME, UPDATE_USER,UPDATE_TIME,STATE FROM ST_DIC_CATALOG WHERE PKID = #{pkid}
+    </select>
+</mapper>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.commodity.dao.ProductDAO" >
+ 	
+    <resultMap id="resultMap" type="cloud.app.commodity.model.Product">
+        <result column="id" property="id" jdbcType="VARCHAR"  />
+        <result column="product_no" property="product_no" jdbcType="VARCHAR"  />
+         <result column="product_name" property="product_name" jdbcType="VARCHAR"  />
+         <result column="productcategory_id" property="productcategory_id" jdbcType="VARCHAR"  />
+        <result column="create_user" property="create_user" jdbcType="VARCHAR"  />
+        <result column="create_time" property="create_time" jdbcType="TIMESTAMP"  />
+        <result column="update_user" property="update_user" jdbcType="VARCHAR"  />
+        <result column="update_time" property="update_time" jdbcType="TIMESTAMP"  />
+        <result column="chtitle" property="chtitle" jdbcType="VARCHAR"  />
+        <result column="brand_id" property="brand_id" jdbcType="VARCHAR"  />
+        <result column="isHost" property="isHost" jdbcType="BIT"  />
+        <result column="isBest" property="isBest" jdbcType="BIT"  />
+        <result column="isNew" property="isNew" jdbcType="BIT"  />
+        <result column="isLogistics" property="isLogistics" jdbcType="BIT"  />
+        <result column="isMarketable" property="isMarketable" jdbcType="BIT"  />           
+        <result column="sale_price" property="sale_price" jdbcType="DECIMAL"  />  
+        <result column="cost" property="cost" jdbcType="DECIMAL"  />  
+        <result column="price" property="price" jdbcType="DECIMAL"  />  
+        <result column="redeem_point" property="redeem_point" jdbcType="INTEGER"  />
+         <result column="stock" property="stock" jdbcType="INTEGER"  />
+         <result column="points_swarded" property="points_swarded" jdbcType="INTEGER"  />
+         <result column="productType_id" property="productType_id" jdbcType="VARCHAR"  />
+         <result column="picture" property="picture" jdbcType="VARCHAR"  />
+         <result column="description" property="description" jdbcType="LONGVARCHAR"  />
+         <result column="metaDescription" property="metaDescription" jdbcType="VARCHAR"  />
+        <result column="metaKeywords" property="metaKeywords" jdbcType="VARCHAR"  /> 
+        <result column="searchKeyword" property="searchKeyword" jdbcType="VARCHAR"  /> 
+        <result column="pageTitle" property="pageTitle" jdbcType="VARCHAR"  /> 
+        <result column="remark" property="remark" jdbcType="VARCHAR"  />        
+    </resultMap>
+    
+    <insert id="saveVO" parameterType="cloud.app.commodity.model.ProductVO"> 
+		insert into t_product
+		( 
+			id,product_no,product_name,productcategory_id,create_user,create_time,update_user,update_time,chtitle,brand_id,isHost,isBest,isNew,isLogistics,isMarketable,sale_price,cost,price,redeem_point,stock,points_swarded,productType_id,picture,description,metaDescription,metaKeywords,searchKeyword,pageTitle,remark
+		) 
+		value
+		( 
+			#{id},#{product_no},#{product_name},#{productcategory_id},#{create_user},SYSDATE(),#{update_user},SYSDATE(),#{chtitle},#{brand_id},#{isHost},#{isBest},#{isNew},#{isLogistics},#{isMarketable},
+			#{sale_price},#{cost},#{price},#{redeem_point},#{stock},#{points_swarded},#{productType_id},#{picture},#{description},#{metaDescription},#{metaKeywords},#{searchKeyword},#{pageTitle},#{remark}
+		) 
+	</insert>
+	
+	<update id="updateVO" parameterType="cloud.app.commodity.model.ProductVO">
+        UPDATE t_product
+        <set>
+        update_time = SYSDATE(),
+        	<if test="null != product_name">
+				product_name = #{product_name},
+			</if>
+			<if test="null != productcategory_id">
+				productcategory_id = #{productcategory_id},
+			</if>
+		
+			<if test="null != chtitle">
+				chtitle = #{chtitle},
+			</if>
+			<if test="null != brand_id">
+				brand_id = #{brand_id},
+			</if>
+			<if test="null != isHost">
+				isHost = #{isHost},
+			</if>
+			<if test="null != isBest">
+				isBest = #{isBest},
+			</if>
+			<if test="null != isNew">
+				isNew = #{isNew},
+			</if>
+			<if test="null != isLogistics">
+				isLogistics = #{isLogistics},
+			</if>
+			<if test="null != isMarketable">
+				isMarketable = #{isMarketable},
+			</if>
+			<if test="null != sale_price">
+				sale_price = #{sale_price},
+			</if>
+			<if test="null != cost">
+				cost = #{cost},
+			</if>
+			<if test="null != price">
+				price = #{price},
+			</if>
+			<if test="null != redeem_point">
+				redeem_point = #{redeem_point},
+			</if>
+			<if test="null != stock">
+				stock = #{stock},
+			</if>
+			<if test="null != points_swarded">
+				points_swarded = #{points_swarded},
+			</if>
+			<if test="null != productType_id">
+				productType_id = #{productType_id},
+			</if>
+			<if test="null != picture">
+				picture = #{picture},
+			</if>
+			<if test="null != description">
+				description = #{description},
+			</if>
+			<if test="null != metaDescription">
+				metaDescription = #{metaDescription},
+			</if>
+			<if test="null != searchKeyword">
+				searchKeyword = #{searchKeyword},
+			</if>
+			<if test="null != pageTitle">
+				pageTitle = #{pageTitle},
+			</if>
+			<if test="null != remark">
+				remark = #{remark},
+			</if>
+			<if test="null != update_user">
+				update_user = #{update_user},
+			</if>		
+        </set>
+        WHERE ID = #{id}
+    </update>
+    
+    <delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM t_product WHERE id = #{id}
+	</delete>
+	
+    <select id="getList" parameterType="cloud.app.commodity.model.Product" resultMap="resultMap" >
+        SELECT
+			t.id,
+			t.product_no,
+			t.product_name,
+			tp.category_name productcategory_id,
+			t.create_user,
+			t.create_time,
+			t.update_user,
+			t.update_time,  
+			t.chtitle,
+			t.brand_id,
+			t.isHost,
+			t.isBest,
+			t.isNew,
+			t.isLogistics,
+			t.isMarketable,
+			t.sale_price,
+			t.cost,
+			t.price,
+			t.redeem_point,
+			t.stock,
+			t.points_swarded,
+			t.productType_id,
+			t.picture,
+			t.description,
+			t.metaDescription,
+			t.metaKeywords,
+			t.searchKeyword,
+			t.pageTitle,
+			t.remark
+		FROM
+			t_product t
+		LEFT JOIN t_product_category tp ON tp.id = t.productcategory_id WHERE 1=1 
+		<if test="null != productcategory_id and productcategory_id != ''">
+			AND t.productcategory_id = #{productcategory_id}
+		</if>
+		<if test="null != product_name and product_name != ''">
+			AND t.product_name like #{product_name}
+		</if>
+		<if test="null != product_no and product_no != ''">
+			AND t.product_no = #{product_no}
+		</if>	
+		<if test="null != brand_id and brand_id != ''">
+			AND t.brand_id = #{brand_id}
+		</if>	
+		<if test="null != productType_id and productType_id != ''">
+			AND t.productType_id = #{productType_id}
+		</if>
+		<if test="null != stringAsc and stringAsc != ''">
+			ORDER BY   #{productType_id}
+		</if>
+		limit #{pageIndex},#{pageSize}
+    </select>
+
+
+ <select id="count" parameterType="cloud.app.commodity.model.Product" resultType="int" >
+        SELECT count(1) FROM t_product  WHERE 1=1
+	<if test="null != productcategory_id and productcategory_id != ''">
+			AND productcategory_id = #{productcategory_id}
+		</if>
+		<if test="null != product_name and product_name != ''">
+			AND product_name like #{product_name}
+		</if>
+		<if test="null != product_no and product_no != ''">
+			AND product_no = #{product_no}
+		</if>	
+		<if test="null != brand_id and brand_id != ''">
+			AND brand_id = #{brand_id}
+		</if>	
+		<if test="null != productType_id and productType_id != ''">
+			AND productType_id = #{productType_id}
+		</if>	
+    </select>
+
+    <select id="getObjById" parameterType="java.lang.String" resultMap="resultMap" >
+        SELECT * FROM t_product  WHERE id = #{id}
+    </select>
+    
+    
+     <select id="getObjByName" parameterType="java.lang.String" resultMap="resultMap" >  
+        select * from t_product where product_name like CONCAT('%',#{product_name},'%')
+    </select>
+    
+
+  
+	  
+	 
+</mapper>

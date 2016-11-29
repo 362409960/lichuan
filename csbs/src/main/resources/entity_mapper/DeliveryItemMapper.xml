@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.order.dao.DeliveryItemDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.order.model.DeliveryItem" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="modifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="productSn" property="productsn" jdbcType="VARCHAR" />
+    <result column="productName" property="productname" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="shipping_id" property="shippingId" jdbcType="VARCHAR" />
+    <result column="reship_id" property="reshipId" jdbcType="VARCHAR" />
+    <result column="deliveryQuantity" property="deliveryquantity" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, createDate, modifyDate, productSn, productName, product_id, shipping_id, reship_id, 
+    deliveryQuantity
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_deliveryitem
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_deliveryitem
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.app.order.model.DeliveryItem" >
+    insert into t_deliveryitem (id, createDate, modifyDate, 
+      productSn, productName, product_id, 
+      shipping_id, reship_id, deliveryQuantity
+      )
+    values (#{id,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}, 
+      #{productsn,jdbcType=VARCHAR}, #{productname,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, 
+      #{shippingId,jdbcType=VARCHAR}, #{reshipId,jdbcType=VARCHAR}, #{deliveryquantity,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.order.model.DeliveryItem" >
+    insert into t_deliveryitem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="modifydate != null" >
+        modifyDate,
+      </if>
+      <if test="productsn != null" >
+        productSn,
+      </if>
+      <if test="productname != null" >
+        productName,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="shippingId != null" >
+        shipping_id,
+      </if>
+      <if test="reshipId != null" >
+        reship_id,
+      </if>
+      <if test="deliveryquantity != null" >
+        deliveryQuantity,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productsn != null" >
+        #{productsn,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingId != null" >
+        #{shippingId,jdbcType=VARCHAR},
+      </if>
+      <if test="reshipId != null" >
+        #{reshipId,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryquantity != null" >
+        #{deliveryquantity,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.order.model.DeliveryItem" >
+    update t_deliveryitem
+    <set >
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productsn != null" >
+        productSn = #{productsn,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        productName = #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingId != null" >
+        shipping_id = #{shippingId,jdbcType=VARCHAR},
+      </if>
+      <if test="reshipId != null" >
+        reship_id = #{reshipId,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryquantity != null" >
+        deliveryQuantity = #{deliveryquantity,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.order.model.DeliveryItem" >
+    update t_deliveryitem
+    set createDate = #{createdate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      productSn = #{productsn,jdbcType=VARCHAR},
+      productName = #{productname,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=VARCHAR},
+      shipping_id = #{shippingId,jdbcType=VARCHAR},
+      reship_id = #{reshipId,jdbcType=VARCHAR},
+      deliveryQuantity = #{deliveryquantity,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

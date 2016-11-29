@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.dao.NewsStreamDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.entity.NewsStream" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="play_duration" property="playDuration" jdbcType="INTEGER" />
+    <result column="duration_type" property="durationType" jdbcType="VARCHAR" />
+    <result column="play_speed" property="playSpeed" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="font_color" property="fontColor" jdbcType="VARCHAR" />
+    <result column="font_size" property="fontSize" jdbcType="INTEGER" />
+    <result column="is_add" property="isAdd" jdbcType="INTEGER" />
+    <result column="font_familyName" property="fontFamilyname" jdbcType="VARCHAR" />
+    <result column="font_position" property="fontPosition" jdbcType="INTEGER" />
+    <result column="font_opacity" property="fontOpacity" jdbcType="INTEGER" />
+    <result column="creator_id" property="creatorId" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="terminal_id" property="terminalId" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, play_duration, duration_type, play_speed, message, font_color, font_size, font_familyName, 
+    font_position, font_opacity, creator_id, creator, create_date, terminal_id, is_add
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_news_stream
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_news_stream
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.app.entity.NewsStream" >
+    insert into t_news_stream (id, play_duration, duration_type, 
+      play_speed, message, font_color, 
+      font_size, font_familyName, font_position, 
+      font_opacity, creator_id, creator, 
+      create_date, terminal_id, is_add)
+    values (#{id,jdbcType=VARCHAR}, #{playDuration,jdbcType=INTEGER}, #{durationType,jdbcType=VARCHAR}, 
+      #{playSpeed,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, #{fontColor,jdbcType=VARCHAR}, 
+      #{fontSize,jdbcType=INTEGER}, #{fontFamilyname,jdbcType=VARCHAR}, #{fontPosition,jdbcType=INTEGER}, 
+      #{fontOpacity,jdbcType=INTEGER}, #{creatorId,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{terminalId,jdbcType=LONGVARCHAR}, #{is_add,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.entity.NewsStream" >
+    insert into t_news_stream
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="playDuration != null" >
+        play_duration,
+      </if>
+      <if test="durationType != null" >
+        duration_type,
+      </if>
+      <if test="playSpeed != null" >
+        play_speed,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="fontColor != null" >
+        font_color,
+      </if>
+      <if test="fontSize != null" >
+        font_size,
+      </if>
+      <if test="fontFamilyname != null" >
+        font_familyName,
+      </if>
+      <if test="fontPosition != null" >
+        font_position,
+      </if>
+      <if test="fontOpacity != null" >
+        font_opacity,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="terminalId != null" >
+        terminal_id,
+      </if>
+      <if test="isAdd != null" >
+        is_add,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="playDuration != null" >
+        #{playDuration,jdbcType=INTEGER},
+      </if>
+      <if test="durationType != null" >
+        #{durationType,jdbcType=VARCHAR},
+      </if>
+      <if test="playSpeed != null" >
+        #{playSpeed,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="fontColor != null" >
+        #{fontColor,jdbcType=VARCHAR},
+      </if>
+      <if test="fontSize != null" >
+        #{fontSize,jdbcType=INTEGER},
+      </if>
+      <if test="fontFamilyname != null" >
+        #{fontFamilyname,jdbcType=VARCHAR},
+      </if>
+      <if test="fontPosition != null" >
+        #{fontPosition,jdbcType=INTEGER},
+      </if>
+      <if test="fontOpacity != null" >
+        #{fontOpacity,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="terminalId != null" >
+        #{terminalId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="isAdd != null" >
+        #{isAdd,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.entity.NewsStream" >
+    update t_news_stream
+    <set >
+      <if test="playDuration != null" >
+        play_duration = #{playDuration,jdbcType=INTEGER},
+      </if>
+      <if test="durationType != null" >
+        duration_type = #{durationType,jdbcType=VARCHAR},
+      </if>
+      <if test="playSpeed != null" >
+        play_speed = #{playSpeed,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="fontColor != null" >
+        font_color = #{fontColor,jdbcType=VARCHAR},
+      </if>
+      <if test="fontSize != null" >
+        font_size = #{fontSize,jdbcType=INTEGER},
+      </if>
+      <if test="fontFamilyname != null" >
+        font_familyName = #{fontFamilyname,jdbcType=VARCHAR},
+      </if>
+      <if test="fontPosition != null" >
+        font_position = #{fontPosition,jdbcType=INTEGER},
+      </if>
+      <if test="fontOpacity != null" >
+        font_opacity = #{fontOpacity,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="terminalId != null" >
+        terminal_id = #{terminalId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="isAdd != null" >
+        is_add = #{isAdd,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.entity.NewsStream" >
+    update t_news_stream
+    set play_duration = #{playDuration,jdbcType=INTEGER},
+      duration_type = #{durationType,jdbcType=VARCHAR},
+      play_speed = #{playSpeed,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      font_color = #{fontColor,jdbcType=VARCHAR},
+      font_size = #{fontSize,jdbcType=INTEGER},
+      font_familyName = #{fontFamilyname,jdbcType=VARCHAR},
+      font_position = #{fontPosition,jdbcType=INTEGER},
+      font_opacity = #{fontOpacity,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      terminal_id = #{terminalId,jdbcType=LONGVARCHAR},
+      is_add = #{isAdd,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="getList" resultMap="BaseResultMap" parameterType="cloud.app.entity.NewsStream" >
+  	SELECT 
+    <include refid="Base_Column_List" />
+    FROM t_news_stream
+    WHERE 1 = 1
+    <if test="id != null and id != ''" >
+      AND id = #{id,jdbcType=VARCHAR}
+    </if>
+    <if test="playDuration != null and playDuration != ''" >
+      AND play_duration = #{playDuration,jdbcType=INTEGER}
+    </if>
+    <if test="durationType != null and durationType != ''" >
+      AND duration_type = #{durationType,jdbcType=VARCHAR}
+    </if>
+    <if test="playSpeed != null and playSpeed != ''" >
+      AND play_speed = #{playSpeed,jdbcType=VARCHAR}
+    </if>
+    <if test="message != null and message != ''" >
+      AND message = #{message,jdbcType=VARCHAR}
+    </if>
+    <if test="fontColor != null and fontColor != ''" >
+      AND font_color = #{fontColor,jdbcType=VARCHAR}
+    </if>
+    <if test="fontSize != null and fontSize != ''" >
+      AND font_size = #{fontSize,jdbcType=INTEGER}
+    </if>
+    <if test="fontFamilyname != null and fontFamilyname != ''" >
+      AND font_familyName = #{fontFamilyname,jdbcType=VARCHAR}
+    </if>
+    <if test="fontPosition != null and fontPosition != ''" >
+      AND font_position = #{fontPosition,jdbcType=INTEGER}
+    </if>
+    <if test="fontOpacity != null and fontOpacity != ''" >
+      AND font_opacity = #{fontOpacity,jdbcType=INTEGER}
+    </if>
+    <if test="creatorId != null and creatorId != ''" >
+      AND creator_id LIKE CONCAT('%', #{creatorId,jdbcType=VARCHAR},'%' )
+    </if>
+    <if test="creator != null and creator != ''" >
+      AND creator LIKE CONCAT('%', trim(#{creator,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="createDate != null and createDate != ''" >
+      AND create_date = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="terminalId != null and terminalId != ''" >
+      AND terminal_id LIKE CONCAT('%', #{terminalId,jdbcType=LONGVARCHAR},'%' )
+    </if>
+    <if test="isAdd != null and isAdd != ''" >
+      AND is_add = #{isAdd,jdbcType=INTEGER}
+    </if>
+    <if test="startDate != null and startDate != ''">
+     <![CDATA[ AND Date(create_date) >= #{startDate,jdbcType=VARCHAR} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''">
+     <![CDATA[ AND Date(create_date) <= #{endDate,jdbcType=VARCHAR} ]]>
+    </if>
+    ORDER BY create_date DESC
+    <if test="pageSize != null and pageSize != ''">
+     LIMIT #{pageIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  <select id="count" resultType="java.lang.Integer" parameterType="cloud.app.entity.NewsStream" >
+  	SELECT 
+    COUNT(*)
+    FROM t_news_stream
+    WHERE 1 = 1
+    <if test="id != null and id != ''" >
+      AND id = #{id,jdbcType=VARCHAR}
+    </if>
+    <if test="playDuration != null and playDuration != ''" >
+      AND play_duration = #{playDuration,jdbcType=INTEGER}
+    </if>
+    <if test="durationType != null and durationType != ''" >
+      AND duration_type = #{durationType,jdbcType=VARCHAR}
+    </if>
+    <if test="playSpeed != null and playSpeed != ''" >
+      AND play_speed = #{playSpeed,jdbcType=VARCHAR}
+    </if>
+    <if test="message != null and message != ''" >
+      AND message = #{message,jdbcType=VARCHAR}
+    </if>
+    <if test="fontColor != null and fontColor != ''" >
+      AND font_color = #{fontColor,jdbcType=VARCHAR}
+    </if>
+    <if test="fontSize != null and fontSize != ''" >
+      AND font_size = #{fontSize,jdbcType=INTEGER}
+    </if>
+    <if test="fontFamilyname != null and fontFamilyname != ''" >
+      AND font_familyName = #{fontFamilyname,jdbcType=VARCHAR}
+    </if>
+    <if test="fontPosition != null and fontPosition != ''" >
+      AND font_position = #{fontPosition,jdbcType=INTEGER}
+    </if>
+    <if test="fontOpacity != null and fontOpacity != ''" >
+      AND font_opacity = #{fontOpacity,jdbcType=INTEGER}
+    </if>
+    <if test="creatorId != null and creatorId != ''" >
+      AND creator_id LIKE CONCAT('%', #{creatorId,jdbcType=VARCHAR},'%' )
+    </if>
+    <if test="creator != null and creator != ''" >
+      AND creator LIKE CONCAT('%', trim(#{creator,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="createDate != null and createDate != ''" >
+      AND create_date = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="terminalId != null and terminalId != ''" >
+      AND terminal_id LIKE CONCAT('%', #{terminalId,jdbcType=LONGVARCHAR},'%' )
+    </if>
+    <if test="isAdd != null and isAdd != ''" >
+      AND is_add = #{isAdd,jdbcType=INTEGER}
+    </if>
+    <if test="startDate != null and startDate != ''">
+     <![CDATA[ AND Date(create_date) >= #{startDate,jdbcType=VARCHAR} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''">
+     <![CDATA[ AND Date(create_date) <= #{endDate,jdbcType=VARCHAR} ]]>
+    </if>
+    ORDER BY create_date DESC
+  </select>
+</mapper>

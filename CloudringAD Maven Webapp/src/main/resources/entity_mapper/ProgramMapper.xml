@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.dao.ProgramDAO" > 
+ 
+    <resultMap id="resultMap" type="cloud.app.entity.Program">
+        <result column="id" property="id" jdbcType="VARCHAR"  />
+        <result column="user_id" property="user_id" jdbcType="VARCHAR"  />
+        <result column="program_name" property="program_name" jdbcType="VARCHAR"  />        
+        <result column="scenes" property="scenes" jdbcType="VARCHAR"  />    
+        <result column="play_time" property="play_time" jdbcType="VARCHAR"  />
+        <result column="updated" property="updated" jdbcType="TIMESTAMP"  />
+        <result column="resolution" property="resolution" jdbcType="VARCHAR"  />
+        <result column="affiliations" property="affiliations" jdbcType="VARCHAR"  />      
+        <result column="program_type" property="program_type" jdbcType="VARCHAR"  />
+        <result column="view_time" property="view_time" jdbcType="VARCHAR"  />      
+        <result column="bagrmusic" property="bagrmusic" jdbcType="VARCHAR"  />
+        <result column="create_time" property="create_time" jdbcType="TIMESTAMP"  />     
+        <result column="update_user" property="update_user" jdbcType="VARCHAR"  />  
+        <result column="user_name" property="user_name" jdbcType="VARCHAR"  /> 
+        <result column="state" property="state" jdbcType="VARCHAR"  />          
+        <result column="is_bg_music" property="is_bg_music" jdbcType="VARCHAR"  />   
+        <result column="increment_address" property="increment_address" jdbcType="VARCHAR"  />   
+    </resultMap>
+    
+    
+     <insert id="save" parameterType="cloud.app.entity.Program"> 
+		insert into t_program
+		( 
+			id,user_id,program_name,scenes, play_time,updated,resolution,affiliations,program_type,view_time,bagrmusic,create_time,update_user,user_name,state,is_bg_music
+		) 
+		value
+		( 
+			#{id},#{user_id},#{program_name},#{scenes},#{play_time},#{updated},#{resolution},#{affiliations},#{program_type},#{view_time},#{bagrmusic},#{create_time},#{update_user},#{user_name},#{state},#{is_bg_music}
+		) 
+	</insert>
+	
+	<update id="update" parameterType="cloud.app.entity.Program">
+        UPDATE t_program
+        <set>  
+         
+        	<if test="null != program_name">
+				program_name = #{program_name},
+			</if>
+			<if test="null != updated">
+				 updated = SYSDATE(),     
+			</if>
+			<if test="null != scenes">
+				scenes = #{scenes},
+			</if>
+			<if test="null != resolution">
+				resolution = #{resolution},
+			</if>
+			<if test="null != affiliations">
+				affiliations = #{affiliations},
+			</if>			
+			
+			<if test="null != program_type">
+				program_type = #{program_type},
+			</if>
+			<if test="null != view_time">
+				view_time = #{view_time},
+			</if>
+			<if test="null != bagrmusic">
+				bagrmusic = #{bagrmusic},
+			</if>
+			<if test="null != state">
+				state = #{state},
+			</if>
+			<if test="null != is_bg_music">
+				is_bg_music = #{is_bg_music},
+			</if>
+			<if test="null != increment_address">
+				increment_address = #{increment_address},
+			</if>
+			
+        </set>
+        WHERE ID = #{id}
+    </update>
+    
+    <delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM t_program WHERE id = #{id}
+	</delete>
+	
+	 <delete id="deleteByIdS" parameterType="java.util.Map">
+		DELETE FROM t_program WHERE id in  
+       <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+							  #{item}  
+				</foreach>  
+	</delete>
+	
+	
+    <select id="getList" parameterType="cloud.app.entity.Program" resultMap="resultMap" >
+        SELECT
+				tp.id,
+				tp.user_id,
+				tp.program_name,				
+				tp.scenes,
+				tp.play_time,
+				tp.updated,
+				tp.resolution,
+			    sd.NAME	affiliations,			
+				tp.program_type,
+				tp.view_time,				
+				tp.bagrmusic,
+				tp.create_time,			
+				tp.update_user,
+				tp.user_name				
+				
+			FROM
+				t_program tp
+			LEFT JOIN st_department sd ON sd.ID = tp.affiliations  WHERE tp.state != '2'
+		<if test="null != program_name and program_name != ''">
+			AND tp.program_name  like CONCAT('%',#{program_name},'%')  
+		</if>	
+		<if test="null != departmentidList and departmentidList.size() > 0 ">
+			AND tp.affiliations in
+			 <foreach collection="departmentidList" item="item" index="index" open="(" close=")" separator=",">
+           	 		#{item}
+        	</foreach>
+		</if>
+		<if test="startTime !=null and startTime!=''">
+	    	<![CDATA[   and DATE_FORMAT(tp.create_time, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+	    </if>
+	    <if test="endTime !=null and endTime!=''">
+	   	 	<![CDATA[  and DATE_FORMAT(tp.create_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+	    </if>	
+	  	ORDER BY  tp.create_time DESC
+		limit #{pageIndex},#{pageSize}
+    </select>
+    
+    <select id="count" parameterType="cloud.app.entity.Program" resultType="int" >
+       SELECT count(1) FROM t_program  WHERE 1=1  and state != '2'
+	     <if test="null != program_name and program_name != ''">
+			AND program_name like CONCAT('%',#{program_name},'%') 
+		</if>	
+		<if test="null != departmentidList and departmentidList.size() > 0">
+			AND affiliations in
+			 <foreach collection="departmentidList" item="item" index="index" open="(" close=")" separator=",">
+           	 		#{item}
+        	</foreach>
+		</if>	
+		<if test="startTime !=null and startTime!=''">
+	    	<![CDATA[   and DATE_FORMAT(create_time, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+	    </if>
+	    <if test="endTime !=null and endTime!=''">
+	   	 	<![CDATA[  and DATE_FORMAT(create_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+	    </if>	    	
+    </select>
+    
+ <select id="getObjById" parameterType="java.lang.String" resultMap="resultMap">
+         SELECT
+				tp.id,
+				tp.user_id,
+				tp.program_name,				
+				tp.scenes,
+				tp.play_time,
+				tp.updated,
+				tp.resolution,
+			    sd.NAME	affiliations,			
+				tp.program_type,
+				tp.view_time,				
+				tp.bagrmusic,
+				tp.create_time,			
+				tp.update_user,
+				tp.user_name,				
+				tp.is_bg_music,
+				tp.increment_address
+			FROM
+				t_program tp
+			LEFT JOIN st_department sd ON sd.ID = tp.affiliations    WHERE tp.id = #{id}
+ </select>
+   
+   <select id="getProgramByIdList"  resultMap="resultMap"  parameterType="java.util.Map">
+      SELECT * FROM t_program  WHERE    id in
+          <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+                      #{item}  
+          </foreach>            
+    </select>
+   
+   
+    <select id="getProgramByStateList" parameterType="cloud.app.entity.Program" resultMap="resultMap" >
+        SELECT
+				tp.id,
+				tp.user_id,
+				tp.program_name,				
+				tp.scenes,
+				tp.play_time,
+				tp.updated,
+				tp.resolution,
+			    sd.NAME	affiliations,
+				tp.program_type,
+				tp.view_time,				
+				tp.bagrmusic,
+				tp.create_time,			
+				tp.update_user,
+				tp.user_name				
+			FROM
+				t_program tp
+			LEFT JOIN st_department sd ON sd.ID = tp.affiliations  WHERE 1=1  AND tp.state='1'
+		<if test="null != program_name and program_name != ''">
+			AND tp.program_name like CONCAT('%',#{program_name},'%') 
+		</if>	
+		<if test="null != departmentidList and departmentidList.size() > 0 ">
+			AND tp.affiliations in
+			 <foreach collection="departmentidList" item="item" index="index" open="(" close=")" separator=",">
+           	 		#{item}
+        	</foreach>
+		</if>
+		<if test="startTime !=null and startTime!=''">
+	    	<![CDATA[   and DATE_FORMAT(tp.create_time, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+	    </if>
+	    <if test="endTime !=null and endTime!=''">
+	   	 	<![CDATA[  and DATE_FORMAT(tp.create_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+	    </if>	
+	  	ORDER BY  tp.create_time DESC
+		limit #{pageIndex},#{pageSize}
+    </select>
+    
+   
+   <select id="countByState" parameterType="cloud.app.entity.Program" resultType="int" >
+       SELECT count(1) FROM t_program  WHERE 1=1  AND state='1'
+	     <if test="null != program_name and program_name != ''">
+			AND program_name like CONCAT('%',#{program_name},'%') 
+		</if>	
+		<if test="null != departmentidList and departmentidList.size() > 0 ">
+			AND affiliations in
+			<foreach collection="departmentidList" item="item" index="index" open="(" close=")" separator=",">
+           	 		#{item}
+        	</foreach>
+		</if>	
+		<if test="startTime !=null and startTime!=''">
+	    	<![CDATA[   and DATE_FORMAT(create_time, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+	    </if>
+	    <if test="endTime !=null and endTime!=''">
+	   	 	<![CDATA[  and DATE_FORMAT(create_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+	    </if>
+	    	    	
+    </select>
+  
+  
+    <select id="updateCountUpdate" parameterType="java.lang.String" resultType="int" >
+         SELECT
+			count(1)
+		FROM
+			t_program_details t LEFT JOIN t_program tp on tp.id=t.programId
+		WHERE
+		   t.programId=#{programId}
+		and(
+					t.imgae_url_update IS NOT NULL
+				OR t.video_url_update IS NOT NULL				
+				OR t.pdf_url_update IS NOT NULL
+				OR t.cont_change ='1'
+				OR tp.is_bg_music='1')
+    </select>
+
+
+<select id="getDeleSonList" parameterType="cloud.app.entity.Program" resultMap="resultMap" >
+        SELECT
+			   DISTINCT
+				tp.id,
+				tp.user_id,
+				tp.program_name,
+				tp.scenes,
+				tp.play_time,
+				tp.updated,
+				tp.resolution,
+				sd. NAME affiliations,
+				tp.program_type,
+				tp.view_time,
+				tp.bagrmusic,
+				tp.create_time,
+				tp.update_user,
+				tp.user_name
+			FROM
+				t_program tp
+			LEFT JOIN st_department sd ON sd.ID = tp.affiliations
+			LEFT JOIN t_program_details tpd ON tp.id = tpd.programId
+			WHERE
+	tp.state != '2'  and tpd.id is not null
+		<if test="null != program_name and program_name != ''">
+			AND tp.program_name  like CONCAT('%',#{program_name},'%')  
+		</if>	
+		<if test="null != departmentidList and departmentidList.size() > 0 ">
+			AND tp.affiliations in
+			 <foreach collection="departmentidList" item="item" index="index" open="(" close=")" separator=",">
+           	 		#{item}
+        	</foreach>
+		</if>
+		<if test="startTime !=null and startTime!=''">
+	    	<![CDATA[   and DATE_FORMAT(tp.create_time, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+	    </if>
+	    <if test="endTime !=null and endTime!=''">
+	   	 	<![CDATA[  and DATE_FORMAT(tp.create_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+	    </if>	
+	  	ORDER BY  tp.create_time DESC
+		limit #{pageIndex},#{pageSize}
+    </select>
+    
+    <select id="countDeleSon" parameterType="cloud.app.entity.Program" resultType="int" >
+       SELECT
+			 COUNT(DISTINCT tp.id) 
+			
+			FROM
+				t_program tp
+			LEFT JOIN t_program_details tpd ON tp.id = tpd.programId
+			WHERE
+				1 = 1
+			AND state != '2' and tpd.id is not null
+	     <if test="null != program_name and program_name != ''">
+			AND tp.program_name like CONCAT('%',#{program_name},'%') 
+		</if>	
+		<if test="null != departmentidList and departmentidList.size() > 0">
+			AND tp.affiliations in
+			 <foreach collection="departmentidList" item="item" index="index" open="(" close=")" separator=",">
+           	 		#{item}
+        	</foreach>
+		</if>	
+		<if test="startTime !=null and startTime!=''">
+	    	<![CDATA[   and tp.DATE_FORMAT(create_time, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+	    </if>
+	    <if test="endTime !=null and endTime!=''">
+	   	 	<![CDATA[  and tp.DATE_FORMAT(create_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+	    </if>	    	
+    </select>
+
+
+
+    <select id="getUrlAndAddUrlByProgramId" parameterType="string" resultType="cloud.app.entity.Program">
+         SELECT a.increment_address, a.user_id FROM t_program a WHERE a.id = #{programId}
+    </select>
+
+    <select id="getBackUpProgramList" parameterType="cloud.app.entity.Program" resultMap="resultMap">
+        SELECT a.id, a.resolution, a.program_name, a.create_time FROM t_program a WHERE a.user_id = #{user_id} AND a.state = '1'
+		<if test="startTime !=null and startTime!=''">
+	    	<![CDATA[   and DATE_FORMAT(a.create_time, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+	    </if>
+	    <if test="endTime !=null and endTime!=''">
+	   	 	<![CDATA[  and DATE_FORMAT(a.create_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+	    </if>	
+	     <if test="null != program_name and program_name != ''">
+			AND a.program_name like CONCAT('%',#{program_name},'%') 
+		</if>	
+		order by create_time desc
+		limit #{pageIndex},#{pageSize}
+    </select>
+
+
+    <select id="getBackUpProgramTotal" parameterType="cloud.app.entity.Program" resultType="int">
+        SELECT count(1) FROM t_program a WHERE a.user_id = #{user_id} AND a.state = '1'
+		<if test="startTime !=null and startTime!=''">
+	    	<![CDATA[   and DATE_FORMAT(a.create_time, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+	    </if>
+	    <if test="endTime !=null and endTime!=''">
+	   	 	<![CDATA[  and DATE_FORMAT(a.create_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+	    </if>
+	     <if test="null != program_name and program_name != ''">
+			AND a.program_name like CONCAT('%',#{program_name},'%') 
+		</if>
+    </select>
+
+
+
+
+</mapper>

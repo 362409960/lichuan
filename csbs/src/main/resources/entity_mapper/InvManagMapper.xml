@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.commodity.dao.InvManagDAO" >
+ 	
+    <resultMap id="resultMap" type="cloud.app.commodity.model.InvManag">
+        <result column="id" property="id" jdbcType="VARCHAR"  />
+        <result column="product_no" property="product_no" jdbcType="VARCHAR"  />
+        <result column="product_name" property="product_name" jdbcType="VARCHAR"  />
+        <result column="type" property="type" jdbcType="VARCHAR"  />
+        <result column="remark" property="remark" jdbcType="VARCHAR"  />
+        <result column="inQuantity" property="inQuantity" jdbcType="INTEGER"  />
+        <result column="outQuantity" property="outQuantity" jdbcType="INTEGER"  /> 
+        <result column="stockId" property="stockId" jdbcType="VARCHAR"  />        
+        <result column="create_user" property="create_user" jdbcType="VARCHAR"  />
+        <result column="create_time" property="create_time" jdbcType="TIMESTAMP"  />
+        <result column="update_user" property="update_user" jdbcType="VARCHAR"  />
+        <result column="update_time" property="update_time" jdbcType="TIMESTAMP"  />       
+    </resultMap>
+    
+    <insert id="save" parameterType="cloud.app.commodity.model.InvManag"> 
+		insert into t_inv_manag
+		( 
+			id,product_no,product_name,type,remark,inQuantity,outQuantity,create_time,update_user,update_time,stockId,create_user,productId
+		) 
+		value
+		( 
+			#{id},#{product_no},#{product_name},#{type},#{remark},#{inQuantity},#{outQuantity},#{create_time},#{update_user},#{update_time},#{stockId},#{create_user},#{productId}
+		) 
+	</insert>
+	
+	<update id="update" parameterType="cloud.app.commodity.model.InvManag">
+        UPDATE t_inv_manag
+        <set>
+         update_time = SYSDATE(),
+        	<if test="null != product_no">
+				product_no = #{product_no},
+			</if>
+			<if test="null != product_name">
+				product_name = #{product_name},
+			</if>
+			<if test="null != type">
+				type = #{type},
+			</if>
+			<if test="null != remark">
+				remark = #{remark},
+			</if>
+			<if test="null != inQuantity">
+				inQuantity = #{inQuantity},
+			</if>
+			<if test="null != outQuantity">
+				outQuantity = #{outQuantity},
+			</if>			
+			<if test="null != update_user">
+				update_user = #{update_user},
+			</if>							
+        </set>
+        WHERE ID = #{id}
+    </update>
+    
+    <delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM t_inv_manag WHERE id = #{id}
+	</delete>
+	
+    <select id="getList" parameterType="cloud.app.commodity.model.InvManag" resultMap="resultMap" >
+        SELECT
+				ti.id,
+				ti.product_no,
+				ti.product_name,
+				ti.type,
+				ti.remark,
+				ti.inQuantity,
+				ti.outQuantity,
+				ti.create_time,
+				ti.update_user,
+				ti.update_time,
+				ti.stockId,
+				ti.create_user,
+				ti.productId,
+			  ts.stock,
+			  ts.lock_stock
+			FROM
+				t_stock ts
+			LEFT JOIN t_inv_manag ti ON ti.stockId = ts.id  WHERE 1=1 
+		<if test="null != product_no and product_no != ''">
+			AND ti.product_no = #{product_no}
+		</if>
+		<if test="null != product_name and product_name != ''">
+			AND ti.product_name = #{product_name}
+		</if>
+		<if test="null != type and type != ''">
+			AND ti.type = #{type}
+		</if>
+		<if test="null != update_user and update_user != ''">
+			AND ti.update_user = #{update_user}
+		</if>	
+		limit #{pageIndex},#{pageSize}
+    </select>
+    
+    <select id="count" parameterType="cloud.app.commodity.model.InvManag" resultType="int" >
+       SELECT count(1) FROM t_inv_manag  WHERE 1=1 
+		<if test="null != product_no and product_no != ''">
+			AND product_no = #{product_no}
+		</if>
+		<if test="null != product_name and product_name != ''">
+			AND product_name = #{product_name}
+		</if>
+		<if test="null != type and type != ''">
+			AND type = #{type}
+		</if>
+		<if test="null != update_user and update_user != ''">
+			AND update_user = #{update_user}
+		</if>	
+    </select>
+
+
+    <select id="getObjById" parameterType="java.lang.String" resultMap="resultMap" >
+        SELECT * FROM t_inv_manag  WHERE id = #{id}
+    </select>
+    
+    <select id="getProductById" parameterType="java.lang.String" resultMap="resultMap" >
+       <!--  SELECT * FROM t_inv_manag  WHERE productId = #{productId} -->
+        SELECT
+			ti.id,
+			ti.product_no,
+			ti.product_name,
+			ti.type,
+			ti.remark,
+			ti.inQuantity,
+			ti.outQuantity,
+			ti.create_time,
+			ti.update_user,
+			ti.update_time,
+			ti.stockId,
+			ti.create_user,
+			ti.productId,
+		  ts.stock,
+		  ts.lock_stock
+		FROM
+			t_stock ts
+		LEFT JOIN t_inv_manag ti ON ti.stockId = ts.id
+		where ts.productId=#{productId}
+    </select>
+    
+
+  
+	  
+	 
+</mapper>

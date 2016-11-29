@@ -1,0 +1,219 @@
+@charset "utf-8";
+/* CSS Document */
+@import url('common.css');
+
+body {
+    font-family: arial,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei","微軟正黑體","儷黑 Pro",sans-serif;
+    font-size: 12px;
+	overflow-y: auto;
+	background: #f9f9f9 none repeat scroll 0 0;
+    color: #666;
+}
+
+.reg{
+	margin:0 auto;
+	width:960px;
+}
+.bugfix_ie6 {
+    position: relative;
+    z-index: 4;
+}
+.logo-area{
+	height:31px;
+	line-height:31px;
+	padding:50px 0;
+}
+.reg-frame{
+	background:#fff;
+	min-height:400px;
+	padding:34px 34px 0;
+}
+.reg-title{
+	border-bottom:1px solid #e6e6e6;
+	clear:both;
+	padding-bottom:35px;
+	text-align:center
+}
+
+.title-big {
+    font-size: 20px;
+	line-height: 1.5;
+	font-weight: bold;
+	color:#333
+}
+.regbox{
+	line-height:20px;
+	padding:30px 0;
+	width:332px;
+	margin:0 auto;
+}
+.listwrap {
+    margin-bottom: 15px;
+    position: relative;
+}
+.tits{
+	border:1px solid #e8e8e8;
+	color:#555;
+	cursor:pointer;
+	display:inline-block;
+	height:40px;
+	line-height:40px;
+	padding-left:14px;
+	vertical-align:middle
+}
+.tits > em{
+	border-right:1px solid #e8e8e8;
+	cursor:pointer;
+	float:left;
+	width:275px;
+}
+.icon-code{
+	background:url(../../images/default/icon_user.png) no-repeat;
+	float:right;
+	width:16px;
+	height:16px;
+	margin:11px 12px 0;
+}
+.country-container{
+	background:#fff;
+	border:1px solid #e8e8e8;
+	height:168px;
+	left:0;
+	line-height:30px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	position:absolute;
+	top:41px;
+	width:330px;
+	z-index:98;
+	display:none;
+}
+.country-code .head,.record:hover{
+	padding-left:10px;
+	background:#eaeaea;
+}
+.country-code .record{
+	clear:both;
+	cursor:pointer;
+	overflow:hidden;
+	padding:0 10px;
+}
+.country-code .record span{
+	height:30px;
+	overflow:hidden;
+	display:block;
+}
+.record-country{
+	float:left;
+	max-width:74%;
+}
+#code_result .record-code{
+	float:left;
+}
+.record-code{
+	float:right;
+	max-width:20%;
+}
+.inputbg{
+	padding-bottom:15px;
+}
+.labelbox{
+	display:inline-block;
+	height:40px;
+	line-height:40px;
+	border:1px solid #e8e8e8;
+}
+.err-label{
+    border: 1px solid #ff6f3d !important;
+}
+.labelbox > input{
+	height:20px;
+	line-height:20px;
+	display:inline-block;
+	padding:10px;
+	width:310px;
+	border:0 none;
+	outline:0;
+	color:#333;
+}
+.err-tip{
+	color:#f56700;
+	font-size:12px;
+	line-height:20px;
+	margin-bottom:5px;
+	margin-top:-8px;
+	display: none;	
+}
+.icon-error{
+	display:inline-block;
+	background:url(../../images/default/icon_user.png) no-repeat right top;
+	width:14px;
+	height:14px;
+	vertical-align:middle;
+	overflow:hidden;
+	margin: -1px 5px 0 0;
+}
+.err-tip > span{
+	vertical-align:middle;
+}
+.labelbox > input.code{
+	width:170px;
+}
+.code-img{
+	cursor:pointer;
+	vertical-align:middle;
+	margin-left:7px;
+}
+.btn-reg{
+	border:1px solid #e8e8e8;
+	cursor:pointer;
+	display:block;
+	font-size:14px;
+	height:42px;
+	line-height:42px;
+	margin:15px auto 0;
+	text-align:center;
+	width:330px;
+	outline:0 none;
+	background-color:#f56700;
+	color:#fff;
+}
+
+.btn-reg:hover {
+    background: #ff936a;
+}
+
+.msg {
+    color: #9d9d9d;
+    margin-top: 10px;
+}
+
+.msg > a {
+    color: #333;
+	font-weight:bold
+}
+.msg > a:hover{
+	text-decoration:none;
+}
+
+.remain{
+	border: 1px solid #e8e8e8;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+.remain input{
+    color: #000;
+    cursor: pointer;
+    display: block;
+    padding: 0 10px;
+    border:none;
+    background:#fff;
+    line-height:38px;
+}
+.remain input:hover{
+	background: #eee;
+	color:#888;
+}

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.dao.PublishTerminalDAO" > 
+ 
+    <resultMap id="resultMap" type="cloud.app.entity.PublishTerminal">
+        <result column="id" property="id" jdbcType="VARCHAR"  />
+        <result column="publish_id" property="publish_id" jdbcType="VARCHAR"  />
+        <result column="termianl_id" property="termianl_id" jdbcType="VARCHAR"  />
+         <result column="program" property="program" jdbcType="VARCHAR"  />  
+         <result column="user_id" property="user_id" jdbcType="VARCHAR"  /> 
+         <result column="state" property="state" jdbcType="VARCHAR"  /> 
+         <result column="reception_time" property="reception_time" jdbcType="TIMESTAMP"  /> 
+         <result column="complete_time" property="complete_time" jdbcType="TIMESTAMP"  />   
+         <result column="progress" property="progress" jdbcType="VARCHAR"  /> 
+         <result column="program_id" property="program_id" jdbcType="LONGVARCHAR"  />  
+         <result column="del_state" property="del_state" jdbcType="LONGVARCHAR"  /> 
+    </resultMap>
+    
+    
+     <insert id="save" parameterType="cloud.app.entity.PublishTerminal"> 
+		insert into t_publish_terminal
+		( 
+			id,publish_id,termianl_id,program,user_id,state,program_id,reception_time,complete_time,progress
+		)
+		values
+		( 
+			#{id},#{publish_id},#{termianl_id},#{program},#{user_id},#{state},#{program_id},#{reception_time},#{complete_time},#{progress}
+		)
+	</insert>
+	
+	<update id="update" parameterType="cloud.app.entity.PublishTerminal">
+        UPDATE t_publish_terminal
+        <set>  
+        	<if test="null != state">
+				state = #{state},
+			</if>
+			<if test="null != reception_time">
+				reception_time = #{reception_time,jdbcType=TIMESTAMP},
+			</if>
+			<if test="null != complete_time">
+				complete_time = #{complete_time,jdbcType=TIMESTAMP},
+			</if>
+			<if test="null != progress">
+				progress = #{progress},
+			</if>	
+        </set>
+        WHERE termianl_id = #{termianl_id} and program_id=#{program_id}
+    </update>
+    
+      <update id="updateBatch" parameterType="java.util.Map">  
+        update t_publish_terminal   set    del_state='1'        
+         WHERE publish_id in   
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+							  #{item}  
+		</foreach>   
+	</update>  
+    
+    <delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM t_publish_terminal WHERE id = #{id}
+	</delete>
+	
+	 <delete id="deleteByIdS" parameterType="java.util.Map">
+		DELETE FROM t_publish_terminal WHERE publish_id in  
+       <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+							  #{item}  
+				</foreach>  
+	</delete>
+
+	
+    <select id="getList" parameterType="cloud.app.entity.PublishTerminal" resultType="cloud.app.entity.PublishTerminal" >
+          SELECT
+			t.complete_time,t.del_state,t.id,t.program,t.program_id, case when t.progress is NULL then 0 else t.progress end progress,t.publish_id,t.reception_time,t.state,t.user_id,tt.name termianl_name,t.termianl_id
+		FROM
+			t_publish_terminal t
+LEFT   JOIN t_terminal tt ON tt.id = t.termianl_id
+			 WHERE 1=1 		
+		<if test="null != publish_id and publish_id != ''">
+			AND t.publish_id = #{publish_id}
+		</if>	
+		<if test="null != program and program != ''">
+			AND t.program like CONCAT('%',#{program},'%')  
+		</if>
+		<if test="null != termianl_name and termianl_name != ''">
+			AND tt.name like CONCAT('%',#{termianl_name},'%')  
+		</if>	
+		<if test="null != state and state != ''">
+			AND t.state = #{state}
+		</if>	
+		limit #{pageIndex},#{pageSize}
+    </select>
+    
+    <select id="count" parameterType="cloud.app.entity.PublishTerminal" resultType="int" >
+       SELECT count(1) FROM t_publish_terminal t
+       LEFT   JOIN t_terminal tt ON tt.id = t.termianl_id
+       WHERE 1=1 	   	
+		<if test="null != publish_id and publish_id != ''">
+			AND t.publish_id = #{publish_id}	
+		</if>	
+		<if test="null != program and program != ''">
+			AND t.program like CONCAT('%',#{program},'%')  
+		</if>	
+		<if test="null != state and state != ''">
+			AND t.state = #{state}
+		</if>
+		<if test="null != termianl_name and termianl_name != ''">
+			AND tt.name like CONCAT('%',#{termianl_name},'%')  
+		</if>		
+	 
+    </select>
+    
+ <select id="getObjById" parameterType="java.lang.String" resultMap="resultMap">
+        SELECT * FROM t_publish_terminal  WHERE id = #{id}
+ </select>
+ 
+ <select id="getByTerminalId" parameterType="cloud.app.entity.PublishTerminal" resultMap="resultMap">
+        SELECT * FROM t_publish_terminal  WHERE program_id = #{program_id} AND termianl_id = #{termianl_id}
+ </select>
+   
+ 
+</mapper>

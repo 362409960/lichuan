@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.order.dao.ShippingDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.order.model.Shipping" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="modifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="shippingSn" property="shippingsn" jdbcType="VARCHAR" />
+    <result column="deliveryTypeName" property="deliverytypename" jdbcType="VARCHAR" />
+    <result column="deliveryCorpName" property="deliverycorpname" jdbcType="VARCHAR" />
+    <result column="deliverySn" property="deliverysn" jdbcType="VARCHAR" />
+    <result column="deliveryFee" property="deliveryfee" jdbcType="DECIMAL" />
+    <result column="shipName" property="shipname" jdbcType="VARCHAR" />
+    <result column="shipArea" property="shiparea" jdbcType="VARCHAR" />
+    <result column="shipAreaPath" property="shipareapath" jdbcType="VARCHAR" />
+    <result column="shipAddress" property="shipaddress" jdbcType="VARCHAR" />
+    <result column="shipZipCode" property="shipzipcode" jdbcType="VARCHAR" />
+    <result column="shipPhone" property="shipphone" jdbcType="VARCHAR" />
+    <result column="shipMobile" property="shipmobile" jdbcType="VARCHAR" />
+    <result column="oder_id" property="oderId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cloud.app.order.model.Shipping" extends="BaseResultMap" >
+    <result column="memo" property="memo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, createDate, modifyDate, shippingSn, deliveryTypeName, deliveryCorpName, deliverySn, 
+    deliveryFee, shipName, shipArea, shipAreaPath, shipAddress, shipZipCode, shipPhone, 
+    shipMobile, oder_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_shipping
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_shipping
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.app.order.model.Shipping" >
+    insert into t_shipping (id, createDate, modifyDate, 
+      shippingSn, deliveryTypeName, deliveryCorpName, 
+      deliverySn, deliveryFee, shipName, 
+      shipArea, shipAreaPath, shipAddress, 
+      shipZipCode, shipPhone, shipMobile, 
+      oder_id, memo)
+    values (#{id,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}, 
+      #{shippingsn,jdbcType=VARCHAR}, #{deliverytypename,jdbcType=VARCHAR}, #{deliverycorpname,jdbcType=VARCHAR}, 
+      #{deliverysn,jdbcType=VARCHAR}, #{deliveryfee,jdbcType=DECIMAL}, #{shipname,jdbcType=VARCHAR}, 
+      #{shiparea,jdbcType=VARCHAR}, #{shipareapath,jdbcType=VARCHAR}, #{shipaddress,jdbcType=VARCHAR}, 
+      #{shipzipcode,jdbcType=VARCHAR}, #{shipphone,jdbcType=VARCHAR}, #{shipmobile,jdbcType=VARCHAR}, 
+      #{oderId,jdbcType=VARCHAR}, #{memo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.order.model.Shipping" >
+    insert into t_shipping
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="modifydate != null" >
+        modifyDate,
+      </if>
+      <if test="shippingsn != null" >
+        shippingSn,
+      </if>
+      <if test="deliverytypename != null" >
+        deliveryTypeName,
+      </if>
+      <if test="deliverycorpname != null" >
+        deliveryCorpName,
+      </if>
+      <if test="deliverysn != null" >
+        deliverySn,
+      </if>
+      <if test="deliveryfee != null" >
+        deliveryFee,
+      </if>
+      <if test="shipname != null" >
+        shipName,
+      </if>
+      <if test="shiparea != null" >
+        shipArea,
+      </if>
+      <if test="shipareapath != null" >
+        shipAreaPath,
+      </if>
+      <if test="shipaddress != null" >
+        shipAddress,
+      </if>
+      <if test="shipzipcode != null" >
+        shipZipCode,
+      </if>
+      <if test="shipphone != null" >
+        shipPhone,
+      </if>
+      <if test="shipmobile != null" >
+        shipMobile,
+      </if>
+      <if test="oderId != null" >
+        oder_id,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shippingsn != null" >
+        #{shippingsn,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverytypename != null" >
+        #{deliverytypename,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverycorpname != null" >
+        #{deliverycorpname,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverysn != null" >
+        #{deliverysn,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryfee != null" >
+        #{deliveryfee,jdbcType=DECIMAL},
+      </if>
+      <if test="shipname != null" >
+        #{shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="shiparea != null" >
+        #{shiparea,jdbcType=VARCHAR},
+      </if>
+      <if test="shipareapath != null" >
+        #{shipareapath,jdbcType=VARCHAR},
+      </if>
+      <if test="shipaddress != null" >
+        #{shipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shipzipcode != null" >
+        #{shipzipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="shipphone != null" >
+        #{shipphone,jdbcType=VARCHAR},
+      </if>
+      <if test="shipmobile != null" >
+        #{shipmobile,jdbcType=VARCHAR},
+      </if>
+      <if test="oderId != null" >
+        #{oderId,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.order.model.Shipping" >
+    update t_shipping
+    <set >
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shippingsn != null" >
+        shippingSn = #{shippingsn,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverytypename != null" >
+        deliveryTypeName = #{deliverytypename,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverycorpname != null" >
+        deliveryCorpName = #{deliverycorpname,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverysn != null" >
+        deliverySn = #{deliverysn,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryfee != null" >
+        deliveryFee = #{deliveryfee,jdbcType=DECIMAL},
+      </if>
+      <if test="shipname != null" >
+        shipName = #{shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="shiparea != null" >
+        shipArea = #{shiparea,jdbcType=VARCHAR},
+      </if>
+      <if test="shipareapath != null" >
+        shipAreaPath = #{shipareapath,jdbcType=VARCHAR},
+      </if>
+      <if test="shipaddress != null" >
+        shipAddress = #{shipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shipzipcode != null" >
+        shipZipCode = #{shipzipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="shipphone != null" >
+        shipPhone = #{shipphone,jdbcType=VARCHAR},
+      </if>
+      <if test="shipmobile != null" >
+        shipMobile = #{shipmobile,jdbcType=VARCHAR},
+      </if>
+      <if test="oderId != null" >
+        oder_id = #{oderId,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cloud.app.order.model.Shipping" >
+    update t_shipping
+    set createDate = #{createdate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      shippingSn = #{shippingsn,jdbcType=VARCHAR},
+      deliveryTypeName = #{deliverytypename,jdbcType=VARCHAR},
+      deliveryCorpName = #{deliverycorpname,jdbcType=VARCHAR},
+      deliverySn = #{deliverysn,jdbcType=VARCHAR},
+      deliveryFee = #{deliveryfee,jdbcType=DECIMAL},
+      shipName = #{shipname,jdbcType=VARCHAR},
+      shipArea = #{shiparea,jdbcType=VARCHAR},
+      shipAreaPath = #{shipareapath,jdbcType=VARCHAR},
+      shipAddress = #{shipaddress,jdbcType=VARCHAR},
+      shipZipCode = #{shipzipcode,jdbcType=VARCHAR},
+      shipPhone = #{shipphone,jdbcType=VARCHAR},
+      shipMobile = #{shipmobile,jdbcType=VARCHAR},
+      oder_id = #{oderId,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.order.model.Shipping" >
+    update t_shipping
+    set createDate = #{createdate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      shippingSn = #{shippingsn,jdbcType=VARCHAR},
+      deliveryTypeName = #{deliverytypename,jdbcType=VARCHAR},
+      deliveryCorpName = #{deliverycorpname,jdbcType=VARCHAR},
+      deliverySn = #{deliverysn,jdbcType=VARCHAR},
+      deliveryFee = #{deliveryfee,jdbcType=DECIMAL},
+      shipName = #{shipname,jdbcType=VARCHAR},
+      shipArea = #{shiparea,jdbcType=VARCHAR},
+      shipAreaPath = #{shipareapath,jdbcType=VARCHAR},
+      shipAddress = #{shipaddress,jdbcType=VARCHAR},
+      shipZipCode = #{shipzipcode,jdbcType=VARCHAR},
+      shipPhone = #{shipphone,jdbcType=VARCHAR},
+      shipMobile = #{shipmobile,jdbcType=VARCHAR},
+      oder_id = #{oderId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

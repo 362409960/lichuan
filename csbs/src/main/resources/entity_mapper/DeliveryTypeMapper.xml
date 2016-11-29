@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.order.dao.DeliveryTypeDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.order.model.DeliveryType" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modifyDate" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="deliveryMethod" property="deliveryMethod" jdbcType="INTEGER" />
+    <result column="firstWeightUnit" property="firstWeightUnit" jdbcType="INTEGER" />
+    <result column="continueWeightUnit" property="continueWeightUnit" jdbcType="INTEGER" />
+    <result column="firstWeightPrice" property="firstWeightPrice" jdbcType="DECIMAL" />
+    <result column="continueWeightPrice" property="continueWeightPrice" jdbcType="DECIMAL" />
+    <result column="orderList" property="orderList" jdbcType="INTEGER" />
+    <result column="defaultDeliveryCorp_id" property="defaultDeliveryCorId" jdbcType="VARCHAR" />
+    <result column="firstWeight" property="firstWeight" jdbcType="DOUBLE" />
+    <result column="continueWeight" property="continueWeight" jdbcType="DOUBLE" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cloud.app.order.model.DeliveryType" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, createDate, modifyDate, name, deliveryMethod, firstWeightUnit, continueWeightUnit, 
+    firstWeightPrice, continueWeightPrice, orderList, defaultDeliveryCorp_id, firstWeight, 
+    continueWeight
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_deliverytype
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_deliverytype
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.app.order.model.DeliveryType" >
+    insert into t_deliverytype (id, createDate, modifyDate, 
+      name, deliveryMethod, firstWeightUnit, 
+      continueWeightUnit, firstWeightPrice, continueWeightPrice, 
+      orderList, defaultDeliveryCorp_id, firstWeight, 
+      continueWeight, description)
+    values (#{id,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{name,jdbcType=VARCHAR}, #{deliveryMethod,jdbcType=INTEGER}, #{firstWeightUnit,jdbcType=INTEGER}, 
+      #{continueWeightUnit,jdbcType=INTEGER}, #{firstWeightPrice,jdbcType=DECIMAL}, #{continueWeightPrice,jdbcType=DECIMAL}, 
+      #{orderList,jdbcType=INTEGER}, #{defaultDeliveryCorId,jdbcType=VARCHAR}, #{firstWeight,jdbcType=DOUBLE}, 
+      #{continueWeight,jdbcType=DOUBLE}, #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.order.model.DeliveryType" >
+    insert into t_deliverytype
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createDate != null" >
+        createDate,
+      </if>
+      <if test="modifyDate != null" >
+        modifyDate,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="deliveryMethod != null" >
+        deliveryMethod,
+      </if>
+      <if test="firstWeightUnit != null" >
+        firstWeightUnit,
+      </if>
+      <if test="continueWeightUnit != null" >
+        continueWeightUnit,
+      </if>
+      <if test="firstWeightPrice != null" >
+        firstWeightPrice,
+      </if>
+      <if test="continueWeightPrice != null" >
+        continueWeightPrice,
+      </if>
+      <if test="orderList != null" >
+        orderList,
+      </if>
+      <if test="defaultDeliveryCorId != null" >
+        defaultDeliveryCorp_id,
+      </if>
+      <if test="firstWeight != null" >
+        firstWeight,
+      </if>
+      <if test="continueWeight != null" >
+        continueWeight,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryMethod != null" >
+        #{deliveryMethod,jdbcType=INTEGER},
+      </if>
+      <if test="firstWeightUnit != null" >
+        #{firstWeightUnit,jdbcType=INTEGER},
+      </if>
+      <if test="continueWeightUnit != null" >
+        #{continueWeightUnit,jdbcType=INTEGER},
+      </if>
+      <if test="firstWeightPrice != null" >
+        #{firstWeightPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="continueWeightPrice != null" >
+        #{continueWeightPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderList != null" >
+        #{orderList,jdbcType=INTEGER},
+      </if>
+      <if test="defaultDeliveryCorId != null" >
+        #{defaultDeliveryCorId,jdbcType=VARCHAR},
+      </if>
+      <if test="firstWeight != null" >
+        #{firstWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="continueWeight != null" >
+        #{continueWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.order.model.DeliveryType" >
+    update t_deliverytype
+    <set >
+      <if test="createDate != null" >
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryMethod != null" >
+        deliveryMethod = #{deliveryMethod,jdbcType=INTEGER},
+      </if>
+      <if test="firstWeightUnit != null" >
+        firstWeightUnit = #{firstWeightUnit,jdbcType=INTEGER},
+      </if>
+      <if test="continueWeightUnit != null" >
+        continueWeightUnit = #{continueWeightUnit,jdbcType=INTEGER},
+      </if>
+      <if test="firstWeightPrice != null" >
+        firstWeightPrice = #{firstWeightPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="continueWeightPrice != null" >
+        continueWeightPrice = #{continueWeightPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderList != null" >
+        orderList = #{orderList,jdbcType=INTEGER},
+      </if>
+      <if test="defaultDeliveryCorId != null" >
+        defaultDeliveryCorp_id = #{defaultDeliveryCorId,jdbcType=VARCHAR},
+      </if>
+      <if test="firstWeight != null" >
+        firstWeight = #{firstWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="continueWeight != null" >
+        continueWeight = #{continueWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cloud.app.order.model.DeliveryType" >
+    update t_deliverytype
+    set createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      deliveryMethod = #{deliveryMethod,jdbcType=INTEGER},
+      firstWeightUnit = #{firstWeightUnit,jdbcType=INTEGER},
+      continueWeightUnit = #{continueWeightUnit,jdbcType=INTEGER},
+      firstWeightPrice = #{firstWeightPrice,jdbcType=DECIMAL},
+      continueWeightPrice = #{continueWeightPrice,jdbcType=DECIMAL},
+      orderList = #{orderList,jdbcType=INTEGER},
+      defaultDeliveryCorp_id = #{defaultDeliveryCorId,jdbcType=VARCHAR},
+      firstWeight = #{firstWeight,jdbcType=DOUBLE},
+      continueWeight = #{continueWeight,jdbcType=DOUBLE},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.order.model.DeliveryType" >
+    update t_deliverytype
+    set createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      deliveryMethod = #{deliveryMethod,jdbcType=INTEGER},
+      firstWeightUnit = #{firstWeightUnit,jdbcType=INTEGER},
+      continueWeightUnit = #{continueWeightUnit,jdbcType=INTEGER},
+      firstWeightPrice = #{firstWeightPrice,jdbcType=DECIMAL},
+      continueWeightPrice = #{continueWeightPrice,jdbcType=DECIMAL},
+      orderList = #{orderList,jdbcType=INTEGER},
+      defaultDeliveryCorp_id = #{defaultDeliveryCorId,jdbcType=VARCHAR},
+      firstWeight = #{firstWeight,jdbcType=DOUBLE},
+      continueWeight = #{continueWeight,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="getDeliveryTypes" resultMap="ResultMapWithBLOBs" parameterType="cloud.app.order.model.DeliveryType" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_deliverytype
+    where 1=1
+    <if test="id != null" >
+      AND id = #{id,jdbcType=VARCHAR},
+    </if>
+    <if test="createDate != null" >
+      AND createDate = #{createDate,jdbcType=TIMESTAMP},
+    </if>
+    <if test="modifyDate != null" >
+      AND modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+    </if>
+    <if test="name != null" >
+      AND name = #{name,jdbcType=VARCHAR},
+    </if>
+    <if test="deliveryMethod != null" >
+      AND deliveryMethod = #{deliveryMethod,jdbcType=INTEGER},
+    </if>
+    <if test="firstWeightUnit != null" >
+      AND firstWeightUnit = #{firstWeightUnit,jdbcType=INTEGER},
+    </if>
+    <if test="continueWeightUnit != null" >
+      AND continueWeightUnit = #{continueWeightUnit,jdbcType=INTEGER},
+    </if>
+    <if test="firstWeightPrice != null" >
+      AND firstWeightPrice = #{firstWeightPrice,jdbcType=DECIMAL},
+    </if>
+    <if test="continueWeightPrice != null" >
+      AND continueWeightPrice = #{continueWeightPrice,jdbcType=DECIMAL},
+    </if>
+    <if test="orderList != null" >
+      AND orderList = #{orderList,jdbcType=INTEGER},
+    </if>
+    <if test="defaultDeliveryCorId != null" >
+      AND defaultDeliveryCorp_id = #{defaultDeliveryCorId,jdbcType=VARCHAR},
+    </if>
+    <if test="firstWeight != null" >
+      AND firstWeight = #{firstWeight,jdbcType=DOUBLE},
+    </if>
+    <if test="continueWeight != null" >
+      AND continueWeight = #{continueWeight,jdbcType=DOUBLE},
+    </if>
+    <if test="description != null" >
+      AND description = #{description,jdbcType=LONGVARCHAR},
+    </if>
+  </select>
+  
+</mapper>

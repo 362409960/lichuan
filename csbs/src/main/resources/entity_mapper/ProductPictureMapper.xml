@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.commodity.dao.ProductPictureDAO" >
+ 	
+    <resultMap id="resultMap" type="cloud.app.commodity.model.ProductPicture">
+        <result column="id" property="id" jdbcType="VARCHAR"  />
+        <result column="order_value" property="order_value" jdbcType="INTEGER"  />
+         <result column="file_name" property="file_name" jdbcType="VARCHAR"  />
+        <result column="file_url" property="file_url" jdbcType="VARCHAR"  />
+        <result column="product_id" property="product_id" jdbcType="VARCHAR"  />
+        <result column="create_user" property="create_user" jdbcType="VARCHAR"  />
+        <result column="create_time" property="create_time" jdbcType="TIMESTAMP"  />
+        <result column="update_user" property="update_user" jdbcType="VARCHAR"  />
+        <result column="update_time" property="update_time" jdbcType="TIMESTAMP"  />       
+    </resultMap>
+    
+    <insert id="save" parameterType="cloud.app.commodity.model.ProductPicture"> 
+		insert into t_product_picture
+		( 
+			id,order_value,file_name,create_time,update_user,update_time,create_user,file_url,product_id
+		) 
+		value
+		( 
+			#{id},#{order_value},#{file_name},#{create_time},#{update_user},#{update_time},#{create_user},#{file_url},#{product_id}
+		) 
+	</insert>
+	
+	<update id="update" parameterType="cloud.app.commodity.model.ProductPicture">
+        UPDATE t_product_picture
+        <set>
+         update_time = SYSDATE(),
+        	<if test="null != file_name">
+				file_name = #{file_name},
+			</if>
+			<if test="null != file_url">
+				file_url = #{file_url},
+			</if>			
+			<if test="null != update_user">
+				update_user = #{update_user},
+			</if>			
+        </set>
+        WHERE ID = #{id}
+    </update>
+    
+    <delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM t_product_picture WHERE product_id = #{id}
+	</delete>
+	
+    <select id="getList" parameterType="cloud.app.commodity.model.ProductPicture" resultMap="resultMap" >
+        SELECT * FROM t_product_picture  WHERE 1=1 
+		<if test="null != product_id and product_id != ''">
+			AND product_id = #{product_id}
+		</if>
+		limit #{pageIndex},#{pageSize}
+    </select>
+
+    <select id="getObjById" parameterType="java.lang.String" resultMap="resultMap" >
+        SELECT * FROM t_product_picture  WHERE id = #{id}
+    </select>
+    
+    <select id="getListObjByFatherId" parameterType="java.lang.String" resultMap="resultMap" >
+        SELECT * FROM t_product_picture  WHERE product_id = #{id}
+    </select>
+    
+
+  
+	  
+	 
+</mapper>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.shop.goods.dao.OrdersDAO">
+
+	 <resultMap id="resultMap" type="cloud.shop.goods.entity.Orders">
+        <result column="id" property="id" jdbcType="VARCHAR"  />
+        <result column="CREATE_TIME" property="create_time" jdbcType="TIMESTAMP"  />
+        <result column="UPDATE_TIME" property="update_time" jdbcType="TIMESTAMP"  />        
+        <result column="status" property="status" jdbcType="VARCHAR"  /> 
+         <result column="pay_by" property="pay_by" jdbcType="VARCHAR"  /> 
+         <result column="delivery_method" property="delivery_method" jdbcType="VARCHAR"  /> 
+        <result column="price" property="price" jdbcType="DECIMAL"  />
+        <result column="shipment" property="shipment" jdbcType="DECIMAL"  />
+        <result column="order_amount" property="order_amount" jdbcType="DECIMAL"  />
+        <result column="amounts_payable" property="amounts_payable" jdbcType="DECIMAL"  />       
+        <result column="integration" property="integration" jdbcType="INTEGER"  />        
+        <result column="receiver" property="receiver" jdbcType="VARCHAR"  /> 
+        <result column="tel" property="tel" jdbcType="VARCHAR"  /> 
+        <result column="zip_code" property="zip_code" jdbcType="VARCHAR"  /> 
+        <result column="address" property="address" jdbcType="VARCHAR"  /> 
+        <result column="oid" property="oid" jdbcType="VARCHAR"  /> 
+        <result column="account_id" property="account_id" jdbcType="VARCHAR"  /> 
+        <result column="memo" property="memo" jdbcType="VARCHAR"  /> 
+        <result column="receiver_id" property="receiver_id" jdbcType="VARCHAR"  />
+    </resultMap>
+	
+	<insert id="save" parameterType="cloud.shop.goods.entity.Orders"> 
+		insert into t_orders
+		( 
+			id,create_time,update_time,status,pay_by,delivery_method,price,shipment,order_amount,amounts_payable,integration,receiver,tel,zip_code,address,oid,account_id,memo,receiver_id
+		) 
+		value
+		( 
+			#{id},#{create_time},#{update_time},#{status},#{pay_by},#{delivery_method},#{price},#{shipment},#{order_amount},#{amounts_payable},#{integration},#{receiver},#{tel},#{zip_code},#{address},#{oid},#{account_id},#{memo},#{receiver_id}
+		) 
+	</insert>
+	
+	<update id="update" parameterType="cloud.shop.goods.entity.Orders"> 
+		update t_orders
+		 <set>
+        	<if test="null != update_time">
+				update_time = #{update_time},
+			</if>
+			<if test="null != status">
+				status = #{status},
+			</if>	
+			<if test="null != pay_by">
+				pay_by = #{pay_by},
+			</if>
+			<if test="null != receiver">
+				receiver = #{receiver},
+			</if>	
+			<if test="null != tel">
+				tel = #{tel},
+			</if>	
+			<if test="null != zip_code">
+				zip_code = #{zip_code},
+			</if>
+			<if test="null != address">
+				address = #{address},
+			</if>
+			<if test="null != delivery_method">
+				delivery_method = #{delivery_method},
+			</if>
+			<if test="null != integration">
+				integration = #{integration},
+			</if>
+			<if test="null != receiver_id">
+				receiver_id = #{receiver_id},
+			</if>											
+		</set>
+		where id = #{id}
+	</update>
+	
+	
+	<update id="updateByOid" parameterType="cloud.shop.goods.entity.Orders"> 
+		update t_orders
+		 <set>
+        	<if test="null != update_time">
+				update_time = #{update_time},
+			</if>
+			<if test="null != status">
+				status = #{status},
+			</if>	
+			<if test="null != pay_by">
+				pay_by = #{pay_by},
+			</if>
+			<if test="null != receiver">
+				receiver = #{receiver},
+			</if>	
+			<if test="null != tel">
+				tel = #{tel},
+			</if>	
+			<if test="null != zip_code">
+				zip_code = #{zip_code},
+			</if>
+			<if test="null != address">
+				address = #{address},
+			</if>
+			<if test="null != delivery_method">
+				delivery_method = #{delivery_method},
+			</if>
+			<if test="null != integration">
+				integration = #{integration},
+			</if>
+			<if test="null != receiver_id">
+				receiver_id = #{receiver_id},
+			</if>											
+		</set>
+		where oid = #{oid}
+	</update>
+	<delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM t_orders WHERE id = #{id}
+	</delete>
+	
+	<sql id="allColumns"> 
+		id,create_time,update_time,status,pay_by,delivery_method,price,shipment,order_amount,amounts_payable,integration,receiver,tel,zip_code,address,oid,account_id
+	</sql>
+	
+	<select id="getOrdersList" parameterType="cloud.shop.goods.entity.Orders" resultMap="resultMap" >
+        SELECT <include refid="allColumns" /> FROM t_orders  WHERE 1=1  
+       <if test="null != update_time and update_time != ''">
+			AND update_time = #{update_time}
+		</if>
+		<if test="null != create_time and create_time != ''">
+			AND create_time = #{create_time}
+		</if>
+		<if test="null != account_id and account_id != ''">
+			AND account_id = #{account_id}
+		</if>
+		 <if test="null != oid and oid != ''">
+			AND oid = #{oid}
+		</if>
+		<if test="null != receiver and receiver != ''">
+			AND receiver = #{receiver}
+		</if>
+		<if test="null != status and status != ''">
+			AND status = #{status}
+		</if>
+		<if test="null != receiver_id and receiver_id != ''">
+			AND receiver_id = #{receiver_id}
+		</if>
+    </select>
+    
+   <select id="getOrdersByOidList" parameterType="java.lang.String" resultMap="resultMap" >
+       SELECT
+				t.id,
+				t.create_time,
+				t.update_time,
+				t.STATUS,
+				tp.name,pay_by,
+				td.name delivery_method,
+				t.price,
+				t.shipment,
+				t.order_amount,
+				t.amounts_payable,
+				t.integration,
+				t.receiver,
+				t.tel,
+				t.zip_code,
+				t.address,
+				t.oid,
+				t.account_id,
+				t.memo,
+				t.receiver_id
+			FROM
+				t_orders t
+			LEFT JOIN t_pay tp on tp.pay_type=t.pay_by
+			LEFT JOIN t_delivery_type td on td.type=t.delivery_method
+			WHERE
+				1 = 1
+			AND t.oid = #{oid}
+    </select>
+    
+    <select id="getOrdersAndStatusList" parameterType="cloud.shop.goods.entity.Orders" resultMap="resultMap" >
+        SELECT
+				t.id,
+				t.create_time,
+				t.update_time,
+				ts.name STATUS,
+				tp.name,pay_by,
+				td.name delivery_method,
+				t.price,
+				t.shipment,
+				t.order_amount,
+				t.amounts_payable,
+				t.integration,
+				t.receiver,
+				t.tel,
+				t.zip_code,
+				t.address,
+				t.oid,
+				t.account_id,
+				t.memo,
+				t.receiver_id
+			FROM
+				t_orders t
+       LEFT JOIN t_order_status ts on ts.type=t.status
+       LEFT JOIN t_pay tp on tp.pay_type=t.pay_by
+	   LEFT JOIN t_delivery_type td on td.type=t.delivery_method
+         WHERE 1=1  
+       <if test="null != update_time and update_time != ''">
+			AND t.update_time = #{update_time}
+		</if>
+		<if test="null != create_time and create_time != ''">
+			AND t.create_time = #{create_time}
+		</if>
+		<if test="null != account_id and account_id != ''">
+			AND t.account_id = #{account_id}
+		</if>
+		 <if test="null != oid and oid != ''">
+			AND t.oid = #{oid}
+		</if>
+		<if test="null != receiver and receiver != ''">
+			AND t.receiver = #{receiver}
+		</if>
+		<if test="null != status and status != ''">
+			AND t.status = #{status}
+		</if>
+		<if test="null != receiver_id and receiver_id != ''">
+			AND t.receiver_id = #{receiver_id}
+		</if>
+    </select>
+    
+    <select id="getStatusCount" parameterType="cloud.shop.goods.entity.Orders" resultType="int" >
+        SELECT count(1) FROM t_orders  WHERE 1=1
+		and status='1'	and account_id=#{account_id}	
+    </select>
+   
+</mapper>

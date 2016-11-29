@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.dao.AdPlayerDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.entity.AdPlayer" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="terminalId" property="terminalId" jdbcType="VARCHAR" />
+    <result column="terminalName" property="terminalName" jdbcType="VARCHAR" />
+    <result column="adId" property="adId" jdbcType="VARCHAR" />
+    <result column="adName" property="adName" jdbcType="VARCHAR" />
+    <result column="startTime" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="endTime" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="adCount" property="adCount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, terminalId, adId, adName, startTime, endTime, createDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_ad_player
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_ad_player
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertAdPlayer" parameterType="cloud.app.vo.AdPlayerVO">
+     insert into t_ad_player (id, terminalId, adId,  adName, startTime, endTime,  createDate) values (#{id,jdbcType=VARCHAR}, #{terminalId,jdbcType=VARCHAR}, #{adId,jdbcType=VARCHAR}, 
+      #{adName,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},  #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <insert id="insert" parameterType="cloud.app.entity.AdPlayer" >
+    insert into t_ad_player (id, terminalId, adId, 
+      adName, startTime, endTime, 
+      createDate)
+    values (#{id,jdbcType=VARCHAR}, #{terminalId,jdbcType=VARCHAR}, #{adId,jdbcType=VARCHAR}, 
+      #{adName,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.entity.AdPlayer" >
+    insert into t_ad_player
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="terminalId != null" >
+        terminalId,
+      </if>
+      <if test="adId != null" >
+        adId,
+      </if>
+      <if test="adName != null" >
+        adName,
+      </if>
+      <if test="startTime != null" >
+        startTime,
+      </if>
+      <if test="endTime != null" >
+        endTime,
+      </if>
+      <if test="createDate != null" >
+        createDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalId != null" >
+        #{terminalId,jdbcType=VARCHAR},
+      </if>
+      <if test="adId != null" >
+        #{adId,jdbcType=VARCHAR},
+      </if>
+      <if test="adName != null" >
+        #{adName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.entity.AdPlayer" >
+    update t_ad_player
+    <set >
+      <if test="terminalId != null" >
+        terminalId = #{terminalId,jdbcType=VARCHAR},
+      </if>
+      <if test="adId != null" >
+        adId = #{adId,jdbcType=VARCHAR},
+      </if>
+      <if test="adName != null" >
+        adName = #{adName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        startTime = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        endTime = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.entity.AdPlayer" >
+    update t_ad_player
+    set terminalId = #{terminalId,jdbcType=VARCHAR},
+      adId = #{adId,jdbcType=VARCHAR},
+      adName = #{adName,jdbcType=VARCHAR},
+      startTime = #{startTime,jdbcType=TIMESTAMP},
+      endTime = #{endTime,jdbcType=TIMESTAMP},
+      createDate = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="getList" resultMap="BaseResultMap" parameterType="cloud.app.entity.AdPlayer">
+  	SELECT 
+  	player.id, player.terminalId, terminal.name terminalName,player.adId, player.adName, player.startTime, player.endTime, player.createDate,
+ 	COUNT(player.adId) adCount
+  	FROM t_ad_player player
+  	LEFT JOIN t_terminal terminal ON player.terminalId = terminal.id
+  	WHERE 1=1
+  	<if test="id != null" >
+      AND player.id = #{id,jdbcType=VARCHAR}
+    </if>
+  	<if test="terminalId != null and terminalId != ''" >
+      AND player.terminalId = #{terminalId,jdbcType=VARCHAR}
+    </if>
+    <if test="terminalName != null and terminalName != ''" >
+      AND terminal.name LIKE CONCAT('%', trim(#{terminalName,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test=" departmentIds != null">
+      AND terminal.mechanism in 
+      	<foreach item="departmentId" index="index" collection="departmentIds" open="(" separator="," close=")">  
+			#{departmentId}  
+		</foreach>
+    </if>
+    <if test="adId != null" >
+      AND player.adId = #{adId,jdbcType=VARCHAR}
+    </if>
+    <if test="adName != null" >
+      AND player.adName LIKE CONCAT('%', trim(#{adName,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="startTime != null" >
+      AND player.startTime = #{startTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTime != null" >
+      AND player.endTime = #{endTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createDate != null" >
+      AND player.createDate = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="startDate != null and startDate != ''">
+     <![CDATA[ AND Date(player.createDate) >= #{startDate,jdbcType=VARCHAR} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''">
+     <![CDATA[ AND Date(player.createDate) <= #{endDate,jdbcType=VARCHAR} ]]>
+    </if>
+    GROUP BY player.terminalId,player.adId
+    ORDER BY adCount DESC
+    <if test="pageSize != null and pageSize != ''">
+     LIMIT #{pageIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  
+  
+  <select id="count" resultType="java.lang.Integer"  parameterType="cloud.app.entity.AdPlayer">
+  	SELECT 
+  	COUNT(player.id)
+  	FROM t_ad_player player
+  	LEFT JOIN t_terminal terminal ON player.terminalId = terminal.id
+  	WHERE 1=1
+  	<if test="id != null" >
+      AND player.id = #{id,jdbcType=VARCHAR}
+    </if>
+  	<if test="terminalId != null and terminalId != ''" >
+      AND player.terminalId = #{terminalId,jdbcType=VARCHAR}
+    </if>
+    <if test="terminalName != null and terminalName != ''" >
+      AND terminal.name LIKE CONCAT('%', trim(#{terminalName,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test=" departmentIds != null">
+      AND terminal.mechanism in 
+      	<foreach item="departmentId" index="index" collection="departmentIds" open="(" separator="," close=")">  
+			#{departmentId}  
+		</foreach>
+    </if>
+    <if test="adId != null" >
+      AND player.adId = #{adId,jdbcType=VARCHAR}
+    </if>
+    <if test="adName != null" >
+      AND player.adName LIKE CONCAT('%', trim(#{adName,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="startTime != null" >
+      AND player.startTime = #{startTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTime != null" >
+      AND player.endTime = #{endTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createDate != null" >
+      AND player.createDate = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="startDate != null and startDate != ''">
+     <![CDATA[ AND Date(player.createDate) >= #{startDate,jdbcType=VARCHAR} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''">
+     <![CDATA[ AND Date(player.createDate) <= #{endDate,jdbcType=VARCHAR} ]]>
+    </if>
+    ORDER BY player.createDate DESC
+  </select>
+</mapper>

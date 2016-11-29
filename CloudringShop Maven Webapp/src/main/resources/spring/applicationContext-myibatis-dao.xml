@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+   	xmlns="http://www.springframework.org/schema/beans"  
+   	xmlns:tx="http://www.springframework.org/schema/tx"  
+   	xmlns:p="http://www.springframework.org/schema/p"  
+   	xmlns:aop="http://www.springframework.org/schema/aop"   
+   	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   	xmlns:context="http://www.springframework.org/schema/context"
+   	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+   	http://www.springframework.org/schema/tx
+   	http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+   	http://www.springframework.org/schema/aop
+   	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+   	http://www.springframework.org/schema/context
+   	http://www.springframework.org/schema/context/spring-context.xsd">
+   	
+	
+	<!-- dao层 -->
+	<bean id="loginDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.system.dao.LoginDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="sysUserDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.system.dao.SysUserDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="catalogDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.system.dao.CatalogDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="dictionaryDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.system.dao.DictionaryDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="menuDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.system.dao.MenuDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="roleDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.system.dao.RoleDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="merchandiseCategoriesDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.merchandise.dao.MerchandiseCategoriesDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="merchandiseBrandDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.merchandise.dao.MerchandiseBrandDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>	
+	<bean id="merchandiseTypeDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.merchandise.dao.MerchandiseTypeDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="merchandiseProductDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.merchandise.dao.MerchandiseProductDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="commercialDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.goods.dao.CommercialDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="shippingCartDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.goods.dao.ShippingCartDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="customerDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.goods.dao.CustomerDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="shippingAddressDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.goods.dao.ShippingAddressDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="regionDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.goods.dao.RegionDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="deliveryTypeDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.goods.dao.DeliveryTypeDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="payDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.goods.dao.PayDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="ordersDetailDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.goods.dao.OrdersDetailDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="ordersDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.goods.dao.OrdersDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="smsRecordDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.goods.dao.SmsRecordDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="tradInfoDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.shop.goods.dao.TradInfoDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+
+    
+</beans>

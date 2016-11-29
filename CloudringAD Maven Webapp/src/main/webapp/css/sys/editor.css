@@ -1,0 +1,141 @@
+@charset "utf-8";
+/* CSS Document */
+.group .place{
+	background:url(../../images/sys/icon/monitor.png) no-repeat center center;
+}
+.group .text{
+	background:transparent url(../../images/sys/editor/txt.png) no-repeat 2px 0;
+}
+.group .marquee{
+	background:transparent url(../../images/sys/editor/marquee.png) no-repeat;
+}
+.group .date{
+	background:transparent url(../../images/sys/editor/date.png) no-repeat;
+}
+.group .weather{
+	background:transparent url(../../images/sys/editor/weather.png) no-repeat;	
+}
+.group .picture{
+	background:transparent url(../../images/sys/editor/image.png) no-repeat;
+}
+.group .video{
+	background:transparent url(../../images/sys/editor/video.png) no-repeat;
+}
+.group .webpage{
+	background:transparent url(../../images/sys/editor/webpage.png) no-repeat;
+}
+.group .interact{
+	background:transparent url(../../images/sys/editor/interact.png) no-repeat;
+}
+.group .tblink{
+	background:transparent url(../../images/sys/editor/tblink.png) no-repeat;
+}
+.group .tbunlink{
+	background:transparent url(../../images/sys/editor/tbunlink.png) no-repeat;
+}
+.group .livevideo{
+	background:transparent url(../../images/sys/editor/livevideo.png) no-repeat;
+}
+.group .doc{
+	background:transparent url(../../images/sys/editor/doc.png) no-repeat;
+}
+.group .more{
+	background:transparent url(../../images/sys/editor/more.png) no-repeat;
+}
+.group .spanSmall{
+	border:1px solid transparent;
+	cursor:pointer;
+	display:inline-block;
+	height:16px;
+	width:16px;
+	margin:2px 2px 0;
+}
+.group .spanSmall:hover{
+	border:1px solid #ccc;
+}
+.group .gtop{
+	background:transparent url(../../images/sys/editor/topalign.png) no-repeat;
+}
+.group .gbottom{
+	background:transparent url(../../images/sys/editor/bottomalign.png) no-repeat;
+}
+.group .gleft{
+	background:transparent url(../../images/sys/editor/leftalign.png) no-repeat;
+}
+.group .gright{
+	background:transparent url(../../images/sys/editor/rightalign.png) no-repeat;
+}
+.group .gcenter{
+	background:transparent url(../../images/sys/editor/horizontalcenteralign.png) no-repeat;
+}
+.group .vcenter{
+	background:transparent url(../../images/sys/editor/verticalcenteralign.png) no-repeat;
+}
+.group .reduce{
+	background:transparent url(../../images/sys/editor/zoomoutbak.png) no-repeat;
+}
+.group .enlarge{
+	background:transparent url(../../images/sys/editor/zoominbak.png) no-repeat;
+}
+.group .itemDrop{
+	border:1px solid transparent;
+	cursor:pointer;
+	display:inline-block;
+	height:20px;
+	width:38px;
+	margin:2px 2px 0;
+} 
+.group .itemDrop:hover{
+	background-color:white;
+	border-color:#ccc;
+}
+.group .bgtext{
+	background:transparent url(../../images/sys/editor/editor.png) no-repeat -288px -64px;
+}
+.itemDrop .drop{
+	background:transparent url(../../images/sys/editor/editor.png) no-repeat -2px -160px;
+	display:inline-block;
+	width:12px;
+	height:16px;
+}
+.itemDrop .drop:hover{
+	background-color:#98afd3;
+}
+.group .ctext{
+	background:transparent url(../../images/sys/editor/editor.png) no-repeat -256px -63px;
+}
+.group .bold{
+	background:transparent url(../../images/sys/editor/editor.png) no-repeat -128px -63px;
+}
+.group .underline{
+	background:transparent url(../../images/sys/editor/editor.png) no-repeat -191px -64px;
+}
+.group .italic{
+	background:transparent url(../../images/sys/editor/editor.png) no-repeat -160px -63px;
+}
+.group .fontSize{
+	background:transparent url(../../images/sys/editor/editor.png) no-repeat -32px -159px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.shop.merchandise.dao.MerchandiseCategoriesDAO">
+
+	 <resultMap id="resultMap" type="cloud.shop.merchandise.entity.MerchandiseCategories">
+        <result column="ID" property="id" jdbcType="VARCHAR"  />       
+        <result column="NAME" property="name" jdbcType="VARCHAR"  />
+        <result column="CREATE_TIME" property="create_time" jdbcType="TIMESTAMP"  />
+        <result column="UPDATE_TIME" property="update_time" jdbcType="TIMESTAMP"  />        
+        <result column="metaDescription" property="metaDescription" jdbcType="VARCHAR"  />        
+        <result column="metaKeywords" property="metaKeywords" jdbcType="VARCHAR"  />        
+        <result column="orderList" property="orderList" jdbcType="INTEGER"  />
+        <result column="pid" property="pid" jdbcType="VARCHAR"  />      
+    </resultMap>
+	
+	<insert id="insert" parameterType="cloud.shop.merchandise.entity.MerchandiseCategories"> 
+		insert into t_product_category
+		( 
+			id,name,create_time,update_time,metaDescription, metaKeywords,orderList,pid
+		) 
+		value
+		( 
+			#{id},#{name},#{create_time},#{update_time},#{metaDescription},#{metaKeywords},#{orderList},#{pid}
+		) 
+	</insert>
+	
+	<update id="update" parameterType="cloud.shop.merchandise.entity.MerchandiseCategories"> 
+		update t_product_category
+		 <set>
+        	<if test="null != name">
+				name = #{name},
+			</if>
+			<if test="null != metaDescription">
+				metaDescription = #{metaDescription},
+			</if>
+			<if test="null != metaKeywords">
+				metaKeywords = #{metaKeywords},
+			</if>
+			<if test="null != orderList">
+				orderList = #{orderList},
+			</if>
+			<if test="null != update_time">
+				update_time = #{update_time},
+			</if>			
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteByPkId" parameterType="java.lang.String">
+		DELETE FROM t_product_category WHERE id = #{id}
+	</delete>
+	
+	<sql id="allColumns"> 
+		id,name,create_time,update_time,metaDescription, metaKeywords,orderList,pid
+	</sql>
+	
+	<select id="getMerchandiseCategorieList" parameterType="cloud.shop.merchandise.entity.MerchandiseCategories" resultMap="resultMap" >
+     SELECT <include refid="allColumns" />				   
+			FROM
+				t_product_category 
+          
+			where 1=1
+		<if test="null != id and id != ''">
+			AND id = #{id}
+		</if>
+		<if test="null != name and name != ''">
+			AND name like #{name}
+		</if>		
+		limit #{pageIndex},#{pageSize}
+    </select>
+    
+    <select id="getCategorieList" parameterType="cloud.shop.merchandise.entity.MerchandiseCategories" resultMap="resultMap" >
+        SELECT <include refid="allColumns" /> FROM t_product_category  WHERE 1=1 ORDER BY orderList,pid
+    </select>
+    
+     <select id="getCategorieConditionList" parameterType="cloud.shop.merchandise.entity.MerchandiseCategories" resultMap="resultMap" >
+        SELECT <include refid="allColumns" /> FROM t_product_category  where pid is null ORDER  BY orderList
+    </select>
+    
+    <select id="merchandiseCategorieCount" parameterType="cloud.shop.merchandise.entity.MerchandiseCategories" resultType="int" >
+        SELECT count(1) FROM t_product_category  WHERE 1=1
+		<if test="null != id and id != ''">
+			AND id = #{id}
+		</if>
+		<if test="null != name and name != ''">
+			AND name like #{name}
+		</if>		
+    </select>
+    
+     <select id="merchandiseCategorieList" parameterType="cloud.shop.merchandise.entity.MerchandiseCategories" resultMap="resultMap" >      
+            SELECT  case when max(orderList) is null then 0 else max(orderList) end as orderList,id,pid from t_product_category	where 1=1
+       	<if test="null != id and id != ''">
+			AND id = #{pid}
+		</if>
+    </select>
+    
+     <select id="merchandiseCategorieMaxOrderList" parameterType="cloud.shop.merchandise.entity.MerchandiseCategories" resultType="int" >      
+            SELECT  case when max(orderList) is null then 0 else max(orderList) end as orderList,id,pid from t_product_category	
+    </select>
+    
+     <select id="isEffectivenes" parameterType="cloud.shop.merchandise.entity.MerchandiseCategories" resultType="int" >
+      SELECT count(1) FROM t_product_category  WHERE 1=1		
+		<if test="null != name and name != ''">
+			AND name = #{name}
+		</if>			
+    </select>	
+	
+	<select id="selectCheckId" parameterType="cloud.shop.merchandise.entity.MerchandiseCategories" resultType="cloud.shop.merchandise.entity.MerchandiseCategories" >
+      SELECT * FROM t_product_category  WHERE id = #{id} ORDER BY create_time
+    </select>
+    
+        <select id="selectPId" parameterType="cloud.shop.merchandise.entity.MerchandiseCategories" resultType="cloud.shop.merchandise.entity.MerchandiseCategories" >
+            SELECT * FROM t_product_category  WHERE pid = #{id} ORDER BY create_time
+    </select>
+    
+      <select id="selectThreePId" parameterType="cloud.shop.merchandise.entity.MerchandiseCategories" resultType="cloud.shop.merchandise.entity.MerchandiseCategories" >
+            SELECT * FROM t_product_category  WHERE pid = #{id} ORDER BY create_time LIMIT 2
+    </select>
+    
+      <select id="getThreeCategorList" parameterType="cloud.shop.merchandise.entity.MerchandiseCategories" resultType="cloud.shop.merchandise.entity.MerchandiseCategories" >
+              SELECT <include refid="allColumns" /> FROM t_product_category  where pid is null ORDER  BY orderList 
+    </select>
+    
+       <select id="getSelectIdForIN"  resultMap="resultMap" >
+      SELECT * FROM t_product_category  WHERE id in
+          <foreach item="item" index="index" collection="array" open="(" separator="," close=")">  
+                       #{item}  
+          </foreach>  
+          ORDER BY create_time
+    </select>
+    
+      <select id="getGoodsIdFindCAIN"  resultMap="resultMap" >
+      SELECT * FROM t_product_category  WHERE id in
+          <foreach item="item" index="index" collection="array" open="(" separator="," close=")">  
+                       #{item}  
+          </foreach>  
+          ORDER BY create_time
+    </select>
+    
+</mapper>

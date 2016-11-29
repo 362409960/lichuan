@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.dao.TerminalDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.entity.Terminal" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="mechanism" property="mechanism" jdbcType="VARCHAR" />
+    <result column="mechanismName" property="mechanismName" jdbcType="VARCHAR" />
+    <result column="packet" property="packet" jdbcType="VARCHAR" />
+    <result column="mac" property="mac" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="firmware" property="firmware" jdbcType="VARCHAR" />
+    <result column="online" property="online" jdbcType="DOUBLE" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="reolution" property="reolution" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="down_speed_limit" property="downSpeedLimit" jdbcType="DOUBLE" />
+    <result column="volume" property="volume" jdbcType="INTEGER" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="packetName" property="packetName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, ip, status, mechanism, packet, mac, address, firmware, online, 
+    remark, reolution, version, modify_date, create_date, down_speed_limit, volume
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    terminal.id, 
+    terminal.name, 
+    terminal.ip, 
+    terminal.status, 
+    terminal.mechanism, 
+    sd.name AS mechanismName, 
+    terminal.packet, 
+    terminal.mac, 
+    terminal.address, 
+    terminal.firmware, 
+    terminal.online, 
+    terminal.remark, 
+    terminal.reolution, 
+    terminal.version, 
+    terminal.modify_date, 
+    terminal.create_date, 
+    terminal.down_speed_limit, 
+    terminal.volume
+    FROM t_terminal terminal
+    LEFT JOIN st_department sd 
+	ON sd.id = terminal.mechanism
+    where terminal.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_terminal
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.app.entity.Terminal" >
+    insert into t_terminal (id, name, 
+      ip, status, mechanism, 
+      packet, mac, address, 
+      firmware, online, remark, 
+      reolution, version, modify_date, 
+      create_date, down_speed_limit, volume
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{ip,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{mechanism,jdbcType=VARCHAR}, 
+      #{packet,jdbcType=VARCHAR}, #{mac,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{firmware,jdbcType=VARCHAR}, #{online,jdbcType=DOUBLE}, #{remark,jdbcType=VARCHAR}, 
+      #{reolution,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{downSpeedLimit,jdbcType=DOUBLE}, #{volume,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.entity.Terminal" >
+    insert into t_terminal
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="mechanism != null" >
+        mechanism,
+      </if>
+      <if test="packet != null" >
+        packet,
+      </if>
+      <if test="mac != null" >
+        mac,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="firmware != null" >
+        firmware,
+      </if>
+      <if test="online != null" >
+        online,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="reolution != null" >
+        reolution,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="downSpeedLimit != null" >
+        down_speed_limit,
+      </if>
+      <if test="volume != null" >
+        volume,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="mechanism != null" >
+        #{mechanism,jdbcType=VARCHAR},
+      </if>
+      <if test="packet != null" >
+        #{packet,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null" >
+        #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="firmware != null" >
+        #{firmware,jdbcType=VARCHAR},
+      </if>
+      <if test="online != null" >
+        #{online,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reolution != null" >
+        #{reolution,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="downSpeedLimit != null" >
+        #{downSpeedLimit,jdbcType=DOUBLE},
+      </if>
+      <if test="volume != null" >
+        #{volume,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.entity.Terminal" >
+    update t_terminal
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="mechanism != null" >
+        mechanism = #{mechanism,jdbcType=VARCHAR},
+      </if>
+      <if test="packet != null" >
+        packet = #{packet,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null" >
+        mac = #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="firmware != null" >
+        firmware = #{firmware,jdbcType=VARCHAR},
+      </if>
+      <if test="online != null" >
+        online = #{online,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reolution != null" >
+        reolution = #{reolution,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="downSpeedLimit != null" >
+        down_speed_limit = #{downSpeedLimit,jdbcType=DOUBLE},
+      </if>
+      <if test="volume != null" >
+        volume = #{volume,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.entity.Terminal" >
+    update t_terminal
+    set 
+      name = #{name,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      mechanism = #{mechanism,jdbcType=VARCHAR},
+      packet = #{packet,jdbcType=VARCHAR},
+      mac = #{mac,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      firmware = #{firmware,jdbcType=VARCHAR},
+      online = #{online,jdbcType=DOUBLE},
+      remark = #{remark,jdbcType=VARCHAR},
+      reolution = #{reolution,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      down_speed_limit = #{downSpeedLimit,jdbcType=DOUBLE},
+      volume = #{volume,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="getList" resultMap="BaseResultMap" parameterType="cloud.app.entity.Terminal">
+  	SELECT 
+    terminal.id, 
+    terminal.name, 
+    terminal.ip, 
+    terminal.status, 
+    terminal.mechanism, 
+    sd.name AS mechanismName,
+    terminal.packet, 
+    terminal.mac, 
+    terminal.address, 
+    terminal.firmware, 
+    terminal.online, 
+    terminal.remark, 
+    terminal.reolution, 
+    terminal.version, 
+    terminal.modify_date, 
+    terminal.create_date, 
+    terminal.down_speed_limit, 
+    terminal.volume,
+    packet.name AS packetName
+    FROM t_terminal terminal
+    LEFT JOIN st_department sd 	ON sd.id = terminal.mechanism
+    LEFT JOIN t_packet packet ON packet.id = terminal.packet
+    WHERE 1 = 1
+    <if test="mechanismName != null and mechanismName != ''" >
+      AND sd.name LIKE CONCAT('%', trim(#{mechanismName,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="id != null and id != ''" >
+      AND terminal.id LIKE CONCAT('%', trim(#{id,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="name != null and name != ''" >
+      AND terminal.name LIKE CONCAT('%', trim(#{name,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="ip != null and ip != ''" >
+      AND terminal.ip LIKE CONCAT('%', trim(#{ip,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="status != null and status != ''" >
+      AND terminal.status = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="mechanism != null and mechanism != ''" >
+      AND terminal.mechanism = #{mechanism,jdbcType=VARCHAR}
+    </if>
+    <if test="departmentIds != null" >
+      	AND terminal.mechanism IN 
+    	<foreach item="departmentId" index="index" collection="departmentIds" open="(" separator="," close=")">  
+			#{departmentId}  
+		</foreach>
+    </if>
+    <if test="packet != null and packet != ''" >
+      AND terminal.packet = #{packet,jdbcType=VARCHAR}
+    </if>
+  	<if test=" packets != null">
+      AND terminal.packet in 
+	      <foreach collection="packets" item="item" index="index"  open="(" separator="," close=")">
+	      			#{item}
+	      </foreach>
+    </if>
+    <if test="mac != null and mac != ''" >
+      AND terminal.mac = #{mac,jdbcType=VARCHAR}
+    </if>
+    <if test="address != null and address != ''" >
+      AND terminal.address = #{address,jdbcType=VARCHAR}
+    </if>
+    <if test="firmware != null and firmware != ''" >
+      AND terminal.firmware LIKE CONCAT('%', trim(#{firmware,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="online != null and online != ''" >
+      AND terminal.online = #{online,jdbcType=DOUBLE}
+    </if>
+    <if test="remark != null and remark != ''" >
+      AND terminal.remark LIKE CONCAT('%', trim(#{remark,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="reolution != null and reolution != ''" >
+      AND terminal.reolution LIKE CONCAT('%', trim(#{reolution,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="version != null and version != ''" >
+      AND terminal.version LIKE CONCAT('%', trim(#{version,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="modifyDate != null and modifyDate != ''" >
+      AND terminal.modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createDate != null and createDate != ''" >
+      AND terminal.create_date = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="downSpeedLimit != null and downSpeedLimit != ''" >
+      AND terminal.down_speed_limit = #{downSpeedLimit,jdbcType=DOUBLE}
+    </if>
+    <if test="volume != null and volume != ''" >
+      AND terminal.volume = #{volume,jdbcType=INTEGER}
+    </if>
+    <if test="startDate != null and startDate != ''">
+     <![CDATA[ AND Date(terminal.modify_date) >= #{startDate,jdbcType=VARCHAR} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''">
+     <![CDATA[ AND Date(terminal.modify_date) <= #{endDate,jdbcType=VARCHAR} ]]>
+    </if>
+    ORDER BY terminal.create_date DESC
+    <if test="pageSize != null and pageSize != ''">
+     LIMIT #{pageIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  
+  <select id="count" resultType="java.lang.Integer" parameterType="cloud.app.entity.Terminal">
+  	SELECT 
+  	COUNT(terminal.id)
+    FROM t_terminal terminal
+    LEFT JOIN st_department sd 	ON sd.id = terminal.mechanism
+    LEFT JOIN t_packet packet ON packet.id = terminal.packet
+    WHERE 1 = 1 
+    <if test="mechanismName != null and mechanismName != ''" >
+      AND sd.name LIKE CONCAT('%', trim(#{mechanismName,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="id != null and id != ''" >
+      AND terminal.id LIKE CONCAT('%', trim(#{id,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="name != null and name != ''" >
+      AND terminal.name LIKE CONCAT('%', trim(#{name,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="ip != null and ip != ''" >
+      AND terminal.ip LIKE CONCAT('%', trim(#{ip,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="status != null and status != ''" >
+      AND terminal.status = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="mechanism != null and mechanism != ''" >
+      AND terminal.mechanism = #{mechanism,jdbcType=VARCHAR}
+    </if>
+    <if test="departmentIds != null" >
+      	AND terminal.mechanism IN 
+    	<foreach item="departmentId" index="index" collection="departmentIds" open="(" separator="," close=")">  
+			#{departmentId}  
+		</foreach>
+    </if>
+    <if test="packet != null and packet != ''" >
+      AND terminal.packet = #{packet,jdbcType=VARCHAR}
+    </if>
+  	<if test=" packets != null">
+      AND terminal.packet in 
+	      <foreach collection="packets" item="item" index="index"  open="(" separator="," close=")">
+	      			#{item}
+	      </foreach>
+    </if>
+    <if test="mac != null and mac != ''" >
+      AND terminal.mac = #{mac,jdbcType=VARCHAR}
+    </if>
+    <if test="address != null and address != ''" >
+      AND terminal.address = #{address,jdbcType=VARCHAR}
+    </if>
+    <if test="firmware != null and firmware != ''" >
+      AND terminal.firmware LIKE CONCAT('%', trim(#{firmware,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="online != null and online != ''" >
+      AND terminal.online = #{online,jdbcType=DOUBLE}
+    </if>
+    <if test="remark != null and remark != ''" >
+      AND terminal.remark LIKE CONCAT('%', trim(#{remark,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="reolution != null and reolution != ''" >
+      AND terminal.reolution LIKE CONCAT('%', trim(#{reolution,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="version != null and version != ''" >
+      AND terminal.version LIKE CONCAT('%', trim(#{version,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="modifyDate != null and modifyDate != ''" >
+      AND terminal.modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createDate != null and createDate != ''" >
+      AND terminal.create_date = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="downSpeedLimit != null and downSpeedLimit != ''" >
+      AND terminal.down_speed_limit = #{downSpeedLimit,jdbcType=DOUBLE}
+    </if>
+    <if test="volume != null and volume != ''" >
+      AND terminal.volume = #{volume,jdbcType=INTEGER}
+    </if>
+    <if test="startDate != null and startDate != ''">
+     <![CDATA[ AND Date(terminal.modify_date) >= #{startDate,jdbcType=VARCHAR} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''">
+     <![CDATA[ AND Date(terminal.modify_date) <= #{endDate,jdbcType=VARCHAR} ]]>
+    </if>
+    ORDER BY terminal.create_date DESC
+  </select>
+  
+  <delete id="deleteByIdS" parameterType="java.util.Map"> 
+  	DELETE FROM t_terminal
+    WHERE id IN 
+    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+		#{item}  
+	</foreach>
+  </delete>
+  
+  
+  <select id="getListAndMessage" resultMap="BaseResultMap" parameterType="cloud.app.entity.Terminal">
+  	SELECT 
+    distinct 
+    terminal.id, 
+    terminal.name, 
+    terminal.ip, 
+    terminal.status, 
+    terminal.mechanism, 
+    sd.name AS mechanismName,
+    terminal.packet, 
+    terminal.mac, 
+    terminal.address, 
+    terminal.firmware, 
+    terminal.online, 
+    terminal.remark, 
+    terminal.reolution, 
+    terminal.version, 
+    terminal.modify_date, 
+    terminal.create_date, 
+    terminal.down_speed_limit, 
+    terminal.volume,
+    newsStream.message,
+    packet.name AS packetName
+    FROM t_terminal terminal
+    LEFT JOIN (select t.* FROM t_news_stream t WHERE t.terminal_id != '' ORDER BY t.create_date DESC) newsStream ON LOCATE(terminal.id,newsStream.terminal_id) > 0 
+	LEFT JOIN st_department sd 	ON sd.id = terminal.mechanism
+	LEFT JOIN t_packet packet ON packet.id = terminal.packet
+    WHERE 1 = 1
+    <if test="mechanismName != null and mechanismName != ''" >
+      AND sd.name LIKE CONCAT('%', trim(#{mechanismName,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="id != null and id != ''" >
+      AND terminal.id = #{id,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null and name != ''" >
+       AND terminal.name LIKE CONCAT('%', trim(#{name,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="ip != null and ip != ''" >
+       AND terminal.ip LIKE CONCAT('%', trim(#{ip,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="status != null and status != ''" >
+      AND terminal.status = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="mechanism != null and mechanism != ''" >
+      AND terminal.mechanism = #{mechanism,jdbcType=VARCHAR}
+    </if>
+    <if test="departmentIds != null" >
+      	AND terminal.mechanism IN 
+    	<foreach item="departmentId" index="index" collection="departmentIds" open="(" separator="," close=")">  
+			#{departmentId}  
+		</foreach>
+    </if>
+    <if test="packet != null and packet != ''" >
+      AND terminal.packet = #{packet,jdbcType=VARCHAR}
+    </if>
+    <if test="mac != null and mac != ''" >
+      AND terminal.mac = #{mac,jdbcType=VARCHAR}
+    </if>
+    <if test="address != null and address != ''" >
+      AND terminal.address = #{address,jdbcType=VARCHAR}
+    </if>
+    <if test="firmware != null and firmware != ''" >
+      AND terminal.firmware = #{firmware,jdbcType=VARCHAR}
+    </if>
+    <if test="online != null and online != ''" >
+      AND terminal.online = #{online,jdbcType=DOUBLE}
+    </if>
+    <if test="remark != null and remark != ''" >
+      AND terminal.remark = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="reolution != null and reolution != ''" >
+      AND terminal.reolution = #{reolution,jdbcType=VARCHAR}
+    </if>
+    <if test="version != null and version != ''" >
+      AND terminal.version = #{version,jdbcType=VARCHAR}
+    </if>
+    <if test="modifyDate != null and modifyDate != ''" >
+      AND terminal.modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createDate != null and createDate != ''" >
+      AND terminal.create_date = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="downSpeedLimit != null and downSpeedLimit != ''" >
+      AND terminal.down_speed_limit = #{downSpeedLimit,jdbcType=DOUBLE}
+    </if>
+    <if test="volume != null and volume != ''" >
+      AND terminal.volume = #{volume,jdbcType=INTEGER}
+    </if>
+    GROUP BY terminal.id 
+    ORDER BY terminal.create_date DESC
+    <if test="pageSize != null">
+     LIMIT #{pageIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  
+  <select id="getListAndMessageCount" resultType="java.lang.Integer" parameterType="cloud.app.entity.Terminal">
+  	SELECT 
+    COUNT(distinct terminal.id)
+    FROM t_terminal terminal
+    LEFT JOIN (select t.* FROM t_news_stream t WHERE t.terminal_id != '' ORDER BY t.create_date DESC) newsStream ON LOCATE(terminal.id,newsStream.terminal_id) > 0 
+	LEFT JOIN st_department sd 	ON sd.id = terminal.mechanism
+	LEFT JOIN t_packet packet ON packet.id = terminal.packet
+    WHERE 1 = 1
+    <if test="mechanismName != null and mechanismName != ''" >
+      AND sd.name LIKE CONCAT('%', trim(#{mechanismName,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="id != null and id != ''" >
+      AND terminal.id = #{id,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null and name != ''" >
+       AND terminal.name LIKE CONCAT('%', trim(#{name,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="ip != null and ip != ''" >
+       AND terminal.ip LIKE CONCAT('%', trim(#{ip,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="status != null and status != ''" >
+      AND terminal.status = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="mechanism != null and mechanism != ''" >
+      AND terminal.mechanism = #{mechanism,jdbcType=VARCHAR}
+    </if>
+    <if test="departmentIds != null" >
+      	AND terminal.mechanism IN 
+    	<foreach item="departmentId" index="index" collection="departmentIds" open="(" separator="," close=")">  
+			#{departmentId}  
+		</foreach>
+    </if>
+    <if test="packet != null and packet != ''" >
+      AND terminal.packet = #{packet,jdbcType=VARCHAR}
+    </if>
+    <if test="mac != null and mac != ''" >
+      AND terminal.mac = #{mac,jdbcType=VARCHAR}
+    </if>
+    <if test="address != null and address != ''" >
+      AND terminal.address = #{address,jdbcType=VARCHAR}
+    </if>
+    <if test="firmware != null and firmware != ''" >
+      AND terminal.firmware = #{firmware,jdbcType=VARCHAR}
+    </if>
+    <if test="online != null and online != ''" >
+      AND terminal.online = #{online,jdbcType=DOUBLE}
+    </if>
+    <if test="remark != null and remark != ''" >
+      AND terminal.remark = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="reolution != null and reolution != ''" >
+      AND terminal.reolution = #{reolution,jdbcType=VARCHAR}
+    </if>
+    <if test="version != null and version != ''" >
+      AND terminal.version = #{version,jdbcType=VARCHAR}
+    </if>
+    <if test="modifyDate != null and modifyDate != ''" >
+      AND terminal.modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createDate != null and createDate != ''" >
+      AND terminal.create_date = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="downSpeedLimit != null and downSpeedLimit != ''" >
+      AND terminal.down_speed_limit = #{downSpeedLimit,jdbcType=DOUBLE}
+    </if>
+    <if test="volume != null and volume != ''" >
+      AND terminal.volume = #{volume,jdbcType=INTEGER}
+    </if>
+    ORDER BY terminal.create_date DESC
+  </select>
+  
+    <update id="UpdateTerminalStatus" parameterType="java.lang.Integer">
+      UPDATE T_TERMINAL SET STATUS = '0' WHERE TIMESTAMPDIFF(SECOND, MODIFY_DATE, NOW()) > #{keepAliveInterval,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPacket" parameterType="java.util.Map"> 
+  	UPDATE t_terminal SET packet = null
+    WHERE packet IN 
+   <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+		#{item}  
+	</foreach>
+  </update>
+  
+  <select id="queryTerminalByUser" parameterType="java.util.Map" resultType="cloud.app.entity.Terminal">
+		SELECT  * FROM t_terminal a WHERE a.id = #{terminalId,jdbcType=VARCHAR} AND a.mechanism IN (
+		    SELECT b.DEPARTMENTID FROM st_user b WHERE b.USER_CODE = #{userCode,jdbcType=VARCHAR} AND b.USER_PASSWORD = #{password,jdbcType=VARCHAR}  AND b.DEPARTMENTID = a.mechanism
+		)
+  </select>
+  
+  <delete id="deleteById" parameterType="String">
+      DELETE FROM T_TERMINAL WHERE ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+</mapper>

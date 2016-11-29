@@ -1,0 +1,258 @@
+@charset "utf-8";
+/* CSS Document */
+
+@import url('common.css');
+
+body, input {
+    font-family: "Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+}
+html, body {
+    background: #f5f5f5 none repeat scroll 0 0;
+    color: #333;
+    font-size: 12px;
+    line-height: 1.5;
+	width:100%;
+	height:100%;
+}
+
+.login{
+	height:100%;
+	min-height:780px;
+	overflow:hidden;
+	position:relative;
+}
+
+.l-content{
+	left:0;
+	margin-top:-360px;
+	position:absolute;
+	text-align:center;
+	top:50%;
+	width:100%;
+}
+.logo{
+	height:80px;
+	margin-bottom:20px;
+}
+.login-title {
+    color: #000;
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.login-intro{
+	color:#8d8d8d;
+	font-size:14px;
+	margin-bottom:30px;
+}
+.login-intro > a{
+	color:#8d8d8d
+}
+.login-intro > a:hover {
+    color: #ff7e00;
+    text-decoration: none;
+}
+
+.form-container{
+	text-align:left;
+}
+.login-area{
+	margin:0 auto;
+	display:block !important;
+	padding-top:10px;
+	position:relative;
+	width:324px;
+}
+.shake-area{
+	position:relative;
+	margin-bottom:16px;
+}
+.enter-area{
+	position:relative;
+}
+.enter-item{
+	outline:0 none;
+    background:#fff;
+    border: 1px solid #e6e6e6;
+    color: #333;
+    display: block;
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+    padding: 12px 10px;
+    width: 298px;
+}
+.error-tip{
+	height:18px;
+	line-height:16px;
+	width:300px;
+	display:none
+}
+.error-ico{
+	display:inline-block;
+	height:14px;
+	margin-right:6px;
+	vertical-align:middle;
+	width:14px;
+	background:url(../../images/default/sprite_all_82.png) no-repeat -60px -38px;
+}
+
+.error-msg {
+    color: #ff7448;
+    font-size: 14px;
+    vertical-align: middle;
+}
+#pwd{
+	margin-top:10px;
+}
+.button{
+	margin: 16px 0 0;
+}
+.button:hover{
+	color:#333;
+}
+.button,.third-area{
+	outline:0 none;
+	background:#fff;
+	border: 1px solid #e5e5e5;
+	color: #7c7c7c;
+	cursor: pointer;
+	display: block;
+	font-size: 16px;
+	height: 44px;
+    line-height: 40px;
+    text-align: center;
+    width: 320px;
+
+}
+.orange {
+    background: #ff7a4d;
+    border: 1px solid #ff7549;
+    color: #fff;
+}
+
+.orange:hover {
+    background: #ff936a;
+    border: 1px solid #ff936a;
+    color: #fff;
+}
+.orange:active {
+    background: #f6683b;
+    border: 1px solid #f6683b;
+    color: #fff;
+}
+.forget{
+	height:18px;
+	margin-top:16px;
+}
+.link-area{
+	olor: #999;
+    float: right;
+    position: relative;
+    text-align: right;
+}
+.link-area > a,.link-area > span{
+	color:#999
+}
+.link-area > a:hover{
+	text-decoration:none;
+	color:#ff7e00;
+}
+
+.third-area {
+    position: absolute;
+    right: 2px;
+    top: 34px;
+}
+.qrlogin-trigger {
+	background:url(../../images/default/wx.png) no-repeat;
+    cursor: pointer;
+    font-size: 0;
+    height: 18px;
+    overflow: hidden;
+    position: absolute;
+    right: 12px;
+    top: 24px;
+    width: 18px;
+    z-index: 30;
+}
+
+
+/*�������*/
+.f-pass{
+	width:854px;
+	margin:0 auto;
+	padding-top:80px;
+}
+.reset-frame{
+	background:#fff;
+	min-height:400px;
+	padding:34px 34px 30px;
+}
+.logo-area{
+	padding-bottom:40px;
+}
+.milogo{
+	background:url(../../images/default/logo.png) no-repeat;
+	width:240px;
+	display:block;
+	height:59px;
+	margin:0 auto
+}
+.title-item{
+	clear:both;
+	text-align:center;
+}
+.title-item h4{
+	font-size:30px;
+	font-weight:normal;
+	color:#333;
+	line-height:1.5;
+}
+.regbox{
+	line-height:20px;
+	padding:30px 0;
+	width:332px;
+	margin:0 auto;
+}
+.regbox > h5{
+	margin:10px 0 20px;
+	color:#666;
+}
+.inputbg{
+	padding-bottom:15px;
+}
+.labelbox{
+	display:inline-block;
+	height:40px;
+	line-height:40px;
+	border:1px solid #e8e8e8;
+}
+.inputbg input{
+	height:20px;
+	line-height:20px;
+	width:310px;
+	display:inline-block;
+	padding:10px;
+	border:0 none;
+}
+.inputcode .code{
+	width:170px;
+}
+.code-img{
+	cursor:pointer;
+	margin-left:7px;
+	vertical-align:middle;
+}
+.btn_forget{
+	border:1px solid rgba(186,186,186,0.3);
+	cursor:pointer;
+	display:block;
+	font-size:14px;
+	height:42px;
+	line-height:42px;
+	text-align:center;
+	width:330px;
+	color:#fff;
+	background-color:#ff6700;
+}

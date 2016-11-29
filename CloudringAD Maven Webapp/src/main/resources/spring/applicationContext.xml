@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:jee="http://www.springframework.org/schema/jee" 
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:task="http://www.springframework.org/schema/task"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		                   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+		                   http://www.springframework.org/schema/tx 
+		                   http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
+		                   http://www.springframework.org/schema/jee 
+		                   http://www.springframework.org/schema/jee/spring-jee-4.0.xsd 
+		                   http://www.springframework.org/schema/aop 
+		                   http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		                   http://www.springframework.org/schema/task
+		                   http://www.springframework.org/schema/task/spring-task-4.0.xsd
+		                   http://www.springframework.org/schema/context 
+		                   http://www.springframework.org/schema/context/spring-context-4.0.xsd"
+		                   
+		  default-lazy-init="false">
+
+	<!-- 属性文件读入 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:redis-manager-config.properties</value>
+				<value>classpath*:log4j.properties</value>
+				<value>classpath*:jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+    <!-- 自动扫描组件，这里要把controler下面的 controller去除，他们是在spring3-servlet.xml中配置的，如果不去除会影响事务管理的。   -->  
+    <context:component-scan base-package="cloud.app.*">  
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />   
+    </context:component-scan>  
+    
+	<context:annotation-config  />
+ 
+	 <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">  
+	    <property name="minIdle" value="${redis.minIdle}" />  
+	       <property name="maxIdle" value="${redis.maxIdle}" />    
+	       <property name="maxTotal" value="${redis.maxActive}" />    
+	       <property name="maxWaitMillis" value="${redis.maxWait}" />    
+	       <property name="testOnBorrow" value="${redis.testOnBorrow}" />    
+	   </bean>    
+  
+	   <bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">  
+	       <property name="hostName" value="${redis.host}" />  
+	       <property name="port" value="${redis.port}" />  
+	       <property name="password" value="${redis.password}" />  
+	       <property name="usePool" value="true" />  
+	       <property name="poolConfig" ref="poolConfig" />  
+	   </bean>   
+	      
+		<!-- redis template definition -->  
+		<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">  
+		    <property name="connectionFactory" ref="jedisConnFactory" />  
+		    <property name="keySerializer">  
+		        <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />  
+		    </property>     
+		    <property name="valueSerializer">  
+		        <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />  
+		    </property>  
+		    <property name="hashKeySerializer">    
+		       <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>    
+		    </property>  
+		    <property name="hashValueSerializer">  
+		       <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>    
+		    </property>  
+		</bean>
+		
+       <import resource="applicationContext-myibatis.xml"/>
+ 	   <import resource="applicationContext-quartz.xml"/>
+	   
+       
+       <!-- 断点续传（上传） 定时启动([秒] [分] [小时] [日] [月] [周] [年])-->
+       <!--自定义任务 -->
+       <bean id="breakpointUploadTask" class="cloud.app.download.BreakpointsResumeUploadServer"/>
+       <task:scheduled-tasks>
+           <task:scheduled ref="breakpointUploadTask" method="service" fixed-delay="1000" cron="59 59 23  1 1 ?" />
+       </task:scheduled-tasks>
+ 
+       
+       
+       	<!-- SpringMVC上传文件时,需配置MultipartResolver处理器 -->
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	
+	    <!-- 指定所上传文件的总大小不能超过80M......注意maxUploadSize属性的限制不是针对单个文件,而是所有文件的容量之和 -->
+	
+	    <property name="maxUploadSize" value="80000000"/>
+	
+	</bean>
+	
+	  
+	
+	<!-- SpringMVC在超出上传文件限制时,会抛出org.springframework.web.multipart.MaxUploadSizeExceededException -->
+	
+	<!-- 该异常是SpringMVC在检查上传的文件信息时抛出来的,而且此时还没有进入到Controller方法中 -->
+	
+	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+	
+	    <property name="exceptionMappings">
+	
+	        <props>
+	
+	            <!-- 遇到MaxUploadSizeExceededException异常时,自动跳转到/WEB-INF/jsp/error_fileupload.jsp页面 -->
+	
+	            <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">error_fileupload</prop>
+	
+	        </props>
+	
+	    </property>
+	
+		</bean>
+       
+       
+   <bean id="contextUtil" class="cloud.app.common.ContextUtil" />    
+		
+</beans>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.order.dao.OrderItemDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.order.model.OrderItem" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modifyDate" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="productName" property="productName" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="productPrice" property="productPrice" jdbcType="DECIMAL" />
+    <result column="productQuantity" property="productQuantity" jdbcType="INTEGER" />
+    <result column="deliverQuantity" property="deliverQuantity" jdbcType="INTEGER" />
+    <result column="productSn" property="productSn" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, createDate, modifyDate, order_id, productName, product_id, productPrice, productQuantity, 
+    deliverQuantity, productSn
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_orderitem
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_orderitem
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.app.order.model.OrderItem" >
+    insert into t_orderitem (id, createDate, modifyDate, 
+      order_id, productName, product_id, 
+      productPrice, productQuantity, deliverQuantity, 
+      productSn)
+    values (#{id,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{orderId,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, 
+      #{productPrice,jdbcType=DECIMAL}, #{productQuantity,jdbcType=INTEGER}, #{deliverQuantity,jdbcType=INTEGER}, 
+      #{productSn,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.order.model.OrderItem" >
+    insert into t_orderitem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createDate != null" >
+        createDate,
+      </if>
+      <if test="modifyDate != null" >
+        modifyDate,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="productName != null" >
+        productName,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="productPrice != null" >
+        productPrice,
+      </if>
+      <if test="productQuantity != null" >
+        productQuantity,
+      </if>
+      <if test="deliverQuantity != null" >
+        deliverQuantity,
+      </if>
+      <if test="productSn != null" >
+        productSn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null" >
+        #{productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productQuantity != null" >
+        #{productQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="deliverQuantity != null" >
+        #{deliverQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="productSn != null" >
+        #{productSn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.order.model.OrderItem" >
+    update t_orderitem
+    <set >
+      <if test="createDate != null" >
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        productName = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null" >
+        productPrice = #{productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productQuantity != null" >
+        productQuantity = #{productQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="deliverQuantity != null" >
+        deliverQuantity = #{deliverQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="productSn != null" >
+        productSn = #{productSn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.order.model.OrderItem" >
+    update t_orderitem
+    set createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      productName = #{productName,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=VARCHAR},
+      productPrice = #{productPrice,jdbcType=DECIMAL},
+      productQuantity = #{productQuantity,jdbcType=INTEGER},
+      deliverQuantity = #{deliverQuantity,jdbcType=INTEGER},
+      productSn = #{productSn,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="searchOrderItems" resultMap="BaseResultMap" parameterType="cloud.app.order.model.OrderItem" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_orderitem
+    where 1=1
+    <if test="id != null" >
+      AND id = #{id,jdbcType=VARCHAR}
+    </if>
+    <if test="createDate != null" >
+      AND createDate = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="modifyDate != null" >
+      AND modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="orderId != null" >
+      AND order_id = #{orderId,jdbcType=VARCHAR}
+    </if>
+    <if test="productName != null" >
+      AND productName = #{productName,jdbcType=VARCHAR}
+    </if>
+    <if test="productId != null" >
+      AND product_id = #{productId,jdbcType=VARCHAR}
+    </if>
+    <if test="productPrice != null" >
+      AND productPrice = #{productPrice,jdbcType=DECIMAL}
+    </if>
+    <if test="productQuantity != null" >
+      AND productQuantity = #{productQuantity,jdbcType=INTEGER}
+    </if>
+    <if test="deliverQuantity != null" >
+      AND deliverQuantity = #{deliverQuantity,jdbcType=INTEGER}
+    </if>
+    <if test="productSn != null" >
+      AND productSn = #{productSn,jdbcType=VARCHAR}
+    </if>
+  </select>
+  
+</mapper>

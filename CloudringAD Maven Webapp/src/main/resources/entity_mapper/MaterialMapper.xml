@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.dao.MaterialDAO" > 
+ 
+    <resultMap id="resultMap" type="cloud.app.entity.Material">
+        <result column="id" property="id" jdbcType="VARCHAR"  />
+        <result column="user_id" property="user_id" jdbcType="VARCHAR"  />
+        <result column="department_id" property="department_id" jdbcType="VARCHAR"  />
+        <result column="name" property="name" jdbcType="VARCHAR"  />
+        <result column="material_type" property="material_type" jdbcType="VARCHAR"  />
+        <result column="file_size" property="file_size" jdbcType="VARCHAR"  />    
+        <result column="upload_time" property="upload_time" jdbcType="TIMESTAMP"  />       
+        <result column="file_path" property="file_path" jdbcType="VARCHAR"  />
+        <result column="create_user" property="create_user" jdbcType="VARCHAR"  /> 
+        <result column="remark" property="remark" jdbcType="VARCHAR"  /> 
+        <result column="update_user" property="update_user" jdbcType="VARCHAR"  />
+        <result column="update_time" property="update_time" jdbcType="TIMESTAMP"  /> 
+        <result column="pixels" property="pixels" jdbcType="VARCHAR"  /> 
+        <result column="video_play_time" property="video_play_time" jdbcType="VARCHAR"  />        
+    </resultMap>
+    
+    
+     <insert id="save" parameterType="cloud.app.entity.Material"> 
+		insert into t_material
+		( 
+			id,user_id,department_id,name,material_type,file_size, upload_time,file_path,update_time,update_user,remark,create_user,pixels,video_play_time
+		) 
+		value
+		( 
+			#{id},#{user_id},#{department_id},#{name},#{material_type},#{file_size},#{upload_time},#{file_path},#{update_time},#{update_user},#{remark},#{create_user},#{pixels},#{video_play_time}
+		) 
+	</insert>
+	
+	<update id="update" parameterType="cloud.app.entity.Material">
+        UPDATE t_material
+        <set>  
+         
+        	<if test="null != name">
+				name = #{name},
+			</if>
+			<if test="null != upload_time">
+				 upload_time = SYSDATE(),     
+			</if>
+			<if test="null != file_size">
+				file_size = #{file_size},
+			</if>
+			<if test="null != file_path">
+				file_path = #{file_path},
+			</if>
+			<if test="null != update_user">
+				update_user = #{update_user},
+			</if>
+			<if test="null != update_time">
+				update_time =  SYSDATE(),  
+			</if>	
+			<if test="null != remark">
+				remark =  #{remark},
+			</if>			
+        </set>
+        WHERE ID = #{id}
+    </update>
+    
+    <delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM t_material WHERE id = #{id}
+	</delete>
+	
+	 <delete id="deleteByIdS" parameterType="java.util.Map">
+		DELETE FROM t_material WHERE id in  
+       <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+			#{item}  
+		</foreach>
+	</delete>
+	
+    <select id="getListMap" parameterType="java.util.Map" resultMap="resultMap" >
+        SELECT
+			tm.id,
+			tm.user_id,
+			tm.department_id,
+			tm.NAME,
+			tmt.name material_type,
+			tm.file_size,
+			tm.upload_time,
+			tm.file_path,
+			tm.update_time,
+			tm.update_user,
+			tm.remark,
+			tm.create_user,
+			tm.pixels,
+			tm.video_play_time
+		FROM
+			t_material tm
+		LEFT JOIN t_material_type tmt ON tmt.id = tm.material_type
+		WHERE 1=1
+		<if test="null != material_type ">
+			AND tm.material_type in 
+			<foreach item="item" index="index" collection="material_type" open="(" separator="," close=")">  
+				#{item}
+			</foreach>
+		</if>
+		<if test="null != department_id ">
+			AND tm.department_id in 
+			<foreach item="item" index="index" collection="department_id" open="(" separator="," close=")">  
+				#{item}
+			</foreach>
+		</if>
+		<if test="null != name and name != ''">
+			AND tm.name like CONCAT('%',#{name},'%')  
+		</if>
+		<if test="startTime !=null and startTime!=''">
+	    	<![CDATA[   and DATE_FORMAT(tm.upload_time, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+	    </if>
+	    <if test="endTime !=null and endTime!=''">
+	   	 	<![CDATA[  and DATE_FORMAT(tm.upload_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+	    </if>
+	    order by upload_time desc
+		<if test="null != pageIndex">
+			<if test="null != pageSize">
+				limit #{pageIndex},#{pageSize}
+			</if>
+		</if>
+    </select>
+    
+    <select id="countMap" parameterType="java.util.Map" resultType="int" >
+       	SELECT count(1) FROM t_material  WHERE 1=1 
+	    <if test="null != material_type and material_type != ''">
+			AND material_type in 
+			<foreach item="item" index="index" collection="material_type" open="(" separator="," close=")">  
+				#{item}
+			</foreach>
+		</if>
+		<if test="null != department_id and department_id != ''">
+			AND department_id in 
+			<foreach item="item" index="index" collection="department_id" open="(" separator="," close=")">  
+				#{item}
+			</foreach>
+		</if>
+		<if test="null != name and name != ''">
+			AND name like CONCAT('%',#{name},'%')  
+		</if>
+		<if test="startTime !=null and startTime!=''">
+	    	<![CDATA[   and DATE_FORMAT(upload_time, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+	    </if>
+	    <if test="endTime !=null and endTime!=''">
+	   	 	<![CDATA[  and DATE_FORMAT(upload_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+	    </if>	
+    </select>
+    
+ 	<select id="getObjById" parameterType="java.lang.String" resultMap="resultMap">
+        SELECT * FROM t_material  WHERE id = #{id}
+ 	</select>
+   	
+   	<select id="getListByUrl" parameterType="java.util.Map" resultMap="resultMap">
+         SELECT
+			tm.id,
+			tm.user_id,
+			tm.NAME,
+			tmt.name material_type,
+			tm.file_size,
+			tm.upload_time,
+			tm.file_path,
+			tm.update_time,
+			tm.update_user,
+			tm.remark,
+			tm.create_user,
+			tm.pixels,
+			tm.video_play_time
+		FROM
+			t_material tm
+		LEFT JOIN t_material_type tmt ON tmt.id = tm.material_type
+		  WHERE file_path  in 
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+			#{item}  
+		</foreach>
+		order by upload_time desc
+ </select>
+</mapper>

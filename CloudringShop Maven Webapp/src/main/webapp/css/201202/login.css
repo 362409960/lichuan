@@ -1,0 +1,303 @@
+@charset "utf-8";
+
+/* CSS Document */
+body,form,ul,ol,li,p,h1,h2,h3,h4,h5,h6,dl,dt,dd,table,fieldset{
+	margin:0;
+	 padding:0;
+}
+
+
+body,input,select,textarea{
+	color:#706e6e;
+	 font:12px/1.5 "宋体",Tahoma,Arial,Helvetica,STHeiti;
+	 vertical-align:middle;
+ }
+
+
+img{
+	border:0;
+	 vertical-align:middle;
+}
+
+
+ul,ol,li{
+	list-style-type:none;
+}
+
+
+a{
+	color:#666;
+	 outline:none;
+	 text-decoration:none;
+}
+
+
+a:hover{
+	text-decoration:none;
+}
+
+
+.clear{
+	 clear:both;
+}
+
+
+
+al_rad_5x{
+	-moz-border-radius:0 0 5px 5px;
+	 -khtml-border-radius:0 0 5px 5px;
+	 -webkit-border-radius:0 0 5px 5px;
+	 border-radius:0 0 5px 5px;
+}
+
+
+
+
+/* header */
+.sme_header{
+	 height:95px;
+	 background:url(../../images/201202/sme__02.jpg) repeat-x;
+}
+
+
+.sme_top{
+	 width:960px;
+	 height:95px;
+	 overflow:hidden;
+	 margin:0 auto;
+}
+
+
+.sme_logo{
+	margin:6px 0px 0px 30px;
+	 width:249px;
+	 height:95px;
+	 background:url(../../images/login_09.jpeg) no-repeat;
+ }
+
+
+.sme_logo a{
+	 width:249px;
+	 height:73px;
+	 display:block;
+}
+
+
+
+/* main */
+.sme_main{
+	 width:960px;
+	 height:auto;
+	 overflow:hidden;
+	 clear:both;
+	 margin:30px auto 0px;
+ }
+
+
+.sme_left{
+	 width:512px;
+	 height:452px;
+	 overflow:hidden;
+	 float:left;
+	 margin-left:30px;
+	display:inline;
+}
+
+
+.sme_right{
+		width: 367px;
+		height: 452px;
+		overflow: hidden;
+		border-radius: 5px;
+		border: 1px solid #BBDAE8;
+		background: none repeat scroll 0% 0% #ECF9FF;
+		padding-left: 19px;
+		text-align: center;
+		margin-right: auto;
+		margin-left: 300px;
+ }
+
+
+
+.sme_lmes{
+	 width:445px;
+	 overflow:hidden;
+}
+
+
+.sme_lmes h1{
+	 color:#005bac;
+	 font-size:28px;
+	 font-family:"微软雅黑", "宋体", Arial;
+	 font-weight:100;
+}
+
+
+.sme_lmes h2{
+	 font-size:16px;
+	 font-weight:bold;
+	 margin-top:5px;
+}
+
+
+.sme_lmes p{
+	 margin-top:5px;
+}
+
+
+.sme_lul{
+	 width:460px;
+	 overflow:hidden;
+	 margin-top:30px;
+}
+
+
+.sme_lul li{
+	 clear:both;
+	 height:90px;
+	 margin-bottom:25px;
+}
+
+
+.sme_lul li h1{
+	 display:block;
+	 float:left;
+}
+
+
+.sme_lul li div{
+	 float:left;
+	 width:340px;
+	 margin-left:15px;
+}
+
+
+.sme_lul li div h2{
+	 clear:both;
+	 color:#659e0c;
+	 font-size:14px;
+	 font-weight:bold;
+}
+
+
+
+
+.sme_right form h1{
+	 font-size:16px;
+	 font-weight:bold;
+	 margin-top:15px;
+}
+
+
+.sme_right form input{
+	 width:340px;
+	 height:40px;
+	 line-height:40px;
+	  -moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	 border:#bbdae8 solid 1px;
+	 margin-top:10px;
+	 font-size:24px;
+	 padding-left:8px;
+ }
+
+
+.sme_right form select{
+	width:350px;
+	 height:47px;
+	 line-height:40px;
+	  -moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	 border:#bbdae8 solid 1px;
+	 margin-top:10px;
+	 font-size:24px;
+	 padding-left:8px;
+	 padding:5px;
+ }
+
+
+.sme_right form select option{
+	 font-size:24px;
+	  margin:3px;
+}
+
+
+.sme_right form .sme_sub{
+	 width:84px;
+	 height:30px;
+	 background:url(../../images/201202/sme__23.gif);
+	 border:none;
+}
+
+
+.sme_right form .sme_reg{
+	 width:84px;
+	 height:30px;
+	 background:url(../../images/201202/reg.gif);
+	 border:none;
+}
+
+
+
+
+/* footer */
+.sme_footer{
+	 width:960px;
+	 height:auto;
+	 overflow:hidden;
+	 clear:both;
+	 margin:30px auto 0px;
+}
+
+
+.sme_footer .sme_about{
+	 float:center;
+	 margin-left:20px;
+}
+
+
+.sme_footer .sme_about a{
+	 margin:0px 5px;
+}
+
+
+.sme_footer .sme_copyright{
+	 float:center;
+	 margin-right:20px;
+}
+
+
+/*sz-new*/
+.sme_right, .sme_right form input, .sme_right form select{
+	behavior: url(css/201202/ie-css3.htc);
+	 z-index:55;
+	 position:relative;
+}
+
+
+.sme_lmes h1{
+	 font-family:"微软雅黑", "宋体", Arial;
+	 font-weight:100;
+}
+
+
+.txt_english{
+	font-family:Arial, Tahoma, "Times New Roman";
+}
+
+
+.sme_copyright span{
+	font-family:Arial, Helvetica, sans-serif;
+	 font-size:12px;
+	 margin-right:5px;
+}
+
+
+.sme_right form input{
+	padding-left:8px;
+	 font-family:Arial, Tahoma, "Times New Roman";
+}

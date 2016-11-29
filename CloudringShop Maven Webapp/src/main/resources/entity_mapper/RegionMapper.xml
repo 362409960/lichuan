@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.shop.goods.dao.RegionDAO">
+
+	 <resultMap id="resultMap" type="cloud.shop.goods.entity.Region">
+        <result column="id" property="id" jdbcType="VARCHAR"  />       
+        <result column="name" property="name" jdbcType="VARCHAR"  />              
+        <result column="code" property="code" jdbcType="VARCHAR"  />        
+        <result column="parent_id" property="parent_id" jdbcType="VARCHAR"  />
+        <result column="orderlist" property="orderlist" jdbcType="INTEGER"  />      
+    </resultMap>
+	
+	<insert id="save" parameterType="cloud.shop.goods.entity.Region"> 
+		insert into t_region
+		( 
+			id,name,code,parent_id,orderlist
+		) 
+		value
+		( 
+			#{id},#{name},#{code},#{parent_id},#{orderlist}
+		) 
+	</insert>
+	
+	<update id="update" parameterType="cloud.shop.goods.entity.Region"> 
+		update t_region
+		 <set>
+        	<if test="null != t_name">
+				t_name = #{t_name},
+			</if>
+			<if test="null != code">
+				code = #{code},
+			</if>
+			<if test="null != parent_id">
+				parent_id = #{parent_id},
+			</if>
+			<if test="null != orderlist">
+				orderlist = #{orderlist},
+			</if>						
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM t_region WHERE id = #{id}
+	</delete>
+	
+	<sql id="allColumns"> 
+		id,name,code,parent_id,orderlist
+	</sql>
+	
+	<select id="getRegionList" parameterType="cloud.shop.goods.entity.Region" resultMap="resultMap" >
+        SELECT <include refid="allColumns" /> FROM t_region  WHERE 1=1  and parent_id is null
+		
+    </select>
+    
+    <select id="getRegionIdList" parameterType="java.lang.String" resultMap="resultMap" >
+        SELECT <include refid="allColumns" /> FROM t_region  WHERE parent_id=#{parent_id}
+    </select>
+    
+    <select id="getRegionConData" parameterType="cloud.shop.goods.entity.Region" resultType="cloud.shop.goods.entity.Region" >
+        SELECT <include refid="allColumns" /> FROM t_region  WHERE 1=1
+		<if test="null != id and id != ''">
+			AND id = #{id}
+		</if>		
+    </select>
+    
+   
+</mapper>

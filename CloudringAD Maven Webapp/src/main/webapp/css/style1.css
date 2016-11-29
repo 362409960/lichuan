@@ -1,0 +1,29 @@
+body {margin:0;padding:0;}
+
+
+ .ui-progressbar-value { 
+            background:#f93 url(../images/sys/pbar-ani.gif);
+	    }
+ .download-progress {
+     height:22px;
+     margin:5px 0;
+ }
+ .progress-info {
+     text-align:center;
+     line-height:22px;
+     margin-top: -22px;
+ }
+ .progress-bar {
+     height:22px; 
+ }
+ .progress-complete .ui-progressbar-value {
+      background:#fc9;
+ }
+
+
+/* ANIMATIONS */
+@keyframes moveBars { 100% { margin-left:-180px;} }
+@-webkit-keyframes moveBars { 100% { margin-left:-180px;} }
+@-moz-keyframes moveBars { 100% { margin-left:-180px;} }
+@-ms-keyframes moveBars { 100% { margin-left:-180px;} }
+@-o-keyframes moveBars { 100% { margin-left:-180px;} }

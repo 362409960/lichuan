@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.commodity.dao.ProductCategoryDAO" >
+ 	
+    <resultMap id="resultMap" type="cloud.app.commodity.model.ProductCategory">
+        <result column="id" property="id" jdbcType="VARCHAR"  />
+        <result column="order_value" property="order_value" jdbcType="INTEGER"  />
+         <result column="metaDescription" property="metaDescription" jdbcType="VARCHAR"  />
+        <result column="metaKeywords" property="metaKeywords" jdbcType="VARCHAR"  />
+         <result column="category_name" property="category_name" jdbcType="VARCHAR"  />
+         <result column="promotion" property="promotion" jdbcType="VARCHAR"  />
+           <result column="path" property="path" jdbcType="VARCHAR"  />
+          <result column="brand_id" property="brand_id" jdbcType="VARCHAR"  />
+         <result column="parent_id" property="parent_id" jdbcType="VARCHAR"  />
+        <result column="create_user" property="create_user" jdbcType="VARCHAR"  />
+        <result column="create_time" property="create_time" jdbcType="TIMESTAMP"  />
+        <result column="update_user" property="update_user" jdbcType="VARCHAR"  />
+        <result column="update_time" property="update_time" jdbcType="TIMESTAMP"  />       
+    </resultMap>
+    
+    <insert id="save" parameterType="cloud.app.commodity.model.ProductCategory"> 
+		insert into t_product_category
+		( 
+			id,order_value,metaDescription,create_time,update_user,update_time,create_user,metaKeywords,parent_id,category_name,brand_id,promotion,path
+		) 
+		value
+		( 
+			#{id},#{order_value},#{metaDescription},#{create_time},#{update_user},#{update_time},#{create_user},#{metaKeywords},#{parent_id},#{category_name},#{brand_id},#{promotion},#{path}
+		) 
+	</insert>
+	
+	<update id="update" parameterType="cloud.app.commodity.model.ProductCategory">
+        UPDATE t_product_category
+        <set>
+          update_time = SYSDATE(),
+        	<if test="null != parent_id">
+				parent_id = #{parent_id},
+			</if>
+			<if test="null != order_value">
+				order_value = #{order_value},
+			</if>
+			<if test="null != category_name">
+				category_name = #{category_name},
+			</if>
+			<if test="null != update_user">
+				update_user = #{update_user},
+			</if>
+			<if test="null != category_name and category_name != ''">
+				category_name = #{category_name},
+			</if>
+			<if test="null != brand_id and brand_id != ''">
+				brand_id = #{brand_id},
+			</if>
+			<if test="null != promotion and promotion != ''">
+				promotion = #{promotion},
+			</if>
+			<if test="null != path and path != ''">
+				path = #{path},
+			</if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+    
+    <delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM t_product_category WHERE id = #{id}
+	</delete>
+	
+    <select id="getList" parameterType="cloud.app.commodity.model.ProductCategory" resultMap="resultMap" >
+        SELECT * FROM t_product_category  WHERE 1=1 
+		<if test="null != parent_id and parent_id != ''">
+			AND parent_id = #{parent_id}
+		</if>
+		<if test="null != order_value and order_value != ''">
+			AND order_value = #{order_value}
+		</if>
+		<if test="null != category_name and category_name != ''">
+			AND category_name = #{category_name}
+		</if>			
+		<!--  ORDER BY order_value asc ,create_time desc -->
+    </select>
+
+
+    <select id="getObjById" parameterType="java.lang.String" resultMap="resultMap" >
+        SELECT * FROM t_product_category  WHERE id = #{id}
+    </select>
+    
+  <select id="selectPId" parameterType="cloud.app.commodity.model.ProductCategory" resultType="cloud.app.commodity.model.ProductCategory" >
+            SELECT * FROM t_product_category  WHERE parent_id = #{id} ORDER BY create_time
+  </select>
+  
+	 <select id="checkName" parameterType="java.lang.String" resultType="int" >
+            SELECT count(1) FROM t_product_category  WHERE 1=1 AND category_name = #{category_name}
+    </select>
+	  
+	 
+</mapper>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.order.dao.PaymentConfigDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.order.model.PaymentConfig" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modifyDate" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="orderList" property="orderList" jdbcType="INTEGER" />
+    <result column="paymentFee" property="paymentFee" jdbcType="DECIMAL" />
+    <result column="paymentFeeType" property="paymentFeeType" jdbcType="INTEGER" />
+    <result column="paymentConfigType" property="paymentConfigType" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cloud.app.order.model.PaymentConfig" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, createDate, modifyDate, name, orderList, paymentFee, paymentFeeType, paymentConfigType
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_paymentconfig
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_paymentconfig
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.app.order.model.PaymentConfig" >
+    insert into t_paymentconfig (id, createDate, modifyDate, 
+      name, orderList, paymentFee, 
+      paymentFeeType, paymentConfigType, description
+      )
+    values (#{id,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{name,jdbcType=VARCHAR}, #{orderList,jdbcType=INTEGER}, #{paymentFee,jdbcType=DECIMAL}, 
+      #{paymentFeeType,jdbcType=INTEGER}, #{paymentConfigType,jdbcType=INTEGER}, #{description,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.order.model.PaymentConfig" >
+    insert into t_paymentconfig
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createDate != null" >
+        createDate,
+      </if>
+      <if test="modifyDate != null" >
+        modifyDate,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="orderList != null" >
+        orderList,
+      </if>
+      <if test="paymentFee != null" >
+        paymentFee,
+      </if>
+      <if test="paymentFeeType != null" >
+        paymentFeeType,
+      </if>
+      <if test="paymentConfigType != null" >
+        paymentConfigType,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="orderList != null" >
+        #{orderList,jdbcType=INTEGER},
+      </if>
+      <if test="paymentFee != null" >
+        #{paymentFee,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentFeeType != null" >
+        #{paymentFeeType,jdbcType=INTEGER},
+      </if>
+      <if test="paymentConfigType != null" >
+        #{paymentConfigType,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.order.model.PaymentConfig" >
+    update t_paymentconfig
+    <set >
+      <if test="createDate != null" >
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="orderList != null" >
+        orderList = #{orderList,jdbcType=INTEGER},
+      </if>
+      <if test="paymentFee != null" >
+        paymentFee = #{paymentFee,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentFeeType != null" >
+        paymentFeeType = #{paymentFeeType,jdbcType=INTEGER},
+      </if>
+      <if test="paymentConfigType != null" >
+        paymentConfigType = #{paymentConfigType,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cloud.app.order.model.PaymentConfig" >
+    update t_paymentconfig
+    set createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      orderList = #{orderList,jdbcType=INTEGER},
+      paymentFee = #{paymentFee,jdbcType=DECIMAL},
+      paymentFeeType = #{paymentFeeType,jdbcType=INTEGER},
+      paymentConfigType = #{paymentConfigType,jdbcType=INTEGER},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.order.model.PaymentConfig" >
+    update t_paymentconfig
+    set createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      orderList = #{orderList,jdbcType=INTEGER},
+      paymentFee = #{paymentFee,jdbcType=DECIMAL},
+      paymentFeeType = #{paymentFeeType,jdbcType=INTEGER},
+      paymentConfigType = #{paymentConfigType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="getPaymentConfigs" resultMap="ResultMapWithBLOBs" parameterType="cloud.app.order.model.PaymentConfig" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_paymentconfig
+    where 1=1
+    <if test="id != null" >
+      AND id = #{id,jdbcType=VARCHAR},
+    </if>
+    <if test="createDate != null" >
+      AND createDate = #{createDate,jdbcType=TIMESTAMP},
+    </if>
+    <if test="modifyDate != null" >
+      AND modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+    </if>
+    <if test="name != null" >
+      AND name = #{name,jdbcType=VARCHAR},
+    </if>
+    <if test="orderList != null" >
+      AND orderList = #{orderList,jdbcType=INTEGER},
+    </if>
+    <if test="paymentFee != null" >
+      AND paymentFee = #{paymentFee,jdbcType=DECIMAL},
+    </if>
+    <if test="paymentFeeType != null" >
+      AND paymentFeeType = #{paymentFeeType,jdbcType=INTEGER},
+    </if>
+    <if test="paymentConfigType != null" >
+      AND paymentConfigType = #{paymentConfigType,jdbcType=INTEGER},
+    </if>
+    <if test="description != null" >
+      AND description = #{description,jdbcType=LONGVARCHAR},
+    </if>
+  </select>
+</mapper>

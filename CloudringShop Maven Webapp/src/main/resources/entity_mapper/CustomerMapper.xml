@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.shop.goods.dao.CustomerDAO" > 
+ 
+    <resultMap id="resultMap" type="cloud.shop.goods.entity.Customer">
+        <result column="ID" property="id" jdbcType="VARCHAR"  />
+        <result column="code" property="code" jdbcType="VARCHAR"  />
+        <result column="name" property="name" jdbcType="VARCHAR"  />
+        <result column="nick" property="nick" jdbcType="VARCHAR"  />
+        <result column="password" property="password" jdbcType="VARCHAR"  />
+        <result column="sex" property="sex" jdbcType="VARCHAR"  />
+        <result column="address" property="address" jdbcType="VARCHAR"  />
+        <result column="head" property="head" jdbcType="VARCHAR"  />
+        <result column="email" property="email" jdbcType="VARCHAR"  />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"  />
+        <result column="qq" property="qq" jdbcType="VARCHAR"  />
+        <result column="wx" property="wx" jdbcType="VARCHAR"  />
+        <result column="security" property="security" jdbcType="VARCHAR"  />
+        <result column="birthday" property="birthday" jdbcType="VARCHAR"  />
+        <result column="create_user" property="create_user" jdbcType="VARCHAR"  />
+        <result column="update_user" property="update_user" jdbcType="VARCHAR"  />
+        <result column="update_time" property="update_time" jdbcType="TIMESTAMP"  />
+        <result column="create_time" property="create_time" jdbcType="TIMESTAMP"  />
+        <result column="score" property="score" jdbcType="INTEGER"  />
+        <result column="type" property="type" jdbcType="VARCHAR"  />
+        <result column="status" property="status" jdbcType="VARCHAR"  />
+        <result column="contacts_name" property="contacts_name" jdbcType="VARCHAR"  />
+        <result column="contacts_phone" property="contacts_phone" jdbcType="VARCHAR"  />
+        <result column="contacts_mobile" property="contacts_mobile" jdbcType="VARCHAR"  />
+        <result column="contacts_dept" property="contacts_dept" jdbcType="VARCHAR"  />
+        <result column="contacts_email" property="contacts_email" jdbcType="VARCHAR"  />
+        <result column="company_name" property="company_name" jdbcType="VARCHAR"  />
+        <result column="company_addres" property="company_addres" jdbcType="VARCHAR"  />
+        <result column="company_hy" property="company_hy" jdbcType="VARCHAR"  />
+        <result column="company_xz" property="company_xz" jdbcType="VARCHAR"  />
+        <result column="company_yt" property="company_yt" jdbcType="VARCHAR"  />
+        <result column="company_num" property="company_num" jdbcType="VARCHAR"  />
+    </resultMap>
+    
+    <insert id="insertCustomer" parameterType="cloud.shop.goods.entity.Customer"> 
+		insert into t_customer
+		( 
+			id,code,name,nick,password,sex,address,head,email,mobile,qq,wx,security,birthday,create_user,update_user,update_time,create_time,score,type,status,contacts_name,contacts_phone,contacts_mobile,contacts_dept,contacts_email,company_name,company_addres,company_hy,company_xz,company_yt,company_num
+		) 
+		value
+		( 
+			#{id},#{code},#{name},#{nick},#{password},#{sex},#{address},#{head},#{email},#{mobile},#{qq},#{wx},#{security},#{birthday},#{create_user},#{update_user},#{update_time},#{create_time},#{score},#{type},#{status},#{contacts_name},#{contacts_phone},#{contacts_mobile},#{contacts_dept},#{contacts_email},#{company_name},#{company_addres},#{company_hy},#{company_xz},#{company_yt},#{company_num}
+		) 
+	</insert>
+   
+  <insert id="esbWebUserRegist" parameterType="java.util.Map">
+		INSERT INTO cloudringesbwebdb.st_user(ID, USER_CODE, USER_PASSWORD, PHONE, STATE, CREATE_TIME)
+		VALUE (#{id},#{name},#{password},#{mobile},#{status},now())
+	</insert>
+    
+    <select id="getUser" parameterType="cloud.shop.goods.entity.Customer" resultMap="resultMap" >
+        SELECT * FROM t_customer  WHERE status = '0'
+		<if test="null != name">
+			AND name = #{name}
+		</if>
+		<if test="null != id">
+			AND id = #{id}
+		</if>
+		<if test="null != mobile">
+			AND mobile = #{mobile}
+		</if>
+		<if test="null != password">
+			AND    password = #{password}
+		 </if>
+    </select> 
+    
+    <update id="updateUser" parameterType="cloud.shop.goods.entity.Customer">
+        UPDATE t_customer
+        <set>
+            <if test="null != nick">
+			    nick = #{nick},
+		    </if>
+            <if test="null != email">
+			    email = #{email},
+		    </if>
+            <if test="null != sex">
+			    sex = #{sex},
+		    </if>
+		    <if test="null != mobile">
+			    mobile = #{mobile},
+		    </if>
+		    <if test="null != update_time">
+			    update_time = #{update_time},
+		    </if>
+		    <if test="null != score">
+			    score = #{score},
+		    </if>
+		     <if test="null != status">
+			    status = #{status},
+		    </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+    
+    <update id="updateUserPassword" parameterType="cloud.shop.goods.entity.Customer">
+        UPDATE t_customer
+        <set>
+            <if test="null != password">
+			    password = #{password},
+		    </if>            
+        </set>
+        WHERE ID = #{id}
+    </update>
+    
+    <update id="updateUserPasswordByName" parameterType="cloud.shop.goods.entity.Customer">
+        UPDATE t_customer
+        <set>
+            <if test="null != password">
+			    password = #{password},
+		    </if>            
+        </set>
+        WHERE mobile = #{mobile}
+    </update>
+     <select id="checkUsername" parameterType="java.lang.String" resultType="int" >
+      SELECT count(1) FROM t_customer  WHERE 1=1
+			AND name = #{name}
+    </select>
+    
+     <select id="checkPhone" parameterType="java.lang.String" resultType="int" >
+      SELECT count(1) FROM t_customer  WHERE 1=1
+			AND mobile = #{mobile}
+    </select>
+    
+      <select id="checkFieldStatus" parameterType="cloud.shop.goods.entity.Customer" resultType="int" >
+		      SELECT count(1) FROM t_customer  WHERE 1=1
+	      <if test="null != name">
+				 AND   name = #{name}
+			    </if> 
+	       <if test="null != password">
+			    AND password = #{password}
+		  </if> 
+		    <if test="null != email">
+				    AND email = #{email}
+		  </if> 
+		   <if test="null != mobile">
+				    AND mobile = #{mobile}
+		  </if> 
+    </select>
+   
+   <select id="getUserIphone" parameterType="java.lang.String" resultMap="resultMap" >
+        SELECT * FROM t_customer  WHERE status = '0' AND name = #{name}
+		
+    </select>
+</mapper>
+

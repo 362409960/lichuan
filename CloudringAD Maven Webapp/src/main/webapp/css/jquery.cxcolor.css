@@ -1,0 +1,70 @@
+.layui-layer-content .input_cxcolor {
+    background: #000 url(../images/icon/jquery.cxcolor.png) no-repeat scroll 0 0;
+    border: medium none;
+    cursor: pointer;
+    font-size: 0;
+    height: 18px;
+    line-height: 0;
+    padding: 0;
+    vertical-align: middle;
+    width: 18px;
+}
+.cxcolor {
+    display: none;
+    position: absolute;
+    z-index: 29891019;
+}
+.cxcolor  table{
+	width:auto;
+}
+.cxcolor .panel_hd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: #fff none repeat scroll 0 0;
+    border-color: #000 #000 -moz-use-text-color;
+    border-image: none;
+    border-style: solid solid none;
+    border-width: 1px 1px medium;
+    font: 12px/20px "宋体";
+    padding: 0 5px;
+    position: relative;
+    width: 220px;
+}
+.cxcolor .panel_hd a {
+    color: #999;
+    text-decoration: none;
+}
+.cxcolor .panel_hd a:hover {
+    color: #333;
+}
+.cxcolor .clear {
+    position: absolute;
+    right: 5px;
+    top: 0;
+}
+.cxcolor table {
+    border-collapse: collapse;
+    empty-cells: show;
+    table-layout: fixed;
+}
+.cxcolor td {
+    border: 1px solid #000;
+    cursor: pointer;
+    font-size: 0;
+    height: 10px;
+    line-height: 0;
+    padding: 0;
+    position: static;
+    width: 10px;
+}
+.cxcolor_lock {
+    background: #fff none repeat scroll 0 0;
+    display: none;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    z-index: 19891018;
+}

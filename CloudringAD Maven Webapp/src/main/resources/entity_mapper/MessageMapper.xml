@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.dao.MessageDAO" >
+   
+ 
+  <insert id="save" parameterType="cloud.app.entity.Message" >
+    insert into t_terminal (id, terminalId, type, name, content, ip, createDate)
+    values (#{id,jdbcType=VARCHAR}, #{terminalId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},  #{content,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+ 
+  
+</mapper>

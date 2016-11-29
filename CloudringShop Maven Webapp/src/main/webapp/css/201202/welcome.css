@@ -1,0 +1,26 @@
+@charset "utf-8";
+/* CSS Document */
+body,form,ul,ol,li,p,h1,h2,h3,h4,h5,h6,dl,dt,dd,table,fieldset{margin:0; padding:0;}
+body,input,select,textarea{color:#706e6e; font:12px/1.5 "宋体",Tahoma,Arial,Helvetica,STHeiti; vertical-align:middle; }
+{border:0; vertical-align:middle;}
+ul,ol,li{list-style-type:none;}
+a{color:#666; outline:none; text-decoration:none;}
+a:hover{text-decoration:none;}
+.clear{ clear:both;}
+.txt_english{font-family:Arial, Tahoma, "Times New Roman";}.redtxt{color:#F00; font-weight:bold; font-family:Arial, "宋体", sans-serif;}
+/**/
+.welcomer{behavior: url(css/201202/ie-css3.htc); position:relative;  z-index:1; background:#FFF;} 
+.welcomer{ height:449px; width:auto;-moz-border-radius: 5px;-khtml-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px; border:#dedede solid 6px;}
+
+.welcom_txt{ margin:20px 25px;}
+.welcom_txt h1{font-size:18px; color:#3b3b3b; line-height:34px;}
+.welcom_txt h1 span a{ color:#3576b0; font-family:Arial, "宋体", sans-serif}
+.welcom_txtul{ color:#706e6e; font-size:12px; line-height:30px;  border-top:solid 1px #dedede; font:12px/1.5 "宋体",Tahoma,Arial,Helvetica,STHeiti; vertical-align:middle;}
+.welcometips{background:#e0f3ff; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; -khtml-border-radius: 5px;behavior: url(css/201202/ie-css3.htc); position:relative;  z-index:1; width:560px;  padding:10px 15px; margin-top:10px;}
+.welcometips {margin-right:5px; }
+.welcometips a{ color:#275a91; text-decoration:underline;}
+.wintrotitle{background:#f4f4f4; padding:10px 15px; margin-left:15px; width:570px; margin-top:60px;}
+.wintrotitle h2{ font-size:14px;  color:#3576b0; }
+.wintrotitle p{font-size:12px; line-height:24px;}
+.welcom_txt_intro ul{margin-left:45px; margin-top:15px;}
+.welcom_txt_intro ul li{list-style:disc; line-height:24px;}

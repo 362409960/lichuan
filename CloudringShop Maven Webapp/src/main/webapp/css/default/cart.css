@@ -1,0 +1,536 @@
+@charset "utf-8";
+/* CSS Document */
+
+@import url("layout.css");
+
+/*加入购物车头部样式*/
+.site-mini-header .header-logo{
+	width:93px;
+}
+
+.site-mini-header .has-more{
+	height:48px;
+}
+.site-mini-header .has-more h2{
+	float:left;
+	line-height:48px;
+	color:#424242;
+	font-size:28px;
+	font-weight:normal;
+}
+.site-mini-header .has-more p{
+	float:left;
+	height:20px;
+	line-height:20px;
+	margin:20px 0 0 15px;
+	color:#757575;
+}
+
+/*加入购物车page-main样式*/
+.page-main{
+	padding:38px 0;
+	background:#f5f5f5;
+}
+.cart-goods-list{
+	background-color:#fff;
+}
+.cart-goods-list .list-head{
+	height:70px;
+	line-height:70px;
+	color:#424242;
+	padding-right:26px;
+}
+.cart-goods-list .col-check{
+	width:110px;
+}
+.cart-goods-list .list-head .col{
+	float:left;
+}
+.cart-goods-list .col-check .icon-checkbox{
+	background-color:#fff;
+	border:1px solid #e0e0e0;
+	color:#fff;
+	cursor:pointer;
+	display:inline-block;
+	font-size:16px;
+	height:18px;
+	line-height:18px;
+	margin-left:24px;
+	position:relative;
+	text-align:center;
+	top:-1px;
+	vertical-align:middle;
+	width:18px;
+	margin-right:15px
+}
+.cart-goods-list .col-check .icon-checkbox-selected{
+	background-color:#ff6700;
+	border-color:#ff6700;
+	color:#fff;
+}
+.cart-goods-list .list-head .col-img{
+	width:120px;
+}
+.cart-goods-list .list-head .col-name{
+	width:380px;
+}
+.cart-goods-list .col-price{
+	color:#424242;
+	padding-right:84px;
+	text-align:right;
+	width:75px;
+}
+.cart-goods-list .col-num{
+	color:#424242;
+	text-align:center;
+	width:150px;
+}
+.cart-goods-list .col-total{
+	padding-right:81px;
+	text-align:right;
+	width:120px;
+}
+.cart-goods-list .col-action{
+	text-align:center;
+	width:80px;
+}
+.cart-goods-list .item-box{
+	border-top:1px solid #e0e0e0;
+	padding:15px 26px 15px 0;
+}
+.cart-goods-list .item-table{
+	display:table;
+	border-collapse:collapse;
+	border-spacing:0;
+}
+.cart-goods-list .item-table .item-row{
+	display:table-row;
+}
+.cart-goods-list .item-table .col{
+	display:table-cell;
+	vertical-align:middle;
+}
+.cart-goods-list .item-box .tags, .cart-goods-list .item-sub-box .tags{
+	margin-bottom:6px;
+}
+.cart-goods-list .col-name .name{
+	font-size:18px;
+	font-weight:normal;
+	line-height:1;
+	margin-bottom:8px;
+	margin-top:8px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.cart-goods-list .item-box .col-img{
+	height:80px;
+	width:80px;
+	overflow:hidden;
+	padding-right:40px;
+}
+.cart-goods-list .col-name .name a, .cart-goods-list .col-name .desc a{
+	color:#ff6700;
+}
+.cart-goods-list .col-name .name a{
+	color:#424242;
+}
+.cart-goods-list .col-name .desc{
+	color:#757575;
+	font-size:12px;
+}
+.cart-goods-list .item-box .col-price, .cart-goods-list .item-sub-box .col-price{
+	font-size:16px;
+}
+.change-goods-num{
+	background-color:#fff;
+	border:1px solid #e0e0e0;
+	height:38px;
+	position:relative;
+	width:148px;
+	text-align:center;
+}
+.change-goods-num a{
+	color:#757575;
+	float:left;
+	font-size:20px;
+	height:38px;
+	line-height:38px;
+	transition:all 0.3s ease 0s;
+	width:38px;
+}
+.change-goods-num a:hover{
+	background-color:#e0e0e0;
+}
+.change-goods-num input{
+	border-width:0;
+	color:#424242;
+	float:left;
+	font-size:16px;
+	height:38px;
+	line-height:38px;
+	padding:0;
+	text-align:center;
+	width:72px;
+}
+.cart-goods-list .item-box .col-total, .cart-goods-list .item-sub-box .col-total{
+	color:#ff6700;
+	font-size:16px;
+}
+.cart-goods-list .item-box .pre-info{
+	color:#b0b0b0;
+	font-size:12px;
+	margin:0;
+}
+.cart-goods-list .item-box .col-action .del, .cart-goods-list .item-sub-box .col-action .del{
+	border-radius:12px;
+	color:#757575;
+	display:inline-block;
+	font-size:20px;
+	height:24px;
+	line-height:24px;
+	text-align:center;
+	transition:all 0.3s ease 0s;
+	width:24px;
+}
+.cart-goods-list .item-box .col-action .del:hover, .cart-goods-list .item-sub-box .col-action .del:hover{
+	background-color:#e53935;
+	color:#fff;
+}
+.cart-bar{
+	background-color:#fff;
+	height:50px;
+	position:relative;
+	text-align:right;
+	transition:background 0.3s ease 0s,top 0.3s ease 0s;
+}
+.cart-bar a{
+	transition:color 0.3s ease 0s;
+}
+.cart-bar i{
+	font-style:normal;
+}
+.cart-bar .section-left{
+	float:left;
+}
+.cart-bar .back-shopping{
+	line-height:50px;
+	margin-left:32px;
+}
+.cart-bar .cart-total{
+	border-left:1px solid #eee;
+	color:#757575;
+	margin-left:16px;
+	padding-left:16px;
+}
+.cart-bar .cart-total i{
+	color:#ff6700;	
+}
+.cart-bar .total-price{
+	color:#ff6700;
+	padding-left:13px;
+}
+.cart-bar .total-price em{
+	font-size:30px;
+	font-style:normal;
+}
+.cart-bar .btn-a{
+	font-size:18px;
+	height:48px;
+	line-height:48px;
+	margin-left:50px;
+	vertical-align:top;
+	width:200px;
+	background:#ff6700;
+	border:1px solid #ff6700;
+	color:#fff;
+	cursor:pointer;
+	display:inline-block;
+	text-align:center;
+}
+
+#miRecommendBox,.cart-recommend{
+	margin-top:60px;
+}
+.recommend-title{
+	border-top:1px solid #e0e0e0;
+	color:#757575;
+	font-size:30px;
+	font-weight:400;
+	height:50px;
+	margin:0;
+	position:relative;
+}
+.recommend-title span{
+	background-color:#f5f5f5;
+	display:block;
+	height:40px;
+	line-height:40px;
+	position:absolute;
+	text-align:center;
+	top:-20px;
+	left:372px;
+	width:482px;
+}
+.recommend ul li{
+	background-color:#fff;
+	height:300px;
+	margin-bottom:14px;
+	text-align:center;
+}
+.recommend dl{
+	padding:0 20px;
+}
+.recommend dl dt{
+	height:145px;
+	padding:40px 0 15px;
+}
+.recommend .recommend-name{
+	height:18px;
+	margin-bottom:10px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.recommend .recommend-name a{
+	color:#333;
+}
+.recommend .recommend-price{
+	color:#ff6700;
+	margin-bottom:10px;	
+}
+.recommend .recommend-tips{
+	color:#757575;
+	position:relative;
+}
+.recommend .recommend-tips .btn{
+	display:none;
+	position:absolute;
+	left:37px;
+	top:0;
+	width:120px;
+	border:1px solid #ff6700;
+	color:#ff6700;
+	cursor:pointer;
+	background:#fff;
+	text-align:center;
+	transition:all 0.4s ease 0s;
+	font-size:12px;
+	height:28px;
+	line-height:28px;
+}
+.recommend .recommend-tips .btn:hover{
+	background-color:#f25807;
+	border-color:#f25807;
+	color:#fff;
+}
+
+/*已成功加入购物车 buy-succ-box区域*/
+.buy-succ-box{
+	background-color:#fff;
+	height:180px;
+	padding:0 62px;
+}
+.buy-succ-box .goods-content{
+	float:left;
+	margin-top:30px;
+}
+.buy-succ-box .goods-img{
+	background:#eee;
+	float:left;
+	width:110px;
+	height:110px;
+}
+.buy-succ-box .goods-info{
+	float:left;
+	margin-left:20px;
+	margin-top:16px;
+}
+.buy-succ-box .goods-info .name, .buy-succ-box .goods-info .price{
+	color:#333;
+	font-size:18px;
+	margin-right:15px;
+}
+.buy-succ-box .goods-info h3{
+	color:#83c44e;
+	font-size:28px;
+	font-weight:normal;
+}
+.buy-succ-box .actions{
+	float:right;
+	margin-top:70px;
+}
+.buy-succ-box .actions a{
+	margin-left:12px;
+	width:180px;
+	border:1px solid #b0b0b0;
+	color:#b0b0b0;
+	cursor:pointer;
+	display:inline-block;
+	font-size:14px;
+	height:38px;
+	line-height:38px;
+	text-align:center;
+	transition:all 0.4s ease 0s;
+}
+.buy-succ-box .actions a.buy-btn{
+	background:#fff;
+	border-color:#b0b0b0;
+	color:#757575;
+}
+.buy-succ-box .actions a.buy-btn:hover{
+	background:#757575;
+	border-color:#757575;
+	color:#fff;
+}
+
+.buy-succ-box .actions a.end-btn{
+	background:#ff6700;
+	border-color:#ff6700;
+	color:#fff;
+}
+.buy-succ-box .actions a.end-btn:hover{
+	background:#f25807;
+	border-color:#f25807;
+	color:#fff;
+}
+
+/*点击删除时，显示遮罩层*/
+.modal-backdrop{
+	background-color:#000;
+	position:fixed;
+	bottom:0;
+	left:0;
+	top:0;
+	right:0;
+	z-index:1040;
+	opacity:0.5;
+	transition:opacity 0.15s linear 0s;
+	filter:alpha(opacity=50)
+}
+.modal-alert{
+	background-color:#fff;
+	left:50%;
+	position:fixed;
+	z-index:1050;
+	width:500px;
+	top:50%;
+	height:270px;
+	margin:-800px 0 0 -250px;
+	display:none;
+}
+.modal-alert .modal-bd{
+	padding:60px 60px 40px;
+	text-align:center;
+	position:relative;
+}
+.modal-alert .text{
+	min-height:130px;
+}
+.modal-alert h3, .modal-alert .title{
+	color:#424242;
+	font-size:30px;
+	font-weight:400;
+	line-height:50px;
+}
+.modal-alert .actions input{
+	height:40px;
+	width:160px;
+	border:1px solid #b0b0b0;
+	color:#b0b0b0;
+	cursor:pointer;
+	display:inline-block;
+	font-size:14px;
+	line-height:38px;
+	text-align:center;
+	transition:all 0.4s ease 0s;
+	margin:0 7px;
+	outline:0 none;
+}
+.modal-alert .actions input.alertCancel{
+	background:#b0b0b0;
+	border-color:#b0b0b0;
+	color:#fff;
+}
+.modal-alert .actions input.alertCancel:hover{
+	background:#757575;
+	border-color:#757575;
+}
+.modal-alert .actions input.alertOk{
+	background:#ff6700;
+	border-color:#ff6700;
+	color:#fff;
+}
+.modal-alert .actions input.alertOk:hover{
+	background:#f25807;
+	border-color:#f25807;
+}
+.modal-alert .close{
+	border-radius:15px;
+	color:#757575;
+	cursor:pointer;
+	height:30px;
+	line-height:30px;
+	position:absolute;
+	right:14px;
+	text-align:center;
+	top:14px;
+	width:30px;
+	z-index:10;
+	transition:all 0.2s ease 0s;
+	font-size:24px;
+}
+.modal-alert .close:hover{
+	background:#e53935;
+	color:#fff;
+}
+
+/*购物车为空的样式*/
+.cart-empty{
+	background:url(../../images/default/cart-empty.png) no-repeat 124px 0;
+	color:#b0b0b0;
+	height:273px;
+	margin:65px 0 130px;
+	overflow:hidden;
+	padding-left:558px;
+}
+.cart-empty h2{
+	font-size:36px;
+	margin:50px 0 0 0;
+}
+.cart-empty .login-desc{
+	color:#b0b0b0;
+	font-size:20px;
+	margin:0 0 20px;
+}
+.cart-empty a{
+	border:1px solid #b0b0b0;
+	color:#b0b0b0;
+	display:inline-block;
+	font-size:14px;
+	text-align:center;
+	transition:all 0.4s ease 0s;
+	height:48px;
+	line-height:48px;
+	width:170px;
+}
+.cart-empty a.login-a{
+	margin-right:10px;
+	background:#ff6700;
+	border-color:#ff6700;
+	color:#fff;
+}
+.cart-empty a.login-a:hover{
+	background:#f25807;
+	border-color:#f25807;
+	color:#fff;
+}
+.cart-empty a.shop-a{
+	border-color:#ff6700;
+	background:#f5f5f5;
+	color:#ff6700
+}
+.cart-empty a.shop-a:hover{
+	border-color:#f25807;
+	color:#f25807;
+}

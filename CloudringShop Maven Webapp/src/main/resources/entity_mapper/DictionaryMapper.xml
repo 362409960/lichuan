@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.shop.system.dao.DictionaryDAO">
+	
+	<sql id="allColumns"> 
+		PKID,CATALOG_ID,DIC_CODE,DIC_VALUE,SHOW_INDEX,
+		NOTE,CREATE_USER,CREATE_TIME,UPDATE_USER,UPDATE_TIME,
+		STATE
+	</sql>
+	
+	<select id="view" parameterType="java.lang.String" resultType="cloud.shop.system.po.Dictionary"> 
+		SELECT <include refid="allColumns" />  FROM  ST_DICTIONARY WHERE PKID = #{pkid}
+	</select>
+	
+	<select id="viewDic" parameterType="java.util.HashMap" resultType="cloud.shop.system.po.Dictionary"> 
+		select <include refid="allColumns" /> from  ST_DICTIONARY where dic_code = #{dic_code}  and catalog_id=#{catalog_id}
+	</select>
+	
+	<select id="getDictionaryList" parameterType="cloud.shop.system.po.Dictionary" resultType="cloud.shop.system.po.Dictionary" >
+        SELECT <include refid="allColumns" /> FROM ST_DICTIONARY  WHERE 1=1 
+		<if test="null != pkid and pkid != ''">
+			AND pkid = #{pkid}
+		</if>
+		<if test="null != catalog_id and catalog_id != ''">
+			AND catalog_id like #{catalog_id}
+		</if>
+		<if test="null != dic_value and dic_value != ''">
+			AND dic_value like #{dic_value}
+		</if>
+		<if test="null != note and note != ''">
+			AND note = #{note}
+		</if>
+		<if test="null != state and state != ''">
+			AND state = #{state}
+		</if>
+		limit #{pageIndex},#{pageSize}
+    </select>
+	
+	<select id="dictionaryCount" parameterType="cloud.shop.system.po.Dictionary" resultType="int" >
+        SELECT count(1) FROM ST_DICTIONARY WHERE 1 = 1
+		<if test="null != pkid and pkid != ''">
+			AND pkid = #{pkid}
+		</if>
+		<if test="null != catalog_id and catalog_id != ''">
+			AND catalog_id like #{catalog_id}
+		</if>
+		<if test="null != dic_value and dic_value != ''">
+			AND dic_value like #{dic_value}
+		</if>
+		<if test="null != note and note != ''">
+			AND note = #{note}
+		</if>
+		<if test="null != state and state != ''">
+			AND state = #{state}
+		</if>
+    </select>
+	
+	<insert id="insertDictionary" parameterType="cloud.shop.system.po.Dictionary"> 
+		insert into ST_DICTIONARY
+		( 
+			PKID,CATALOG_ID,DIC_CODE,DIC_VALUE,SHOW_INDEX,
+			NOTE,CREATE_USER,CREATE_TIME,UPDATE_USER,STATE
+		) 
+		values 
+		( 
+			#{pkid},#{catalog_id},#{dic_code},#{dic_value},#{show_index},
+			#{note},#{create_user},now(),#{update_user},#{state}
+		) 
+	</insert>
+	
+	<update id="updateDictionary" parameterType="cloud.shop.system.po.Dictionary"> 
+		UPDATE ST_DICTIONARY
+		<set>
+        	<if test="null != catalog_id">
+				catalog_id = #{catalog_id},
+			</if>
+			<if test="null != dic_code">
+				dic_code = #{dic_code},
+			</if>
+			<if test="null != dic_value">
+				dic_value = #{dic_value},
+			</if>
+			<if test="null != show_index">
+				show_index = #{show_index},
+			</if>
+			<if test="null != note">
+				note = #{note},
+			</if>
+			<if test="null != create_user">
+				create_user = #{create_user},
+			</if>
+			<if test="null != update_user">
+				update_user = #{update_user},
+			</if>
+			<if test="null != state">
+				state = #{state}
+			</if>
+			update_time = now()
+		</set>
+		WHERE PKID = #{pkid}
+	</update>
+	
+	<delete id="deleteDictionary" parameterType="java.lang.String">
+		DELETE FROM ST_DICTIONARY WHERE PKID = #{pkid}
+	</delete>
+	
+	<delete id="deleteByCatalogId" parameterType="java.lang.String">
+		delete from ST_DICTIONARY
+		where catalog_id = #{catalog_id}
+	</delete>
+
+	<sql id="dynamicWhere">
+		<if test="null != pkid">
+			and pkid = #{pkid}
+		</if>
+		<if test="null != catalog_id">
+			and catalog_id = #{catalog_id}
+		</if>
+		<if test="null != dic_code">
+			and dic_code = #{dic_code}
+		</if>
+		<if test="null != dic_value">
+			and dic_value = #{dic_value}
+		</if>
+		<if test="null != show_index">
+			and show_index = #{show_index}
+		</if>
+		<if test="null != note">
+			and note = #{note}
+		</if>
+		<if test="null != create_user">
+			and create_user = #{create_user}
+		</if>
+		<if test="null != create_time">
+			and create_time = #{create_time}
+		</if>
+		<if test="null != update_user">
+			and update_user = #{update_user}
+		</if>
+		<if test="null != update_time">
+			and update_time = #{update_time}
+		</if>
+		<if test="null != state">
+			and state = #{state}
+		</if>
+	</sql>
+
+	<select id="select" parameterType="java.util.HashMap" resultType="cloud.shop.system.po.Dictionary"> 
+		SELECT <include refid="allColumns" /> FROM ST_DICTIONARY
+			where 1= 1 
+			<include refid="dynamicWhere" />
+			ORDER BY SHOW_INDEX ASC
+	</select>
+
+	<select id="selectCheck" parameterType="java.util.HashMap" resultType="cloud.shop.system.po.Dictionary">
+		SELECT
+        <include refid="allColumns"/>
+        FROM ST_DICTIONARY
+		WHERE DIC_CODE = #{dic_code} AND CATALOG_ID = #{catalog_id}
+    </select>
+    	<select id="selectCheckValue" parameterType="java.util.HashMap" resultType="cloud.shop.system.po.Dictionary">
+		SELECT <include refid="allColumns"/> FROM ST_DICTIONARY
+		WHERE DIC_VALUE = #{dic_value} AND CATALOG_ID=#{catalog_id}
+    </select>
+    
+    <select id="maxShowIndex" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select max(show_index) as max_show_index
+        from ST_DICTIONARY
+        where catalog_id = #{catalog_id}
+    </select>
+</mapper>

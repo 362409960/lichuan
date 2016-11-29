@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.commodity.dao.ParametersGroupDAO" >
+ 	
+    <resultMap id="resultMap" type="cloud.app.commodity.model.ParametersGroup">
+        <result column="id" property="id" jdbcType="VARCHAR"  />     
+         <result column="parameter_group_id" property="parameter_group_id" jdbcType="VARCHAR"  />
+        <result column="product_id" property="product_id" jdbcType="VARCHAR"  />
+        <result column="name" property="name" jdbcType="VARCHAR"  />       
+        <result column="create_date" property="create_date" jdbcType="TIMESTAMP"  />     
+        <result column="modify_date" property="modify_date" jdbcType="TIMESTAMP"  />       
+    </resultMap>
+    
+    <insert id="save" parameterType="cloud.app.commodity.model.ParametersGroup"> 
+		insert into t_parameters_group
+		( 
+			id,parameter_group_id,product_id,name,create_date,modify_date
+		) 
+		value
+		( 
+			#{id},#{parameter_group_id},#{product_id},#{name},#{create_date},#{modify_date}
+		) 
+	</insert>
+	
+	<update id="update" parameterType="cloud.app.commodity.model.ParametersGroup">
+        UPDATE t_parameters_group
+        <set>
+         modify_date = SYSDATE(),
+        	<if test="null != name">
+				name = #{name},
+			</if>			
+        </set>
+        WHERE product_id = #{product_id}
+    </update>
+    
+    <delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM t_parameters_group WHERE product_id = #{id}
+	</delete>
+
+    <select id="getObjById" parameterType="java.lang.String" resultMap="resultMap" >
+        SELECT * FROM t_parameters_group  WHERE id = #{id}
+    </select>
+    
+    <select id="getListObjByFatherId" parameterType="java.lang.String" resultMap="resultMap" >
+        SELECT * FROM t_parameters_group  WHERE product_id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.order.dao.OrderLogDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.order.model.OrderLog" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modifyDate" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="orderSn" property="orderSn" jdbcType="VARCHAR" />
+    <result column="orderLogType" property="orderLogType" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cloud.app.order.model.OrderLog" extends="BaseResultMap" >
+    <result column="info" property="info" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, createDate, modifyDate, order_id, orderSn, orderLogType, operator
+  </sql>
+  <sql id="Blob_Column_List" >
+    info
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_orderlog
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_orderlog
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.app.order.model.OrderLog" >
+    insert into t_orderlog (id, createDate, modifyDate, 
+      order_id, orderSn, orderLogType, 
+      operator, info)
+    values (#{id,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{orderId,jdbcType=VARCHAR}, #{orderSn,jdbcType=VARCHAR}, #{orderLogType,jdbcType=INTEGER}, 
+      #{operator,jdbcType=VARCHAR}, #{info,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.order.model.OrderLog" >
+    insert into t_orderlog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createDate != null" >
+        createDate,
+      </if>
+      <if test="modifyDate != null" >
+        modifyDate,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderSn != null" >
+        orderSn,
+      </if>
+      <if test="orderLogType != null" >
+        orderLogType,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSn != null" >
+        #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="orderLogType != null" >
+        #{orderLogType,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.order.model.OrderLog" >
+    update t_orderlog
+    <set >
+      <if test="createDate != null" >
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSn != null" >
+        orderSn = #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="orderLogType != null" >
+        orderLogType = #{orderLogType,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cloud.app.order.model.OrderLog" >
+    update t_orderlog
+    set createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      orderSn = #{orderSn,jdbcType=VARCHAR},
+      orderLogType = #{orderLogType,jdbcType=INTEGER},
+      operator = #{operator,jdbcType=VARCHAR},
+      info = #{info,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.order.model.OrderLog" >
+    update t_orderlog
+    set createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      orderSn = #{orderSn,jdbcType=VARCHAR},
+      orderLogType = #{orderLogType,jdbcType=INTEGER},
+      operator = #{operator,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="searchOrderLogs" resultMap="ResultMapWithBLOBs" parameterType="cloud.app.order.model.OrderLog" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_orderlog
+    where 1=1
+    <if test="id != null" >
+      AND id = #{id,jdbcType=VARCHAR}
+    </if>
+    <if test="createDate != null" >
+      AND createDate = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="modifyDate != null" >
+      AND modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="orderId != null" >
+      AND order_id = #{orderId,jdbcType=VARCHAR}
+    </if>
+    <if test="orderSn != null" >
+      AND orderSn = #{orderSn,jdbcType=VARCHAR}
+    </if>
+    <if test="orderLogType != null" >
+      AND orderLogType = #{orderLogType,jdbcType=INTEGER}
+    </if>
+    <if test="operator != null" >
+      AND operator = #{operator,jdbcType=VARCHAR}
+    </if>
+    <if test="info != null" >
+      AND info = #{info,jdbcType=LONGVARCHAR}
+    </if>
+  </select>
+  
+</mapper>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.dao.DataGatheringDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.entity.DataGathering" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="terminalId" property="terminalId" jdbcType="VARCHAR" />
+    <result column="terminalName" property="terminalName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="alias" property="alias" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, terminalId, type, name, alias, content, ip, createDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_data_gathering
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_data_gathering
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.app.entity.DataGathering" >
+    insert into t_data_gathering (id, terminalId, type, 
+      name, alias, content, 
+      ip, createDate)
+    values (#{id,jdbcType=VARCHAR}, #{terminalId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{ip,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.entity.DataGathering" >
+    insert into t_data_gathering
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="terminalId != null" >
+        terminalId,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="alias != null" >
+        alias,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="createDate != null" >
+        createDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalId != null" >
+        #{terminalId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.entity.DataGathering" >
+    update t_data_gathering
+    <set >
+      <if test="terminalId != null" >
+        terminalId = #{terminalId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        alias = #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.entity.DataGathering" >
+    update t_data_gathering
+    set terminalId = #{terminalId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      alias = #{alias,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+  <select id="getList" resultMap="BaseResultMap" parameterType="cloud.app.entity.DataGathering">
+  	SELECT 
+  	gathering.id, gathering.terminalId, terminal.name terminalName,gathering.type, gathering.name, gathering.alias, gathering.content, gathering.ip, gathering.createDate
+  	FROM t_data_gathering gathering
+  	LEFT JOIN t_terminal terminal ON gathering.terminalId = terminal.id
+  	WHERE 1=1
+  	<if test="id != null" >
+      AND gathering.id = #{id,jdbcType=VARCHAR},
+    </if>
+  	<if test="terminalId != null" >
+      AND gathering.terminalId = #{terminalId,jdbcType=VARCHAR}
+    </if>
+    <if test="type != null" >
+      AND gathering.type = #{type,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null" >
+      AND gathering.name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="alias != null" >
+      AND gathering.alias = #{alias,jdbcType=VARCHAR}
+    </if>
+    <if test="content != null" >
+      AND gathering.content = #{content,jdbcType=VARCHAR}
+    </if>
+    <if test="ip != null and ip != ''" >
+      AND gathering.ip LIKE CONCAT('%', trim(#{ip,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="createDate != null" >
+      AND gathering.createDate = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="startDate != null and startDate != ''">
+     <![CDATA[ AND Date(gathering.createDate) >= #{startDate,jdbcType=VARCHAR} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''">
+     <![CDATA[ AND Date(gathering.createDate) <= #{endDate,jdbcType=VARCHAR} ]]>
+    </if>
+    ORDER BY gathering.createDate DESC
+    <if test="pageSize != null and pageSize != ''">
+     LIMIT #{pageIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  
+  <select id="count" resultType="java.lang.Integer" parameterType="cloud.app.entity.DataGathering">
+  	SELECT 
+  	COUNT(gathering.id)
+  	FROM t_data_gathering gathering
+  	LEFT JOIN t_terminal terminal ON gathering.terminalId = terminal.id
+  	WHERE 1=1
+  	<if test="id != null" >
+      AND gathering.id = #{id,jdbcType=VARCHAR},
+    </if>
+  	<if test="terminalId != null" >
+      AND gathering.terminalId = #{terminalId,jdbcType=VARCHAR}
+    </if>
+    <if test="type != null" >
+      AND gathering.type = #{type,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null" >
+      AND gathering.name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="alias != null" >
+      AND gathering.alias = #{alias,jdbcType=VARCHAR}
+    </if>
+    <if test="content != null" >
+      AND gathering.content = #{content,jdbcType=VARCHAR}
+    </if>
+    <if test="ip != null and ip != ''" >
+      AND gathering.ip LIKE CONCAT('%', trim(#{ip,jdbcType=VARCHAR}),'%' )
+    </if>
+    <if test="createDate != null" >
+      AND gathering.createDate = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="startDate != null and startDate != ''">
+     <![CDATA[ AND Date(gathering.createDate) >= #{startDate,jdbcType=VARCHAR} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''">
+     <![CDATA[ AND Date(gathering.createDate) <= #{endDate,jdbcType=VARCHAR} ]]>
+    </if>
+    ORDER BY gathering.createDate DESC
+  </select>
+</mapper>

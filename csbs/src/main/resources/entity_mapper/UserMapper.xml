@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.system.dao.SysUserDAO" >
+ 	
+    <resultMap id="resultMap" type="cloud.app.system.vo.SysUserVO">
+        <result column="ID" property="id" jdbcType="VARCHAR"  />
+        <result column="USER_CODE" property="userCode" jdbcType="VARCHAR"  />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR"  />
+        <result column="USER_PASSWORD" property="userPassword" jdbcType="VARCHAR"  />
+        <result column="EMAIL" property="email" jdbcType="VARCHAR"  />
+        <result column="PHONE" property="phone" jdbcType="VARCHAR"  />
+        <result column="LAST_LOGIN_IP" property="lastLoginIp" jdbcType="VARCHAR"  />
+        <result column="LAST_LOGIN_TIME" property="lastLoginTime" jdbcType="TIMESTAMP"  />
+        <result column="LAST_LOGOUT_TIME" property="lastLogoutTime" jdbcType="TIMESTAMP"  />
+        <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR"  />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"  />
+        <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"  />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"  />
+        <result column="STATE" property="state" jdbcType="VARCHAR"  />
+    </resultMap>
+    
+    <select id="getSysUserList" parameterType="cloud.app.system.vo.SysUserVO" resultMap="resultMap" >
+        SELECT * FROM ST_USER  WHERE 1=1 
+		<if test="null != userCode and userCode != ''">
+			AND USER_CODE = #{userCode}
+		</if>
+		<if test="null != userName and userName != ''">
+			AND USER_NAME like #{userName}
+		</if>
+		<if test="null != userPassword and userPassword != ''">
+			AND USER_PASSWORD = #{userPassword}
+		</if>
+		<if test="null != createUser and createUser != ''">
+			AND CREATE_USER = #{createUser}
+		</if>
+		limit #{pageIndex},#{pageSize}
+    </select>
+
+	<select id="sysUserCount" parameterType="cloud.app.system.vo.SysUserVO" resultType="int" >
+        SELECT count(1) FROM ST_USER  WHERE STATE = '0'
+		<if test="null != userCode and userCode != ''">
+			AND USER_CODE = #{userCode}
+		</if>
+		<if test="null != userName and userName != ''">
+			AND USER_NAME like #{userName}
+		</if>
+		<if test="null != userPassword and userPassword != ''">
+			AND USER_PASSWORD = #{userPassword}
+		</if>
+		<if test="null != createUser and createUser != ''">
+			AND CREATE_USER = #{createUser}
+		</if>
+    </select>
+
+
+    <update id="updateUser" parameterType="cloud.app.system.po.SysUser">
+        UPDATE ST_USER
+        <set>
+        	<if test="null != userCode">
+				USER_CODE = #{userCode},
+			</if>
+			<if test="null != userName">
+				USER_NAME = #{userName},
+			</if>
+			<if test="null != userPassword">
+				USER_PASSWORD = #{userPassword},
+			</if>
+			<if test="null != email">
+				EMAIL = #{email},
+			</if>
+			<if test="null != phone">
+				PHONE = #{phone},
+			</if>
+			<if test="null != lastLoginIp">
+				LAST_LOGIN_IP = #{lastLoginIp},
+			</if>
+			<if test="null != lastLoginTime and lastLoginTime != ''">
+				LAST_LOGIN_TIME = #{lastLoginTime},
+			</if>
+			<if test="null != lastLogoutTime and lastLogoutTime != ''">
+				LAST_LOGOUT_TIME = #{lastLogoutTime},
+			</if>
+			<if test="null != updateUser">
+				UPDATE_USER = #{updateUser},
+			</if>
+			<if test="null != state">
+				STATE = #{state},
+			</if>
+			UPDATE_TIME = now()
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="getMenuByUserId" resultType="cloud.app.system.po.STMenu" parameterType="java.util.HashMap">
+        SELECT DISTINCT M.* FROM ST_MENU M 
+            WHERE  M.PID = #{pid} AND M.ID IN (SELECT DISTINCT A.MENU_ID FROM ST_ROLE_MENU A WHERE A.ROLE_ID IN(  SELECT B.ROLE_ID FROM ST_USER_ROLE B WHERE B.USER_ID = #{userId}) 
+                  UNION SELECT C.MENU_ID FROM ST_USER_MENU C WHERE C.USER_ID = #{userId}) ORDER BY M.SHOW_INDEX ASC
+    </select>
+ 
+    <select id="select" parameterType="java.util.HashMap" resultMap="resultMap">
+        SELECT * FROM ST_USER  WHERE 1 = 1
+        <if test="null != userCode">
+			AND USER_CODE = #{userCode}
+		</if>
+		<if test="null != userName">
+			AND USER_NAME like #{userName}
+		</if>
+		<if test="null != userPassword">
+			AND USER_PASSWORD = #{userPassword}
+		</if>
+		<if test="null != createUser">
+			AND CREATE_USER = #{createUser}
+		</if>
+        ORDER BY CREATE_TIME ASC
+    </select>
+    
+    <update id="updateUserForLogin" parameterType="cloud.app.system.po.SysUser">
+        UPDATE ST_USER
+        <set>
+        	<if test="null != lastLoginIp">
+				LAST_LOGIN_IP = #{lastLoginIp},
+			</if>
+			<if test="null != lastLoginTime">
+				LAST_LOGIN_TIME = #{lastLoginTime},
+			</if>
+			<if test="null != lastLogoutTime">
+				LAST_LOGOUT_TIME = #{lastLogoutTime},
+			</if>
+        </set>
+        WHERE ID =  #{id}
+    </update>
+    
+    <insert id="insertUser" parameterType="cloud.app.system.po.SysUser">
+       INSERT INTO ST_USER(ID,USER_CODE,USER_NAME,USER_PASSWORD,EMAIL,PHONE,CREATE_USER,CREATE_TIME,STATE)
+       VALUES(#{id},#{userCode},#{userName},#{userPassword},#{email},#{phone},#{createUser},now(),#{state})
+    </insert>
+    
+	  <delete id="deleteById" parameterType="string">
+	      DELETE FROM ST_USER WHERE ID = #{id}
+	  </delete>
+	  
+	  <select id="getInfoById" parameterType="string" resultMap="resultMap" >
+	      SELECT * FROM ST_USER WHERE ID = #{id}
+	  </select>
+	  
+	  <select id="getUserInfoById" parameterType="string" resultMap="resultMap" >
+	      SELECT * FROM ST_USER WHERE ID = #{id}
+	  </select>
+	  
+	 <select id="selectUserByRoleId" parameterType="string" resultType="cloud.app.system.po.STUserRole" >
+	      SELECT * FROM st_user_role WHERE user_id = #{userId}
+	 </select>
+	 
+	  <select id="selectUserByMenuId" parameterType="java.lang.String" resultType="cloud.app.system.po.STUserMenu"> 
+		   SELECT * FROM st_user_menu WHERE user_id = #{userId}
+	  </select>
+	  
+	  <select id="selectUser_Role" parameterType="cloud.app.system.po.STUserRole" resultType="cloud.app.system.po.STUserRole">
+	      SELECT * FROM ST_USER_ROLE WHERE user_id = #{user_id} and role_id = #{role_id}
+	  </select>
+	  
+	  <insert id="insertUser_Role" parameterType="cloud.app.system.po.STUserRole">
+       INSERT INTO ST_USER_ROLE(id,user_id,role_id)
+       VALUES(#{id},#{user_id},#{role_id})
+    </insert>
+    
+	  <delete id="deleteUser_Role" parameterType="cloud.app.system.po.STUserRole">
+	      DELETE FROM ST_USER_ROLE WHERE user_id = #{user_id} AND role_id = #{role_id}
+	  </delete>
+	  
+	  <select id="selectUser_Menu" parameterType="cloud.app.system.po.STUserMenu" resultType="cloud.app.system.po.STUserMenu">
+	      SELECT * FROM ST_USER_Menu WHERE user_id = #{user_id} and menu_id = #{menu_id}
+	  </select>
+	  
+	  <insert id="insertUser_Menu" parameterType="cloud.app.system.po.STUserMenu">
+       INSERT INTO ST_USER_Menu(id,user_id,menu_id)
+       VALUES(#{id},#{user_id},#{menu_id})
+    </insert>
+    
+	  <delete id="deleteUser_Menu" parameterType="cloud.app.system.po.STUserMenu">
+	      DELETE FROM ST_USER_Menu WHERE user_id = #{user_id} AND menu_id = #{menu_id}
+	  </delete>
+	  
+	  <delete id="deleteUser_MenuById" parameterType="java.lang.String">
+	      DELETE FROM ST_USER_Menu WHERE id = #{id}
+	  </delete>
+	  
+	  <delete id="deleteUser_MenuByUserId" parameterType="cloud.app.system.po.STUserMenu">
+	      DELETE FROM ST_USER_Menu WHERE id = #{id} AND user_id = #{user_id}
+	  </delete>
+	  
+	  <select id="selectUserRole" parameterType="java.lang.String" resultType="java.lang.String">
+	      SELECT DISTINCT T.ROLE_ID FROM ST_USER_ROLE T WHERE USER_ID = #{id}
+	  </select>
+	  
+	  <select id="selectUserMenu" parameterType="java.lang.String" resultType="java.lang.String">
+	      SELECT DISTINCT MENU_ID FROM ST_USER_MENU WHERE USER_ID = #{id}
+	  </select>
+	  
+	  <delete id="deleteUserMenuByUserId" parameterType="string">
+	      DELETE FROM ST_USER_MENU WHERE USER_ID = #{id}
+	  </delete>
+	  
+	  <insert id="addUserMenu" parameterType="cloud.app.system.po.STUserMenu">
+	      INSERT INTO ST_USER_MENU(ID,USER_ID,MENU_ID)
+	       values(#{id},#{user_id},#{menu_id})
+	  </insert>
+</mapper>

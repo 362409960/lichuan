@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.order.dao.OrdersDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.order.vo.OrdersVO" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modifyDate" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="deliveryFee" property="deliveryFee" jdbcType="DECIMAL" />
+    <result column="deliveryTypeName" property="deliveryTypeName" jdbcType="VARCHAR" />
+    <result column="orderSn" property="orderSn" jdbcType="VARCHAR" />
+    <result column="orderStatus" property="orderStatus" jdbcType="INTEGER" />
+    <result column="paymentConfigName" property="paymentConfigName" jdbcType="VARCHAR" />
+    <result column="paymentFee" property="paymentFee" jdbcType="DECIMAL" />
+    <result column="paymentStatus" property="paymentStatus" jdbcType="INTEGER" />
+    <result column="productTotalPrice" property="productTotalPrice" jdbcType="DECIMAL" />
+    <result column="totalAmount" property="totalAmount" jdbcType="DECIMAL" />
+    <result column="productTotalQuantity" property="productTotalQuantity" jdbcType="INTEGER" />
+    <result column="shipName" property="shipName" jdbcType="VARCHAR" />
+    <result column="shipArea" property="shipArea" jdbcType="VARCHAR" />
+    <result column="shipAreaPath" property="shipAreaPath" jdbcType="VARCHAR" />
+    <result column="shipAddress" property="shipAddress" jdbcType="VARCHAR" />
+    <result column="shipZipCode" property="shipZipCode" jdbcType="VARCHAR" />
+    <result column="shipPhone" property="shipPhone" jdbcType="VARCHAR" />
+    <result column="shipMobile" property="shipMobile" jdbcType="VARCHAR" />
+    <result column="shipStatus" property="shipStatus" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cloud.app.order.vo.OrdersVO" extends="BaseResultMap" >
+    <result column="memo" property="memo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, createDate, modifyDate, deliveryFee, deliveryTypeName, orderSn, orderStatus, 
+    paymentConfigName, paymentFee, paymentStatus, productTotalPrice, totalAmount, productTotalQuantity, 
+    shipName, shipArea, shipAreaPath, shipAddress, shipZipCode, shipPhone, shipMobile, 
+    shipStatus, user_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_orders
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_orders
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.app.order.model.Orders" >
+    insert into t_orders (id, createDate, modifyDate, 
+      deliveryFee, deliveryTypeName, orderSn, 
+      orderStatus, paymentConfigName, paymentFee, 
+      paymentStatus, productTotalPrice, totalAmount, 
+      productTotalQuantity, shipName, shipArea, 
+      shipAreaPath, shipAddress, shipZipCode, 
+      shipPhone, shipMobile, shipStatus, 
+      user_id, memo)
+    values (#{id,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{deliveryFee,jdbcType=DECIMAL}, #{deliveryTypeName,jdbcType=VARCHAR}, #{orderSn,jdbcType=VARCHAR}, 
+      #{orderStatus,jdbcType=INTEGER}, #{paymentConfigName,jdbcType=VARCHAR}, #{paymentFee,jdbcType=DECIMAL}, 
+      #{paymentStatus,jdbcType=INTEGER}, #{productTotalPrice,jdbcType=DECIMAL}, #{totalAmount,jdbcType=DECIMAL}, 
+      #{productTotalQuantity,jdbcType=INTEGER}, #{shipName,jdbcType=VARCHAR}, #{shipArea,jdbcType=VARCHAR}, 
+      #{shipAreaPath,jdbcType=VARCHAR}, #{shipAddress,jdbcType=VARCHAR}, #{shipZipCode,jdbcType=VARCHAR}, 
+      #{shipPhone,jdbcType=VARCHAR}, #{shipMobile,jdbcType=VARCHAR}, #{shipStatus,jdbcType=INTEGER}, 
+      #{userId,jdbcType=VARCHAR}, #{memo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.order.model.Orders" >
+    insert into t_orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createDate != null" >
+        createDate,
+      </if>
+      <if test="modifyDate != null" >
+        modifyDate,
+      </if>
+      <if test="deliveryFee != null" >
+        deliveryFee,
+      </if>
+      <if test="deliveryTypeName != null" >
+        deliveryTypeName,
+      </if>
+      <if test="orderSn != null" >
+        orderSn,
+      </if>
+      <if test="orderStatus != null" >
+        orderStatus,
+      </if>
+      <if test="paymentConfigName != null" >
+        paymentConfigName,
+      </if>
+      <if test="paymentFee != null" >
+        paymentFee,
+      </if>
+      <if test="paymentStatus != null" >
+        paymentStatus,
+      </if>
+      <if test="productTotalPrice != null" >
+        productTotalPrice,
+      </if>
+      <if test="totalAmount != null" >
+        totalAmount,
+      </if>
+      <if test="productTotalQuantity != null" >
+        productTotalQuantity,
+      </if>
+      <if test="shipName != null" >
+        shipName,
+      </if>
+      <if test="shipArea != null" >
+        shipArea,
+      </if>
+      <if test="shipAreaPath != null" >
+        shipAreaPath,
+      </if>
+      <if test="shipAddress != null" >
+        shipAddress,
+      </if>
+      <if test="shipZipCode != null" >
+        shipZipCode,
+      </if>
+      <if test="shipPhone != null" >
+        shipPhone,
+      </if>
+      <if test="shipMobile != null" >
+        shipMobile,
+      </if>
+      <if test="shipStatus != null" >
+        shipStatus,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryFee != null" >
+        #{deliveryFee,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryTypeName != null" >
+        #{deliveryTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSn != null" >
+        #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="paymentConfigName != null" >
+        #{paymentConfigName,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentFee != null" >
+        #{paymentFee,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentStatus != null" >
+        #{paymentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="productTotalPrice != null" >
+        #{productTotalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="productTotalQuantity != null" >
+        #{productTotalQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="shipName != null" >
+        #{shipName,jdbcType=VARCHAR},
+      </if>
+      <if test="shipArea != null" >
+        #{shipArea,jdbcType=VARCHAR},
+      </if>
+      <if test="shipAreaPath != null" >
+        #{shipAreaPath,jdbcType=VARCHAR},
+      </if>
+      <if test="shipAddress != null" >
+        #{shipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shipZipCode != null" >
+        #{shipZipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shipPhone != null" >
+        #{shipPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shipMobile != null" >
+        #{shipMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="shipStatus != null" >
+        #{shipStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.order.model.Orders" >
+    update t_orders
+    <set >
+      <if test="createDate != null" >
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryFee != null" >
+        deliveryFee = #{deliveryFee,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryTypeName != null" >
+        deliveryTypeName = #{deliveryTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSn != null" >
+        orderSn = #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        orderStatus = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="paymentConfigName != null" >
+        paymentConfigName = #{paymentConfigName,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentFee != null" >
+        paymentFee = #{paymentFee,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentStatus != null" >
+        paymentStatus = #{paymentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="productTotalPrice != null" >
+        productTotalPrice = #{productTotalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalAmount != null" >
+        totalAmount = #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="productTotalQuantity != null" >
+        productTotalQuantity = #{productTotalQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="shipName != null" >
+        shipName = #{shipName,jdbcType=VARCHAR},
+      </if>
+      <if test="shipArea != null" >
+        shipArea = #{shipArea,jdbcType=VARCHAR},
+      </if>
+      <if test="shipAreaPath != null" >
+        shipAreaPath = #{shipAreaPath,jdbcType=VARCHAR},
+      </if>
+      <if test="shipAddress != null" >
+        shipAddress = #{shipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shipZipCode != null" >
+        shipZipCode = #{shipZipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shipPhone != null" >
+        shipPhone = #{shipPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shipMobile != null" >
+        shipMobile = #{shipMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="shipStatus != null" >
+        shipStatus = #{shipStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cloud.app.order.model.Orders" >
+    update t_orders
+    set createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      deliveryFee = #{deliveryFee,jdbcType=DECIMAL},
+      deliveryTypeName = #{deliveryTypeName,jdbcType=VARCHAR},
+      orderSn = #{orderSn,jdbcType=VARCHAR},
+      orderStatus = #{orderStatus,jdbcType=INTEGER},
+      paymentConfigName = #{paymentConfigName,jdbcType=VARCHAR},
+      paymentFee = #{paymentFee,jdbcType=DECIMAL},
+      paymentStatus = #{paymentStatus,jdbcType=INTEGER},
+      productTotalPrice = #{productTotalPrice,jdbcType=DECIMAL},
+      totalAmount = #{totalAmount,jdbcType=DECIMAL},
+      productTotalQuantity = #{productTotalQuantity,jdbcType=INTEGER},
+      shipName = #{shipName,jdbcType=VARCHAR},
+      shipArea = #{shipArea,jdbcType=VARCHAR},
+      shipAreaPath = #{shipAreaPath,jdbcType=VARCHAR},
+      shipAddress = #{shipAddress,jdbcType=VARCHAR},
+      shipZipCode = #{shipZipCode,jdbcType=VARCHAR},
+      shipPhone = #{shipPhone,jdbcType=VARCHAR},
+      shipMobile = #{shipMobile,jdbcType=VARCHAR},
+      shipStatus = #{shipStatus,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.order.model.Orders" >
+    update t_orders
+    set createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      deliveryFee = #{deliveryFee,jdbcType=DECIMAL},
+      deliveryTypeName = #{deliveryTypeName,jdbcType=VARCHAR},
+      orderSn = #{orderSn,jdbcType=VARCHAR},
+      orderStatus = #{orderStatus,jdbcType=INTEGER},
+      paymentConfigName = #{paymentConfigName,jdbcType=VARCHAR},
+      paymentFee = #{paymentFee,jdbcType=DECIMAL},
+      paymentStatus = #{paymentStatus,jdbcType=INTEGER},
+      productTotalPrice = #{productTotalPrice,jdbcType=DECIMAL},
+      totalAmount = #{totalAmount,jdbcType=DECIMAL},
+      productTotalQuantity = #{productTotalQuantity,jdbcType=INTEGER},
+      shipName = #{shipName,jdbcType=VARCHAR},
+      shipArea = #{shipArea,jdbcType=VARCHAR},
+      shipAreaPath = #{shipAreaPath,jdbcType=VARCHAR},
+      shipAddress = #{shipAddress,jdbcType=VARCHAR},
+      shipZipCode = #{shipZipCode,jdbcType=VARCHAR},
+      shipPhone = #{shipPhone,jdbcType=VARCHAR},
+      shipMobile = #{shipMobile,jdbcType=VARCHAR},
+      shipStatus = #{shipStatus,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="searchOrderList" resultMap="ResultMapWithBLOBs" parameterType="cloud.app.order.vo.OrdersVO" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    
+    FROM t_orders
+   	WHERE 1 = 1 
+   	<if test="id != null" >
+      AND id = #{id,jdbcType=VARCHAR}
+    </if>
+   	<if test="createDate != null" >
+      AND createDate = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="modifyDate != null" >
+      AND modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="deliveryFee != null" >
+      AND deliveryFee = #{deliveryFee,jdbcType=DECIMAL}
+    </if>
+    <if test="deliveryTypeName != null" >
+      AND deliveryTypeName = #{deliveryTypeName,jdbcType=VARCHAR}
+    </if>
+    <if test="orderSn != null and orderSn != ''" >
+      AND orderSn LIKE CONCAT('%', #{orderSn,jdbcType=VARCHAR},'%' )
+    </if>
+    <if test="orderStatus != null" >
+      AND orderStatus = #{orderStatus,jdbcType=INTEGER}
+    </if>
+    <if test="paymentConfigName != null" >
+      AND paymentConfigName = #{paymentConfigName,jdbcType=VARCHAR}
+    </if>
+    <if test="paymentFee != null" >
+      AND paymentFee = #{paymentFee,jdbcType=DECIMAL}
+    </if>
+    <if test="paymentStatus != null" >
+      AND paymentStatus = #{paymentStatus,jdbcType=INTEGER}
+    </if>
+    <if test="productTotalPrice != null" >
+      AND productTotalPrice = #{productTotalPrice,jdbcType=DECIMAL}
+    </if>
+    <if test="totalAmount != null" >
+      AND totalAmount = #{totalAmount,jdbcType=DECIMAL}
+    </if>
+    <if test="productTotalQuantity != null" >
+      AND productTotalQuantity = #{productTotalQuantity,jdbcType=INTEGER}
+    </if>
+    <if test="shipName != null and shipName != ''" >
+      AND shipName LIKE CONCAT('%', #{shipName,jdbcType=VARCHAR},'%' )
+    </if>
+    <if test="shipArea != null and shipArea != ''" >
+      AND shipArea LIKE CONCAT('%', #{shipArea,jdbcType=VARCHAR},'%' )
+    </if>
+    <if test="shipAreaPath != null" >
+      AND shipAreaPath = #{shipAreaPath,jdbcType=VARCHAR}
+    </if>
+    <if test="shipAddress != null and shipAddress != ''" >
+      AND shipAddress LIKE CONCAT('%', #{shipAddress,jdbcType=VARCHAR},'%' )
+    </if>
+    <if test="shipZipCode != null and shipZipCode != ''" >
+      AND shipZipCode LIKE CONCAT('%', #{shipZipCode,jdbcType=VARCHAR},'%' )
+    </if>
+    <if test="shipPhone != null and shipPhone != ''" >
+      AND shipPhone LIKE CONCAT('%', #{shipPhone,jdbcType=VARCHAR},'%' )
+    </if>
+    <if test="shipMobile != null" >
+      AND shipMobile = #{shipMobile,jdbcType=VARCHAR}
+    </if>
+    <if test="shipStatus != null" >
+      AND shipStatus = #{shipStatus,jdbcType=INTEGER}
+    </if>
+    <if test="userId != null" >
+      AND user_id = #{userId,jdbcType=VARCHAR}
+    </if>
+    <if test="memo != null" >
+      AND memo = #{memo,jdbcType=LONGVARCHAR}
+    </if>
+    ORDER BY modifyDate DESC
+    <if test="pageSize != null">
+     LIMIT #{pageIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+    
+  </select>
+  
+  
+  <select id="searchOrderListCount" resultType="java.lang.Integer" parameterType="cloud.app.order.vo.OrdersVO" >
+    SELECT 
+    COUNT(*)
+    FROM t_orders
+   	WHERE 1 = 1 
+   	<if test="id != null" >
+      AND id = #{id,jdbcType=VARCHAR}
+    </if>
+   	<if test="createDate != null" >
+      AND createDate = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="modifyDate != null" >
+      AND modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="deliveryFee != null" >
+      AND deliveryFee = #{deliveryFee,jdbcType=DECIMAL}
+    </if>
+    <if test="deliveryTypeName != null" >
+      AND deliveryTypeName = #{deliveryTypeName,jdbcType=VARCHAR}
+    </if>
+    <if test="orderSn != null and orderSn != ''" >
+      AND orderSn LIKE CONCAT('%', #{orderSn,jdbcType=VARCHAR},'%' )
+    </if>
+    <if test="orderStatus != null" >
+      AND orderStatus = #{orderStatus,jdbcType=INTEGER}
+    </if>
+    <if test="paymentConfigName != null" >
+      AND paymentConfigName = #{paymentConfigName,jdbcType=VARCHAR}
+    </if>
+    <if test="paymentFee != null" >
+      AND paymentFee = #{paymentFee,jdbcType=DECIMAL}
+    </if>
+    <if test="paymentStatus != null" >
+      AND paymentStatus = #{paymentStatus,jdbcType=INTEGER}
+    </if>
+    <if test="productTotalPrice != null" >
+      AND productTotalPrice = #{productTotalPrice,jdbcType=DECIMAL}
+    </if>
+    <if test="totalAmount != null" >
+      AND totalAmount = #{totalAmount,jdbcType=DECIMAL}
+    </if>
+    <if test="productTotalQuantity != null" >
+      AND productTotalQuantity = #{productTotalQuantity,jdbcType=INTEGER}
+    </if>
+    <if test="shipName != null and shipName != ''" >
+      AND shipName LIKE CONCAT('%', #{shipName,jdbcType=VARCHAR},'%' )
+    </if>
+    <if test="shipArea != null and shipArea != ''" >
+      AND shipArea LIKE CONCAT('%', #{shipArea,jdbcType=VARCHAR},'%' )
+    </if>
+    <if test="shipAreaPath != null" >
+      AND shipAreaPath = #{shipAreaPath,jdbcType=VARCHAR}
+    </if>
+    <if test="shipAddress != null and shipAddress != ''" >
+      AND shipAddress LIKE CONCAT('%', #{shipAddress,jdbcType=VARCHAR},'%' )
+    </if>
+    <if test="shipZipCode != null and shipZipCode != ''" >
+      AND shipZipCode LIKE CONCAT('%', #{shipZipCode,jdbcType=VARCHAR},'%' )
+    </if>
+    <if test="shipPhone != null and shipPhone != ''" >
+      AND shipPhone LIKE CONCAT('%', #{shipPhone,jdbcType=VARCHAR},'%' )
+    </if>
+    <if test="shipMobile != null" >
+      AND shipMobile = #{shipMobile,jdbcType=VARCHAR}
+    </if>
+    <if test="shipStatus != null" >
+      AND shipStatus = #{shipStatus,jdbcType=INTEGER}
+    </if>
+    <if test="userId != null" >
+      AND user_id = #{userId,jdbcType=VARCHAR}
+    </if>
+    <if test="memo != null" >
+      AND memo = #{memo,jdbcType=LONGVARCHAR}
+    </if>
+  </select>
+  
+  
+  <update id="updateSelective" parameterType="cloud.app.order.vo.OrdersVO" >
+    update t_orders
+    <set >
+      <if test="createDate != null" >
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryFee != null" >
+        deliveryFee = #{deliveryFee,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryTypeName != null" >
+        deliveryTypeName = #{deliveryTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSn != null" >
+        orderSn = #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        orderStatus = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="paymentConfigName != null" >
+        paymentConfigName = #{paymentConfigName,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentFee != null" >
+        paymentFee = #{paymentFee,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentStatus != null" >
+        paymentStatus = #{paymentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="productTotalPrice != null" >
+        productTotalPrice = #{productTotalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalAmount != null" >
+        totalAmount = #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="productTotalQuantity != null" >
+        productTotalQuantity = #{productTotalQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="shipName != null" >
+        shipName = #{shipName,jdbcType=VARCHAR},
+      </if>
+      <if test="shipArea != null" >
+        shipArea = #{shipArea,jdbcType=VARCHAR},
+      </if>
+      <if test="shipAreaPath != null" >
+        shipAreaPath = #{shipAreaPath,jdbcType=VARCHAR},
+      </if>
+      <if test="shipAddress != null" >
+        shipAddress = #{shipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shipZipCode != null" >
+        shipZipCode = #{shipZipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shipPhone != null" >
+        shipPhone = #{shipPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shipMobile != null" >
+        shipMobile = #{shipMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="shipStatus != null" >
+        shipStatus = #{shipStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

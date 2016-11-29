@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.shop.goods.dao.SmsRecordDAO">
+
+	 <resultMap id="resultMap" type="cloud.shop.goods.entity.SmsRecord">
+        <result column="id" property="id" jdbcType="VARCHAR"  />       
+        <result column="phone" property="phone" jdbcType="VARCHAR"  /> 
+         <result column="contents" property="contents" jdbcType="VARCHAR"  /> 
+         <result column="sender" property="sender" jdbcType="VARCHAR"  />
+         <result column="code" property="code" jdbcType="VARCHAR"  />
+        <result column="create_time" property="create_time" jdbcType="TIMESTAMP"  />
+    </resultMap>
+	
+	<insert id="save" parameterType="cloud.shop.goods.entity.SmsRecord"> 
+		insert into t_sms_record
+		( 
+			id,phone,contents,create_time,sender,code
+		) 
+		value
+		( 
+			#{id},#{phone},#{contents},#{create_time},#{sender},#{code}
+		) 
+	</insert>
+	
+	<update id="update" parameterType="cloud.shop.goods.entity.SmsRecord"> 
+		update t_sms_record
+		 <set>
+        	<if test="null != contents">
+				contents = #{contents},
+			</if>									
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM t_sms_record WHERE id = #{id}
+	</delete>
+	
+	<sql id="allColumns"> 
+		id,name,order_info_id,price,quantity,goods_id,goods_url,subtotal
+	</sql>
+	
+	<select id="countSmsRecord" parameterType="cloud.shop.goods.entity.SmsRecord" resultType="int" >
+        SELECT count(1) FROM t_sms_record  WHERE 1=1
+		<if test="null != phone and phone != ''">
+			AND phone = #{phone}
+		</if>
+		<if test="null != create_time and create_time != ''">		
+		  and  to_days(create_time) = to_days(now())
+		</if>
+		<if test="null != sender and sender != ''">
+			AND sender = #{sender}
+		</if>
+		<if test="null != code and code != ''">
+			AND code = #{code}
+		</if>			
+    </select>
+    
+   
+</mapper>

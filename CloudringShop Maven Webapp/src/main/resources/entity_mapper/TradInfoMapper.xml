@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.shop.goods.dao.TradInfoDAO">
+
+	 <resultMap id="resultMap" type="cloud.shop.goods.entity.TradInfo">
+        <result column="id" property="id" jdbcType="VARCHAR"  />       
+        <result column="notify_time" property="notify_time" jdbcType="TIMESTAMP"  /> 
+        <result column="notify_type" property="notify_type" jdbcType="VARCHAR"  />
+        <result column="notify_id" property="notify_id" jdbcType="VARCHAR"  /> 
+       
+        <result column="out_trade_no" property="out_trade_no" jdbcType="VARCHAR"  /> 
+        <result column="payment_type" property="payment_type" jdbcType="VARCHAR"  /> 
+        <result column="trade_no" property="trade_no" jdbcType="VARCHAR"  />          
+        <result column="trade_status" property="trade_status" jdbcType="VARCHAR"  />
+        <result column="seller_email" property="seller_email" jdbcType="VARCHAR"  />
+        <result column="buyer_email" property="buyer_email" jdbcType="VARCHAR"  />
+        <result column="seller_id" property="seller_id" jdbcType="VARCHAR"  />
+        <result column="buyer_id" property="buyer_id" jdbcType="VARCHAR"  /> 
+        <result column="total_fee" property="total_fee" jdbcType="DECIMAL"  />        
+    </resultMap>
+	
+	<insert id="save" parameterType="cloud.shop.goods.entity.TradInfo"> 
+		insert into t_trad_info
+		( 
+			id,notify_time,notify_type,notify_id,out_trade_no,payment_type,trade_no,trade_status,seller_email,buyer_email,seller_id,buyer_id,total_fee
+		) 
+		value
+		( 
+			#{id},#{notify_time},#{notify_type},#{notify_id},#{out_trade_no},#{payment_type},#{trade_no},#{trade_status},#{seller_email},#{buyer_email},#{seller_id},#{buyer_id},#{total_fee}
+		) 
+	</insert>
+
+
+   <sql id="allColumns"> 
+		id,notify_time,notify_type,notify_id,sign_type,sign,out_trade_no,payment_type,trade_no,trade_status,seller_email,buyer_email,seller_id,buyer_id,total_fee
+	</sql>
+    <select id="getShippingAddressList" parameterType="cloud.shop.goods.entity.TradInfo" resultMap="resultMap" >
+        SELECT <include refid="allColumns" /> FROM t_trad_info
+		<if test="null != id">
+			AND id = #{id}
+		</if>
+		<if test="null != buyer_email">
+			AND buyer_email = #{buyer_email}
+		</if>
+		<if test="null != out_trade_no">
+			AND out_trade_no = #{out_trade_no}
+		</if>
+		<if test="null != trade_no">
+			AND trade_no = #{trade_no}
+		</if>
+		<if test="null != notify_type">
+			AND notify_type = #{notify_type}
+		</if>
+	
+    </select> 
+    
+   
+</mapper>

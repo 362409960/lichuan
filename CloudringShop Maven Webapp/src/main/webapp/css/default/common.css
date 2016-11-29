@@ -1,0 +1,98 @@
+@charset "utf-8";
+/* CSS Document */
+@charset "utf-8";
+html,body,h1,h2,h3,h4,h5,h6,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu{margin:0;padding:0;}
+header,footer,section,article,aside,nav,hgroup,address,figure,figcaption,menu,details{display:block;}
+table{border-collapse:collapse;border-spacing:0;}
+caption,th{font-weight:normal;}
+html,body,fieldset,iframe,abbr{border:0;}
+i,cite,em,var,address,dfn{font-style:normal;}
+[hidefocus],summary{outline:0;}
+ul , ol , ul li , li , ol li{list-style:none;}
+h1,h2,h3,h4,h5,h6,small{font-size:100%;}
+sup,sub{font-size:83%;}
+pre,code,kbd,samp{font-family:inherit;}
+q:before,q:after{content:none;}
+textarea{overflow:auto;resize:none;}
+label,summary{cursor:default;}
+a,button{cursor:pointer;}
+h1,h2,h3,h4,h5,h6,em,strong,b{font-weight:bold;}
+ins,u,s,a,a:hover{text-decoration:none;}
+body,textarea,input,button,select,keygen,legend{font-family: 'microsoft yahei'; color:#666;outline:0;}
+a{color:#333; border: none; text-decoration: none;outline:none; /*移除虚线框  IE8,FF有用*/ hide-focus: expression(this.hideFocus=true); /*IE6、IE7*/}
+a:focus{outline: 0;-moz-outline-style: none;}
+a:hover{color: #0065bb;}
+img{overflow: hidden;border: 0 none;vertical-align: middle;-ms-interpolation-mode: bicubic;}
+button,input,select,textarea{font-size:100%;font-family:tahoma;margin: 0;outline: 0 none;vertical-align: baseline;_overflow:visible;*vertical-align: middle;*overflow:visible;}
+label,
+select,
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+input[type="radio"],
+input[type="checkbox"] {
+    cursor: pointer;
+}
+input[type="search"] {
+    box-sizing: content-box;
+}
+html {
+    font-size :12px;
+}
+body{font:12px sans-serif,"Arial Narrow",HELVETICA;background:#fff;-webkit-text-size-adjust:100%;} 
+/*--- 自定义全局function ---*/
+.clearfix {
+    *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    line-height: 0;
+    content: "";
+}
+.clearfix:after {
+    clear: both;
+}
+.hide {
+    display: none;
+}
+.show {
+    display: block;
+}
+.ir{
+	display:block;
+	overflow:hidden;
+	text-align:left;
+	text-indent:-9999em;
+}
+@font-size{
+	font-family:"iconfont";
+	src:url("../../images/default/iconfont.eot?#iefix") format("embedded-opentype");
+}
+
+/*footer 区域*/
+.footer{
+	border-top:solid 1px #efefef;
+	height:60px;
+	width:100%;
+	background:#fff;
+	box-shadow:0 0 10px #ccc;
+	position:absolute;
+	bottom:0;
+}
+.footer-w{
+	width:1009px;
+	margin:0 auto;
+	border-top: solid 2px #2097f4;
+	line-height:58px;
+	text-align:center
+}
+.footer-w > p{
+	color:#9e9e9e;
+	font-size:12px;
+}
+.footer-w > p > a{
+	color:#6d6d6d;
+	padding:0 10px;
+}

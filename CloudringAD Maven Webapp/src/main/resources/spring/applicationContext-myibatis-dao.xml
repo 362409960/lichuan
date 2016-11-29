@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+   	xmlns="http://www.springframework.org/schema/beans"  
+   	xmlns:tx="http://www.springframework.org/schema/tx"  
+   	xmlns:p="http://www.springframework.org/schema/p"  
+   	xmlns:aop="http://www.springframework.org/schema/aop"   
+   	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   	xmlns:context="http://www.springframework.org/schema/context"
+   	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+   	http://www.springframework.org/schema/tx
+   	http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+   	http://www.springframework.org/schema/aop
+   	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+   	http://www.springframework.org/schema/context
+   	http://www.springframework.org/schema/context/spring-context.xsd">
+   	
+	
+	<!-- dao层 -->
+	<bean id="loginDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.system.dao.LoginDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="sysUserDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.system.dao.SysUserDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="catalogDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.system.dao.CatalogDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="dictionaryDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.system.dao.DictionaryDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="menuDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.system.dao.MenuDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="roleDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.system.dao.RoleDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="programDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.ProgramDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="programDetailsDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.ProgramDetailsDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="publishDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.PublishDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="publishTerminalDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.PublishTerminalDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="materialDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.MaterialDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="materialTypeDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.MaterialTypeDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="templateDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.TemplateDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="templateBackGroundDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.TemplateBackGroundDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="newsStreamDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.NewsStreamDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="packetDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.PacketDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="terminalDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.TerminalDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="timeSwitchDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.TimeSwitchDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="surveillanceDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.SurveillanceDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="adPlayerDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.AdPlayerDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="dataGatheringDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.DataGatheringDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="departmentDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.system.dao.DepartmentDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+    
+	<bean id="messageDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	   	<property name="mapperInterface" value="cloud.app.dao.MessageDAO"></property>
+	   	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+    
+</beans>

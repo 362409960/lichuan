@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.shop.goods.dao.OrdersDetailDAO">
+
+	 <resultMap id="resultMap" type="cloud.shop.goods.entity.OrdersDetail">
+        <result column="id" property="id" jdbcType="VARCHAR"  />       
+        <result column="name" property="name" jdbcType="VARCHAR"  /> 
+         <result column="order_info_id" property="order_info_id" jdbcType="VARCHAR"  /> 
+        <result column="price" property="price" jdbcType="DECIMAL"  />   
+        <result column="subtotal" property="subtotal" jdbcType="DECIMAL"  />    
+        <result column="quantity" property="quantity" jdbcType="INTEGER"  /> 
+          <result column="goods_id" property="goods_id" jdbcType="VARCHAR"  /> 
+        <result column="goods_url" property="goods_url" jdbcType="LONGVARCHAR"  /> 
+        <result column="oid" property="oid" jdbcType="VARCHAR"  /> 
+    </resultMap>
+	
+	<insert id="save" parameterType="cloud.shop.goods.entity.OrdersDetail"> 
+		insert into t_orders_detail
+		( 
+			id,name,order_info_id,price,quantity,goods_id,goods_url,subtotal,oid
+		) 
+		value
+		( 
+			#{id},#{name},#{order_info_id},#{price},#{quantity},#{goods_id},#{goods_url},#{subtotal},#{oid}
+		) 
+	</insert>
+	
+	<update id="update" parameterType="cloud.shop.goods.entity.OrdersDetail"> 
+		update t_orders_detail
+		 <set>
+        	<if test="null != name">
+				name = #{name},
+			</if>
+			<if test="null != order_info_id">
+				order_info_id = #{order_info_id},
+			</if>	
+			<if test="null != price">
+				price = #{price},
+			</if>
+			<if test="null != goods_id">
+				goods_id = #{goods_id},
+			</if>	
+			<if test="null != quantity">
+				quantity = #{quantity},
+			</if>	
+			<if test="null != goods_url">
+				goods_url = #{goods_url},
+			</if>
+			<if test="null != subtotal">
+				subtotal = #{subtotal},
+			</if>										
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM t_orders_detail WHERE id = #{id}
+	</delete>
+	
+	<sql id="allColumns"> 
+		id,name,order_info_id,price,quantity,goods_id,goods_url,subtotal
+	</sql>
+	
+	<select id="getOrdersDetailList" parameterType="cloud.shop.goods.entity.OrdersDetail" resultMap="resultMap" >
+        SELECT <include refid="allColumns" /> FROM t_orders_detail  WHERE 1=1  
+       <if test="null != name and name != ''">
+			AND name = #{name}
+		</if>
+		 <if test="null != id and id != ''">
+			AND id = #{id}
+		</if>
+		<if test="null != order_info_id and order_info_id != ''">
+			AND order_info_id = #{order_info_id}
+		</if>
+    </select>
+    
+    <select id="getOrdersDetailByOidList" parameterType="java.lang.String" resultMap="resultMap" >
+        SELECT <include refid="allColumns" /> FROM t_orders_detail  WHERE 1=1  
+		AND oid = #{oid}
+    </select>
+    
+   
+    
+   
+</mapper>

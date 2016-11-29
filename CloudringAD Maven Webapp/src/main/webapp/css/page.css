@@ -1,0 +1,74 @@
+@charset "utf-8";
+/* CSS Document */
+.pagebox a, p
+{
+    margin: 0px;
+    padding: 0px;
+}
+.pagebox
+{
+    height:25px;
+    padding: 8px;
+    background-color: White;
+}
+.pagebox a:link,.pagebox a:visited{padding:5px 10px; border:1px solid #CCCCCC; color:#666; font-size:14px; font-weight:bold; text-decoration:none;}
+.pagebox a:hover{ border:1px solid #666; background:#666; color:#fff;}
+.pagebox .pageleft
+{
+    float: left;
+    width: 79%;
+    height: 28px;
+    overflow:hidden;
+}
+.pagebox .pageleft a:link,.pagebox a:visited{ float:left;  margin-left:4px;}
+.pagebox a:hover
+{
+    border: 1px solid #666;
+    background: #666;
+    color: #fff;
+}
+.pagebox .pageleft span
+{
+    float: left;
+    padding: 5px 7px;
+    border: 1px solid #666;
+    background: #666;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 4px;
+}
+.pagebox .pageleft p
+{
+    float: left;
+    padding: 5px 7px;
+    color: #666;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 4px;
+}
+.pagebox .pageright
+{
+    float: right;
+    width: 20%;
+    height: 28px;
+    overflow:hidden;
+}
+.pageright a:link, .pageright a:visited
+{
+    float: right;
+    margin-right: 4px;
+}
+.pageright p
+{
+    float: right;
+    padding: 7px 10px;
+    color: #666;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 4px;
+}
+.pageright span{float:right; padding:5px 10px; border:1px solid #666; background:#666; color:#fff; font-size:14px; font-weight:bold; text-decoration:none; margin-right:4px;}
+
+

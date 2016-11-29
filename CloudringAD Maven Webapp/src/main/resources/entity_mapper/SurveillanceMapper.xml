@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.dao.SurveillanceDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.entity.Surveillance" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="terminal_id" property="terminalId" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="packet_name" property="packetName" jdbcType="VARCHAR" />
+    <result column="delay_time" property="delayTime" jdbcType="INTEGER" />
+    <result column="transit_time" property="transitTime" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, terminal_id, ip, packet_name, delay_time, transit_time, remark, create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_surveillance
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_surveillance
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.app.entity.Surveillance" >
+    insert into t_surveillance (id, terminal_id, ip, packet_name, delay_time, transit_time,
+      remark, create_date)
+    values (#{id,jdbcType=VARCHAR}, #{terminalId,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{packetName,jdbcType=VARCHAR}, #{delayTime,jdbcType=INTEGER},
+      #{transitTime,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.entity.Surveillance" >
+    insert into t_surveillance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="terminalId != null" >
+        terminal_id,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="packetName != null" >
+        packet_name,
+      </if>
+      <if test="delayTime != null" >
+        delay_time,
+      </if>
+      <if test="transitTime != null" >
+        transit_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalId != null" >
+        #{terminalId,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="packetName != null" >
+        #{packetName,jdbcType=VARCHAR},
+      </if>
+      <if test="delayTime != null" >
+         #{delayTime,jdbcType=INTEGER},
+      </if>
+      <if test="transitTime != null" >
+         #{transitTime,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.entity.Surveillance" >
+    update t_surveillance
+    <set >
+      <if test="terminalId != null" >
+        terminal_id = #{terminalId,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="packetName != null" >
+        packet_name = #{packetName,jdbcType=VARCHAR},
+      </if>
+      <if test="delayTime != null" >
+        delay_time = #{delayTime,jdbcType=INTEGER},
+      </if>
+      <if test="transitTime != null" >
+        transit_time = #{transitTime,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.entity.Surveillance" >
+    update t_surveillance
+    set terminal_id = #{terminalId,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      packet_name = #{packetName,jdbcType=VARCHAR},
+      delay_time = #{delayTime,jdbcType=INTEGER},
+      transit_time = #{transitTime,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="getList" resultMap="BaseResultMap" parameterType="cloud.app.entity.Surveillance">
+  	SELECT 
+    <include refid="Base_Column_List" />
+    FROM t_surveillance
+    WHERE 1 = 1
+    <if test="id != null" >
+      AND id = #{id,jdbcType=VARCHAR}
+    </if>
+  	<if test="terminalId != null" >
+      AND terminal_id = #{terminalId,jdbcType=VARCHAR}
+    </if>
+    <if test="ip != null" >
+      AND ip = #{ip,jdbcType=VARCHAR}
+    </if>
+    <if test="packetName != null" >
+      AND packet_name = #{packetName,jdbcType=VARCHAR},
+    </if>
+    <if test="delayTime != null" >
+      AND delay_time = #{delayTime,jdbcType=INTEGER}
+    </if>
+    <if test="transitTime != null" >
+      AND transit_time = #{transitTime,jdbcType=INTEGER}
+    </if>
+    <if test="remark != null" >
+      AND remark = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="createDate != null" >
+      AND create_date = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  
+  
+  <select id="count" resultType="java.lang.Integer" parameterType="cloud.app.entity.Surveillance">
+  	SELECT 
+    COUNT(*)
+    FROM t_surveillance
+    WHERE 1 = 1
+    <if test="id != null" >
+      AND id = #{id,jdbcType=VARCHAR}
+    </if>
+  	<if test="terminalId != null" >
+      AND terminal_id = #{terminalId,jdbcType=VARCHAR}
+    </if>
+    <if test="ip != null" >
+      AND UPPER(ip) = #{ip,jdbcType=VARCHAR}
+    </if>
+    <if test="packetName != null" >
+      AND packet_name = #{packetName,jdbcType=VARCHAR},
+    </if>
+    <if test="delayTime != null" >
+      AND delay_time = #{delayTime,jdbcType=INTEGER}
+    </if>
+    <if test="transitTime != null" >
+      AND transit_time = #{transitTime,jdbcType=INTEGER}
+    </if>
+    <if test="remark != null" >
+      AND remark = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="createDate != null" >
+      AND create_date = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  
+  
+   <select id="getPacketList" resultType="String">
+  	     SELECT  DISTINCT  packet_name from t_surveillance  ORDER BY packet_name
+  </select>
+  
+  <select id="selectTree" parameterType="String"  resultType="cloud.app.system.vo.TreeVO">
+      SELECT id, packet_name AS pId, remark AS NAME FROM t_surveillance WHERE terminal_id = #{terminalId,jdbcType=VARCHAR} ORDER BY packet_name ASC 
+  </select>
+  
+  <select id="getSurveillanceListByTerminalId" parameterType="String" resultType="cloud.app.vo.SurveillanceVO" >
+      SELECT id, ip, packet_name AS packetName, delay_time AS delayTime, transit_time AS transitTime  FROM t_surveillance WHERE terminal_id = #{terminalId,jdbcType=VARCHAR} 
+  </select>
+  
+  
+</mapper>

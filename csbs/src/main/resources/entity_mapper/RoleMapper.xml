@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.system.dao.RoleDAO">
+	
+	<sql id="dynamicWhere">
+		<if test="null != id and id != ''">
+			and id = #{id}
+		</if>
+		<if test="null != role_name and role_name != ''">
+			and role_name = #{role_name}
+		</if>
+		<if test="null != create_user and create_user != ''">
+			and create_user = #{create_user}
+		</if>
+		<if test="null != create_time and create_time != ''">
+			and create_time = #{create_time}
+		</if>
+		<if test="null != update_user and update_time != ''">
+			and update_user = #{update_user}
+		</if>
+		<if test="null != update_time and update_time != ''">
+			and update_time = #{update_time}
+		</if>
+		<if test="null != role_key and role_key != ''">
+			and role_key = #{role_key}
+		</if>
+		<if test="null != is_del and is_del != ''">
+			and is_del = #{is_del}
+		</if>
+	</sql>
+	
+	<select id="getRoleList" resultType="cloud.app.system.vo.RoleVO" parameterType="cloud.app.system.vo.RoleVO">
+	  	select * from st_role
+	  	WHERE 1=1 
+		<if test="null != id and id != ''">
+			and id = #{id}
+		</if>
+		<if test="null != role_name and role_name != ''">
+			and role_name = #{role_name}
+		</if>
+		limit #{pageIndex},#{pageSize}
+	</select>
+	
+	<select id="roleCount" resultType="int" parameterType="cloud.app.system.vo.RoleVO">
+	  	select count(1) from st_role
+	  	WHERE 1=1 
+		<if test="null != id and id != ''">
+			and id = #{id}
+		</if>
+		<if test="null != role_name and role_name != ''">
+			and role_name = #{role_name}
+		</if>
+	</select>
+	
+	<select id="getInfoById" parameterType="java.lang.String" resultType="cloud.app.system.vo.RoleVO"> 
+		SELECT * FROM  st_role WHERE id = #{id} 
+	</select>
+	
+	<select id="selectRoleByMenuId" parameterType="java.lang.String" resultType="cloud.app.system.po.STRoleMenu"> 
+		SELECT * FROM  st_role_menu WHERE role_id = #{roleId}
+	</select>
+
+	<insert id="insert" parameterType="cloud.app.system.vo.RoleVO"> 
+		insert into st_role
+		(id,role_name,create_user,create_time,update_user,role_key,is_del)
+		value
+		(#{id},#{role_name},#{create_user},now(),#{update_user},#{role_key},#{is_del})
+	</insert>
+
+	<update id="update" parameterType="cloud.app.system.vo.RoleVO"> 
+		update st_role
+		<set>
+        	<if test="null != role_name and role_name != ''">
+				role_name = #{role_name},
+			</if>
+			<if test="null != update_user and update_user != ''">
+				update_user = #{update_user},
+			</if>
+			<if test="null != role_key and role_key != ''">
+				role_key = #{role_key},
+			</if>
+			<if test="null != is_del and is_del != ''">
+				is_del = #{is_del}
+			</if>
+			update_time = now(),
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM st_role WHERE ID = #{id}
+	</delete>
+
+	<select id="selectRole_Menu" parameterType="cloud.app.system.po.STRoleMenu" resultType="cloud.app.system.po.STRoleMenu">
+	    SELECT * FROM ST_Role_Menu WHERE role_id = #{role_id} and menu_id = #{menu_id}
+	</select>
+	  
+	<select id="userRoleById" parameterType="java.lang.String" resultType="cloud.app.system.po.STUserRole">
+	    SELECT * FROM ST_User_Role WHERE role_id = #{roleId}
+	</select>
+	
+	<insert id="insertRole_Menu" parameterType="cloud.app.system.po.STRoleMenu">
+       	INSERT INTO ST_Role_Menu(id,role_id,menu_id)
+       	VALUES(#{id},#{role_id},#{menu_id})
+    </insert>
+    
+	<delete id="deleteRole_Menu" parameterType="cloud.app.system.po.STRoleMenu">
+	    DELETE FROM ST_Role_Menu WHERE role_id = #{role_id} AND menu_id = #{menu_id}
+	</delete>
+	
+</mapper>

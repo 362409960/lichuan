@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.shop.goods.dao.PayDAO">
+
+	 <resultMap id="resultMap" type="cloud.shop.goods.entity.Pay">
+        <result column="id" property="id" jdbcType="VARCHAR"  />       
+        <result column="name" property="name" jdbcType="VARCHAR"  /> 
+        <result column="pay_type" property="pay_type" jdbcType="VARCHAR"  /> 
+        <result column="order_by" property="order_by" jdbcType="INTEGER"  />  
+    </resultMap>
+	
+	<insert id="save" parameterType="cloud.shop.goods.entity.Pay"> 
+		insert into t_pay
+		( 
+			id,name,pay_type,order_by
+		) 
+		value
+		( 
+			#{id},#{name},#{pay_type},#{order_by}
+		) 
+	</insert>
+	
+	<update id="update" parameterType="cloud.shop.goods.entity.Pay"> 
+		update t_pay
+		 <set>
+        	<if test="null != name">
+				name = #{name},
+			</if>
+			<if test="null != pay_type">
+				pay_type = #{pay_type},
+			</if>	
+			<if test="null != order_by">
+				order_by = #{order_by},
+			</if>									
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM t_pay WHERE id = #{id}
+	</delete>
+	
+	<sql id="allColumns"> 
+		id,name,pay_type,order_by
+	</sql>
+	
+	<select id="getPayList" parameterType="cloud.shop.goods.entity.Pay" resultMap="resultMap" >
+        SELECT <include refid="allColumns" /> FROM t_pay  WHERE 1=1  
+       <if test="null != name and name != ''">
+			AND name = #{name}
+		</if>
+		 <if test="null != id and id != ''">
+			AND id = #{id}
+		</if>
+		<if test="null != pay_type and pay_type != ''">
+			AND pay_type = #{pay_type}
+		</if>
+	
+    </select>
+    
+   
+    
+   
+</mapper>

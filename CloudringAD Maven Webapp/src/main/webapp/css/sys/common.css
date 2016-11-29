@@ -1,0 +1,191 @@
+@charset "utf-8";
+/* ---------- Reset ---------- */
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, form, fieldset, legend, input, textarea, select, button, th, td, p, hr, blockquote, pre, code {
+	padding: 0px;
+	margin: 0px;
+}
+
+html {
+	_width: 100%;
+	_height: 100%;
+	color: #666666;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+	_filter: expression(document.execCommand("BackgroundImageCache", false, true));	
+	_background-image: url(about: blank);
+	_background-attachment: fixed;
+}
+
+body {
+	_width: 100%;
+	_height: 100%;
+	min-width: 1000px;
+}
+
+body, input, textarea, select, button {
+	font: 12px Helvetica, Arial, sans-serif;
+}
+
+input, textarea, select, button {
+	font-size: 100%;
+	vertical-align: middle;
+	outline: none;
+}
+
+input[type=checkbox] {
+	margin-right: 2px;
+	vertical-align:-2px;
+}
+
+textarea {
+	resize: none;
+}
+
+button {
+	cursor: pointer;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0px;
+	font-size:12px;
+}
+
+th {
+	text-align: left;
+}
+
+a {
+    color:#000;
+    font-weight:bold;
+    text-decoration:underline;
+}
+a:visited {
+    color: #000;
+    text-decoration: underline;
+}
+a:hover {
+    color: #f501a4;
+    text-decoration: underline;
+}
+a:active {
+    color: #f501a4;
+}
+
+img {
+	vertical-align: middle;
+	image-rendering: optimizeQuality;
+	-ms-interpolation-mode: bicubic;
+	border: 0px;
+}
+
+.img{
+	max-width:100%;
+	height:100%;
+}
+
+ul, ol {
+	list-style-type: none;
+}
+
+h1, h2, h3, h4, h5, h6, strong, em, b {
+	font-size: 100%;
+	font-style: normal;
+	font-weight: bold;
+}
+
+del {
+	text-decoration: line-through;
+}
+.fl{
+	float:left;
+}
+.fr{
+	float:right;
+}
+
+/* ---------- Base ---------- */
+
+.black {
+	color: black;
+}
+
+.white {
+	color: white;
+}
+
+.gray {
+	color: gray;
+}
+
+.silver {
+	color: silver;
+}
+
+.red {
+	color: red;
+}
+
+.green {
+	color: green;
+}
+
+.blue {
+	color: blue;
+}
+
+.f44{
+	color:#f44;
+}
+.c888{
+	color:#888;
+}
+.left {
+	_display: inline;
+	float: left;
+}
+.w_p50{
+	width:50%;
+	display:inline-block;
+}
+.w_p48{
+	width:48%;
+	display:inline-block;
+}
+.right {
+	_display: inline;
+	float: right;
+}
+.cRed, .cRed:visited, .cRed a, .cRed a:visited{
+	color:red;
+}
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.hidden {
+	display: none;
+}
+
+.clearfix {
+	*zoom: 1;
+}
+
+.clearfix:before, .clearfix:after {
+	display: table;
+	content: "";
+}
+
+.clearfix:after {
+	clear: both;
+}
+.maxLength{
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+video{width:100%}

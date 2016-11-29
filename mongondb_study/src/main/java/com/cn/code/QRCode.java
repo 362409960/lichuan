@@ -97,11 +97,11 @@ public class QRCode {
 				// 画文字到新的面板
 				outg.setColor(Color.BLACK);
 				outg.setFont(new Font("宋体", Font.BOLD, 30)); // 字体、字型、字号
-				/*int strWidth = outg.getFontMetrics().stringWidth(productName);
+				int strWidth = outg.getFontMetrics().stringWidth(productName);
 				if (strWidth > 399) {
 					// //长度过长就截取前面部分
-					// outg.drawString(productName, 0, image.getHeight() +
-					// (outImage.getHeight() - image.getHeight())/2 + 5 ); //画文字
+					outg.drawString(productName, 0, image.getHeight() +
+					 (outImage.getHeight() - image.getHeight())/2 + 5 ); //画文字
 					// 长度过长就换行
 					String productName1 = productName.substring(0, productName.length() / 2);
 					String productName2 = productName.substring(productName.length() / 2, productName.length());
@@ -122,7 +122,7 @@ public class QRCode {
 				} else {
 					outg.drawString(productName, 200 - strWidth / 2,
 							image.getHeight() + (outImage.getHeight() - image.getHeight()) / 2 + 12); // 画文字
-				}*/
+				}
 				outg.dispose();
 				outImage.flush();
 				image = outImage;

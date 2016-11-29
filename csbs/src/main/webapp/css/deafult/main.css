@@ -1,0 +1,109 @@
+@charset "utf-8";
+/* CSS Document */
+.main{
+	width:100%;
+	height:100%;
+}
+.main th{
+	background:url(../../images/icon/main.gif)  repeat-x;
+	height:60px;
+}
+.main td{
+	vertical-align:top;
+}
+.main .logo{
+	vertical-align:middle;
+	width:160px;
+}
+
+.main .nav{
+	float:left;
+	height:30px;
+	padding-top:30px;
+	white-space:nowrap;
+	width:600px;
+}
+.main .nav li{
+	background:url(../../images/icon/main.gif) no-repeat right -60px;
+	float:left;
+	padding:0 2px;
+	width:70px;
+}
+.main .nav li a{
+	color:#488bd1;
+	display:block;
+	font-size:14px;
+	font-weight:bold;
+	height:30px;
+	line-height:30px;
+	outline:none;
+	padding:0 6px;
+	text-align:center;
+}
+.main .nav li a:hover,.main .nav li a.current{
+	border-bottom:2px solid #09c;
+	height:28px;
+	line-height:28px;
+}
+.main .link{
+	clear:right;
+	float:right;
+	height:29px;
+	line-height:29px;
+	overflow:hidden;
+	text-align:right;
+	white-space:nowrap;
+	width:240px;
+}
+
+.main .link{
+    clear: right;
+    float: right;
+    height: 29px;
+    line-height: 29px;
+    overflow: hidden;
+    text-align: right;
+    white-space: nowrap;
+    width: 240px;
+}
+.main .link a{
+	padding:0 6px;
+}
+
+.main .menu{
+	background-color:#f5faff;
+	border-right:1px solid #a3c4d7;
+}
+.main .menu dl{
+	display:none;
+	padding:0 6px;
+}
+.main .menu .default{
+	display:block;
+}
+.main .menu dt{
+	border-bottom:1px dashed #b7d3e1;
+	color:#333;
+	font-weight:bold;
+	height:26px;
+	line-height:26px;
+	padding-left:10px;
+}
+.main .menu dd a{
+	color:#666;
+	display:block;
+	height:26px;
+	line-height:26px;
+	outline:none;
+	padding-left:10px;
+}
+.main .menu dd a:hover{
+	background-color:#eaf4ff;
+}
+.main .menu dd a.current{
+	background-color:#e4f2fa;
+}
+.main iframe{
+	height:100%;
+	width:100%;
+}

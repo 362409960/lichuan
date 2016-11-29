@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.dao.PublishDAO" > 
+ 
+    <resultMap id="resultMap" type="cloud.app.entity.Publish">
+        <result column="id" property="id" jdbcType="VARCHAR"  />
+        <result column="user_id" property="user_id" jdbcType="VARCHAR"  />
+        <result column="program_id" property="program_id" jdbcType="LONGVARCHAR"  />
+        <result column="termianl_id" property="termianl_id" jdbcType="LONGVARCHAR"  />
+         <result column="program_name" property="program_name" jdbcType="VARCHAR"  />
+        <result column="task_id" property="task_id" jdbcType="VARCHAR"  />       
+        <result column="affiliations" property="affiliations" jdbcType="VARCHAR"  /> 
+        <result column="state" property="state" jdbcType="VARCHAR"  /> 
+        <result column="create_time" property="create_time" jdbcType="TIMESTAMP"  />
+        <result column="expiration" property="expiration" jdbcType="TIMESTAMP"  />
+        <result column="publish_time" property="publish_time" jdbcType="TIMESTAMP"  />
+        <result column="publish_user" property="publish_user" jdbcType="VARCHAR"  />
+        <result column="publish_type" property="publish_type" jdbcType="VARCHAR"  />
+       
+         <result column="isEngross" property="isEngross" jdbcType="BIT"  />  
+         <result column="playMode" property="playMode" jdbcType="VARCHAR"  />
+         <result column="scheduledPublish" property="scheduledPublish" jdbcType="VARCHAR"  />
+         <result column="modeContent" property="modeContent" jdbcType="LONGVARCHAR"  />
+         <result column="version" property="version" jdbcType="INTEGER"  />
+          <result column="state_del" property="state_del" jdbcType="VARCHAR"  />
+    </resultMap>
+    
+    
+     <insert id="save" parameterType="cloud.app.entity.Publish"> 
+		insert into t_publish
+		( 
+			id,user_id,program_id,task_id,program_name, affiliations,state,create_time,expiration,publish_time,publish_user,publish_type,playMode,isEngross,scheduledPublish,modeContent,version,termianl_id
+		)
+		values
+		( 
+			#{id},#{user_id},#{program_id},#{task_id},#{program_name},#{affiliations},#{state},#{create_time},#{expiration},#{publish_time},#{publish_user},#{publish_type},#{playMode},#{isEngross},#{scheduledPublish},#{modeContent},#{version},#{termianl_id}
+		)
+	</insert>
+	
+	<update id="update" parameterType="cloud.app.entity.Publish">
+        UPDATE t_publish
+        <set>  
+         
+        	<if test="null != program_name">
+				program_name = #{program_name},
+			</if>
+			<if test="null != publish_time">
+				 publish_time = SYSDATE(),     
+			</if>	
+			<if test="null != state">
+				state = #{state},
+			</if>	
+			<if test="null != version">
+				version = #{version},
+			</if>
+			<if test="null != termianl_id">
+				 termianl_id = #{termianl_id},     
+			</if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+    
+    <update id="updateBatch" parameterType="java.util.Map">  
+        update t_publish   set    state_del='1'        
+         WHERE ID in   
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+							  #{item}  
+		</foreach>   
+	</update>  
+    
+    <delete id="deleteById" parameterType="java.lang.String">
+		DELETE FROM t_publish WHERE id = #{id}
+	</delete>
+	
+	 <delete id="deleteByIdS" parameterType="java.util.Map">
+		DELETE FROM t_publish WHERE id in  
+       <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+							  #{item}  
+		</foreach>  
+	</delete>
+	
+    <select id="getList" parameterType="cloud.app.entity.Publish" resultMap="resultMap" >
+        SELECT
+				tp.id,
+				tp.user_id,
+				tp.program_id,
+				tp.task_id,
+				tp.program_name,
+				st.NAME affiliations,				
+				tp.state,
+				tp.create_time,
+				tp.expiration,
+				tp.publish_time,
+				tp.publish_user,
+				tp.playMode,
+				tp.isEngross,
+				tp.scheduledPublish,
+				tp.termianl_id,
+				tp.state_del,
+				tp.modeContent
+			FROM
+				t_publish tp
+			LEFT JOIN st_department st ON st.ID = tp.affiliations
+			 WHERE 1=1  AND  state_del is null
+		<if test="null != program_name and program_name != ''">
+			AND tp.program_name like CONCAT('%',#{program_name},'%')  
+		</if>	
+		<if test="null != task_id and task_id != ''">
+			AND tp.task_id like CONCAT('%',#{task_id},'%')  
+		</if>
+		<if test="null != departmentidList and departmentidList.size() > 0 ">
+			AND tp.affiliations in
+			 <foreach collection="departmentidList" item="item" index="index" open="(" close=")" separator=",">
+           	 		#{item}
+        	</foreach>
+		</if>			
+	    <if test="startTime !=null and startTime !=''">
+	    	<![CDATA[   and DATE_FORMAT(tp.publish_time, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+	    </if>
+	    <if test="endTime !=null and endTime !=''">
+	   	 	<![CDATA[  and DATE_FORMAT(tp.publish_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+	    </if>
+	    	ORDER BY  tp.create_time DESC		
+		limit #{pageIndex},#{pageSize}
+		
+    </select>
+    
+    <select id="count" parameterType="cloud.app.entity.Publish" resultType="int" >
+       SELECT count(1) FROM t_publish  WHERE 1=1 AND state_del is null
+	     <if test="null != program_name and program_name != ''">
+			AND program_name like CONCAT('%',#{program_name},'%')  
+		</if>	
+		<if test="null != task_id and task_id != ''">
+			AND task_id like CONCAT('%',#{task_id},'%')  
+		</if>	
+		<if test="null != departmentidList  and departmentidList.size() > 0">
+			AND affiliations in
+			 <foreach collection="departmentidList" item="item" index="index" open="(" close=")" separator=",">
+           	 		#{item}
+        	</foreach>
+		</if>		
+	    <if test="startTime !=null and startTime !=''">
+	    	<![CDATA[   and DATE_FORMAT(publish_time, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+	    </if>
+	    <if test="endTime !=null and endTime !=''">
+	   	 	<![CDATA[  and DATE_FORMAT(publish_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+	    </if>		    	
+    </select>
+    
+ <select id="getObjById" parameterType="java.lang.String" resultMap="resultMap">
+        SELECT * FROM t_publish  WHERE id = #{id}
+ </select>
+ 
+  <select id="getObjByProgramId" parameterType="java.lang.String" resultType="int">
+       SELECT IFNULL(MAX(version),0) from t_publish    WHERE program_id = #{id}
+ </select>
+ 
+  <select id="getByDownlodPublish" parameterType="cloud.app.entity.Publish" resultMap="resultMap" >
+       SELECT
+			t.id,t.program_name,t.task_id,  IFNULL(case when d.state='2' THEN COUNT(d.id)END ,0 ) state  , COUNT(d.id)state_del
+		FROM
+			t_publish t
+		LEFT JOIN t_publish_terminal d ON t.id = d.publish_id
+		LEFT JOIN st_department st ON st.ID = t.affiliations
+			 WHERE 1=1  
+		<if test="null != program_name and program_name != ''">
+			AND t.program_name like CONCAT('%',#{program_name},'%')  
+		</if>	
+		<if test="null != task_id and task_id != ''">
+			AND t.task_id like CONCAT('%',#{task_id},'%')  
+		</if>
+		<if test="null != departmentidList and departmentidList.size() > 0 ">
+			AND t.affiliations in
+			 <foreach collection="departmentidList" item="item" index="index" open="(" close=")" separator=",">
+           	 		#{item}
+        	</foreach>
+		</if>			
+	  	GROUP BY t.id,t.program_name,t.task_id
+	  	ORDER BY  t.create_time DESC		
+		limit #{pageIndex},#{pageSize}
+    </select>
+    
+    <select id="countDownlodPublish" parameterType="cloud.app.entity.Publish" resultType="int" >
+       SELECT count(1) FROM t_publish  WHERE 1=1 
+	     <if test="null != program_name and program_name != ''">
+			AND program_name like CONCAT('%',#{program_name},'%')  
+		</if>	
+		<if test="null != task_id and task_id != ''">
+			AND task_id like CONCAT('%',#{task_id},'%')  
+		</if>	
+		<if test="null != departmentidList  and departmentidList.size() > 0">
+			AND affiliations in
+			 <foreach collection="departmentidList" item="item" index="index" open="(" close=")" separator=",">
+           	 		#{item}
+        	</foreach>
+		</if>	 	
+    </select>
+ 	
+ 	<select id="getProgramListByTerminal" parameterType="java.lang.String" resultMap="resultMap" >
+        SELECT
+			tp.id,
+			tp.user_id,
+			pro.id program_id,
+			tp.task_id,
+			tp.publish_time,
+			pro.program_name program_name,
+			tp.state,
+			tp.create_time,
+			tp.expiration,
+			pro.scenes affiliations,
+			prod.play_time publish_user,
+			tp.playMode,
+			tp.isEngross,
+			tp.scheduledPublish,
+			tp.termianl_id,
+			tp.state_del,
+			tp.modeContent
+		FROM
+			t_publish tp
+		LEFT JOIN t_program  pro ON LOCATE(pro.id,tp.program_id) > 0  AND (pro.state = '1')
+		LEFT JOIN t_program_details prod ON prod.programId = pro.id 
+		WHERE tp.termianl_id LIKE CONCAT('%',#{terminalId},'%') 
+        AND (tp.state_del IS NULL OR tp.state_del = '0')
+        <![CDATA[ AND DATE_FORMAT(now(),'%Y-%m-%d %H:%i:%s') BETWEEN DATE_FORMAT(tp.publish_time, '%Y-%m-%d %H:%i:%s') AND DATE_FORMAT(tp.expiration, '%Y-%m-%d %H:%i:%s')]]>
+        GROUP BY tp.id
+        ORDER BY tp.publish_time DESC
+    </select>
+ 
+    <select id="getPublishByTerminalId" parameterType="java.lang.String" resultMap="resultMap" >
+        SELECT W.PROGRAM_ID FROM T_PUBLISH W 
+           WHERE W.TERMIANL_ID LIKE CONCAT('%',#{terminalId},'%')
+           AND (W.STATE_DEL IS NULL OR W.STATE_DEL = '0')
+    </select>
+ 
+    <select id="getMaxVersionByProgramId" parameterType="java.lang.String" resultType="int">
+        SELECT MAX(A.VERSION) AS VERSION FROM T_PUBLISH A WHERE A.PROGRAM_ID LIKE CONCAT('%',#{programId},'%') ORDER BY A.VERSION DESC
+    </select>
+ 
+</mapper>

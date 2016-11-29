@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.dao.TimeSwitchDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.entity.TimeSwitch" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="terminal_id" property="terminalId" jdbcType="VARCHAR" />
+    <result column="week" property="week" jdbcType="VARCHAR" />
+    <result column="power_minute" property="powerMinute" jdbcType="VARCHAR" />
+    <result column="power_hour" property="powerHour" jdbcType="VARCHAR" />
+    <result column="shutdown_hour" property="shutdownHour" jdbcType="VARCHAR" />
+    <result column="shutdown_minute" property="shutdownMinute" jdbcType="VARCHAR" />
+    <result column="iscycling" property="iscycling" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, terminal_id, week, power_minute, power_hour, shutdown_hour, shutdown_minute, 
+    iscycling
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_time_switch
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_time_switch
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.app.entity.TimeSwitch" >
+    insert into t_time_switch (id, terminal_id, week, 
+      power_minute, power_hour, shutdown_hour, 
+      shutdown_minute, iscycling)
+    values (#{id,jdbcType=VARCHAR}, #{terminalId,jdbcType=VARCHAR}, #{week,jdbcType=VARCHAR}, 
+      #{powerMinute,jdbcType=VARCHAR}, #{powerHour,jdbcType=VARCHAR}, #{shutdownHour,jdbcType=VARCHAR}, 
+      #{shutdownMinute,jdbcType=VARCHAR}, #{iscycling,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.entity.TimeSwitch" >
+    insert into t_time_switch
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="terminalId != null" >
+        terminal_id,
+      </if>
+      <if test="week != null" >
+        week,
+      </if>
+      <if test="powerMinute != null" >
+        power_minute,
+      </if>
+      <if test="powerHour != null" >
+        power_hour,
+      </if>
+      <if test="shutdownHour != null" >
+        shutdown_hour,
+      </if>
+      <if test="shutdownMinute != null" >
+        shutdown_minute,
+      </if>
+      <if test="iscycling != null" >
+        iscycling,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalId != null" >
+        #{terminalId,jdbcType=VARCHAR},
+      </if>
+      <if test="week != null" >
+        #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="powerMinute != null" >
+        #{powerMinute,jdbcType=VARCHAR},
+      </if>
+      <if test="powerHour != null" >
+        #{powerHour,jdbcType=VARCHAR},
+      </if>
+      <if test="shutdownHour != null" >
+        #{shutdownHour,jdbcType=VARCHAR},
+      </if>
+      <if test="shutdownMinute != null" >
+        #{shutdownMinute,jdbcType=VARCHAR},
+      </if>
+      <if test="iscycling != null" >
+        #{iscycling,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.entity.TimeSwitch" >
+    update t_time_switch
+    <set >
+      <if test="terminalId != null" >
+        terminal_id = #{terminalId,jdbcType=VARCHAR},
+      </if>
+      <if test="week != null" >
+        week = #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="powerMinute != null" >
+        power_minute = #{powerMinute,jdbcType=VARCHAR},
+      </if>
+      <if test="powerHour != null" >
+        power_hour = #{powerHour,jdbcType=VARCHAR},
+      </if>
+      <if test="shutdownHour != null" >
+        shutdown_hour = #{shutdownHour,jdbcType=VARCHAR},
+      </if>
+      <if test="shutdownMinute != null" >
+        shutdown_minute = #{shutdownMinute,jdbcType=VARCHAR},
+      </if>
+      <if test="iscycling != null" >
+        iscycling = #{iscycling,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.entity.TimeSwitch" >
+    update t_time_switch
+    set terminal_id = #{terminalId,jdbcType=VARCHAR},
+      week = #{week,jdbcType=VARCHAR},
+      power_minute = #{powerMinute,jdbcType=VARCHAR},
+      power_hour = #{powerHour,jdbcType=VARCHAR},
+      shutdown_hour = #{shutdownHour,jdbcType=VARCHAR},
+      shutdown_minute = #{shutdownMinute,jdbcType=VARCHAR},
+      iscycling = #{iscycling,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="getList" resultMap="BaseResultMap" parameterType="cloud.app.entity.TimeSwitch">
+  	SELECT 
+    <include refid="Base_Column_List" />
+    FROM t_time_switch
+    WHERE 1 = 1
+  	<if test="id != null" >
+      AND id = #{id,jdbcType=VARCHAR}
+    </if>
+  	<if test="terminalId != null" >
+      AND terminal_id = #{terminalId,jdbcType=VARCHAR}
+    </if>
+    <if test="week != null" >
+      AND week = #{week,jdbcType=VARCHAR}
+    </if>
+    <if test="powerMinute != null" >
+      AND power_minute = #{powerMinute,jdbcType=VARCHAR}
+    </if>
+    <if test="powerHour != null" >
+      AND power_hour = #{powerHour,jdbcType=VARCHAR}
+    </if>
+    <if test="shutdownHour != null" >
+      AND shutdown_hour = #{shutdownHour,jdbcType=VARCHAR}
+    </if>
+    <if test="shutdownMinute != null" >
+      AND shutdown_minute = #{shutdownMinute,jdbcType=VARCHAR}
+    </if>
+    <if test="iscycling != null" >
+      AND iscycling = #{iscycling,jdbcType=VARCHAR}
+    </if>
+  	ORDER BY power_hour DESC ,shutdown_hour DESC 
+  </select>
+  
+  
+  <delete id="deleteByIdS" parameterType="java.util.Map"> 
+  	DELETE FROM t_time_switch
+    WHERE terminal_id IN 
+    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+		#{item}  
+	</foreach>
+  </delete>
+  
+</mapper>

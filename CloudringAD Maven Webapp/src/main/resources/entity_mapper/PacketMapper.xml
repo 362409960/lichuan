@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.dao.PacketDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.entity.Packet" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="f_id" property="fId" jdbcType="VARCHAR" />
+    <result column="mechanism" property="mechanism" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, f_id, name, remark, create_date,mechanism
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_packet
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_packet
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.app.entity.Packet" >
+    insert into t_packet (id, f_id, name, 
+      remark, create_date,mechanism)
+    values (#{id,jdbcType=VARCHAR}, #{fId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},#{mechanism,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.entity.Packet" >
+    insert into t_packet
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fId != null" >
+        f_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="mechanism != null" >
+        mechanism,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="fId != null" >
+        #{fId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mechanism != null" >
+        #{mechanism,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.entity.Packet" >
+    update t_packet
+    <set >
+      <if test="fId != null" >
+        f_id = #{fId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mechanism != null" >
+        mechanism = #{mechanism,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.entity.Packet" >
+    update t_packet
+    set f_id = #{fId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      mechanism = #{mechanism,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="getList" resultMap="BaseResultMap" parameterType="cloud.app.entity.Packet">
+  	SELECT 
+    <include refid="Base_Column_List" />
+    FROM t_packet
+    WHERE 1=1
+    <if test="id != null" >
+      AND id = #{id,jdbcType=VARCHAR}
+    </if>
+    <if test="fId != null" >
+      AND f_id = #{fId,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null" >
+      AND name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="remark != null" >
+      AND remark = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="createDate != null" >
+      AND create_date = #{createDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="mechanism != null" >
+      AND mechanism = #{mechanism,jdbcType=VARCHAR}
+    </if>
+  </select>
+  
+  
+  <delete id="deleteByIdS" parameterType="java.util.Map"> 
+  	DELETE FROM t_packet
+    WHERE id IN 
+    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+		#{item}  
+	</foreach>
+  </delete>
+  
+    
+  <delete id="deleteTree" parameterType="string">
+      DELETE FROM T_PACKET WHERE ID = #{id,jdbcType=VARCHAR} OR F_ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <select id="selectTree" parameterType="String"  resultType="cloud.app.system.vo.TreeVO">
+      SELECT id, f_id AS pId, NAME FROM t_packet WHERE mechanism IN 
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+		#{item}  
+	  </foreach> 
+	     ORDER BY CREATE_DATE, F_ID DESC 
+  </select>
+  
+  
+</mapper>

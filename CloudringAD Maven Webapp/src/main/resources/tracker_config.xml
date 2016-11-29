@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config>
+
+<!-- 
+  <param name="context" value="./example/tracker/"/>
+  <param name="torrentXML" value="./example/tracker/files/torrents.xml"/>
+  <param name="peerXML" value="./example/tracker/files/peers.xml"/>
+  <param name="listeningPort" value="8081"/>
+  <param name="servername" value="localhost"/>
+  <param name="torrentsDir" value="./example/tracker/files/torrentsFile/"/>
+ -->
+ 
+
+  <param name="context" value="/example/tracker/"/>
+  <param name="torrentXML" value="/example/tracker/files/torrents.xml"/>
+  <param name="peerXML" value="/example/tracker/files/peers.xml"/>
+  <param name="listeningPort" value="8081"/>
+  <param name="servername" value="localhost"/>
+  <param name="torrentsDir" value="/example/tracker/files/torrentsFile/"/>
+  
+  <param name="btProject" value="/example"/>
+  <param name="announceurl" value="http://120.24.46.165:8081/announce"/>
+  <param name="upload" value="http://120.24.46.165:8081/upload"/>
+  <param name="pieceLength" value="512"/>
+  <param name="url" value="http://120.24.46.165/"/>
+
+</config>

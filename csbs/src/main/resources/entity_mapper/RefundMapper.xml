@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.app.order.dao.RefundDAO" >
+  <resultMap id="BaseResultMap" type="cloud.app.order.model.Refund" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="modifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="bankName" property="bankname" jdbcType="VARCHAR" />
+    <result column="bankAccount" property="bankaccount" jdbcType="VARCHAR" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="payer" property="payer" jdbcType="DECIMAL" />
+    <result column="paymentConfigName" property="paymentconfigname" jdbcType="VARCHAR" />
+    <result column="refundSn" property="refundsn" jdbcType="VARCHAR" />
+    <result column="refundType" property="refundtype" jdbcType="INTEGER" />
+    <result column="totalAmount" property="totalamount" jdbcType="DECIMAL" />
+    <result column="paymentConfig_id" property="paymentconfigId" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cloud.app.order.model.Refund" extends="BaseResultMap" >
+    <result column="memo" property="memo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, createDate, modifyDate, bankName, bankAccount, operator, payer, paymentConfigName, 
+    refundSn, refundType, totalAmount, paymentConfig_id, order_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_refund
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_refund
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.app.order.model.Refund" >
+    insert into t_refund (id, createDate, modifyDate, 
+      bankName, bankAccount, operator, 
+      payer, paymentConfigName, refundSn, 
+      refundType, totalAmount, paymentConfig_id, 
+      order_id, memo)
+    values (#{id,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}, 
+      #{bankname,jdbcType=VARCHAR}, #{bankaccount,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, 
+      #{payer,jdbcType=DECIMAL}, #{paymentconfigname,jdbcType=VARCHAR}, #{refundsn,jdbcType=VARCHAR}, 
+      #{refundtype,jdbcType=INTEGER}, #{totalamount,jdbcType=DECIMAL}, #{paymentconfigId,jdbcType=VARCHAR}, 
+      #{orderId,jdbcType=VARCHAR}, #{memo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.app.order.model.Refund" >
+    insert into t_refund
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="modifydate != null" >
+        modifyDate,
+      </if>
+      <if test="bankname != null" >
+        bankName,
+      </if>
+      <if test="bankaccount != null" >
+        bankAccount,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="payer != null" >
+        payer,
+      </if>
+      <if test="paymentconfigname != null" >
+        paymentConfigName,
+      </if>
+      <if test="refundsn != null" >
+        refundSn,
+      </if>
+      <if test="refundtype != null" >
+        refundType,
+      </if>
+      <if test="totalamount != null" >
+        totalAmount,
+      </if>
+      <if test="paymentconfigId != null" >
+        paymentConfig_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bankname != null" >
+        #{bankname,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccount != null" >
+        #{bankaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null" >
+        #{payer,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentconfigname != null" >
+        #{paymentconfigname,jdbcType=VARCHAR},
+      </if>
+      <if test="refundsn != null" >
+        #{refundsn,jdbcType=VARCHAR},
+      </if>
+      <if test="refundtype != null" >
+        #{refundtype,jdbcType=INTEGER},
+      </if>
+      <if test="totalamount != null" >
+        #{totalamount,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentconfigId != null" >
+        #{paymentconfigId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.app.order.model.Refund" >
+    update t_refund
+    <set >
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bankname != null" >
+        bankName = #{bankname,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccount != null" >
+        bankAccount = #{bankaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null" >
+        payer = #{payer,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentconfigname != null" >
+        paymentConfigName = #{paymentconfigname,jdbcType=VARCHAR},
+      </if>
+      <if test="refundsn != null" >
+        refundSn = #{refundsn,jdbcType=VARCHAR},
+      </if>
+      <if test="refundtype != null" >
+        refundType = #{refundtype,jdbcType=INTEGER},
+      </if>
+      <if test="totalamount != null" >
+        totalAmount = #{totalamount,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentconfigId != null" >
+        paymentConfig_id = #{paymentconfigId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cloud.app.order.model.Refund" >
+    update t_refund
+    set createDate = #{createdate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      bankName = #{bankname,jdbcType=VARCHAR},
+      bankAccount = #{bankaccount,jdbcType=VARCHAR},
+      operator = #{operator,jdbcType=VARCHAR},
+      payer = #{payer,jdbcType=DECIMAL},
+      paymentConfigName = #{paymentconfigname,jdbcType=VARCHAR},
+      refundSn = #{refundsn,jdbcType=VARCHAR},
+      refundType = #{refundtype,jdbcType=INTEGER},
+      totalAmount = #{totalamount,jdbcType=DECIMAL},
+      paymentConfig_id = #{paymentconfigId,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.app.order.model.Refund" >
+    update t_refund
+    set createDate = #{createdate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      bankName = #{bankname,jdbcType=VARCHAR},
+      bankAccount = #{bankaccount,jdbcType=VARCHAR},
+      operator = #{operator,jdbcType=VARCHAR},
+      payer = #{payer,jdbcType=DECIMAL},
+      paymentConfigName = #{paymentconfigname,jdbcType=VARCHAR},
+      refundSn = #{refundsn,jdbcType=VARCHAR},
+      refundType = #{refundtype,jdbcType=INTEGER},
+      totalAmount = #{totalamount,jdbcType=DECIMAL},
+      paymentConfig_id = #{paymentconfigId,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

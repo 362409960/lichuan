@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+   	xmlns="http://www.springframework.org/schema/beans"  
+   	xmlns:tx="http://www.springframework.org/schema/tx" 
+   	xmlns:p="http://www.springframework.org/schema/p"  
+   	xmlns:aop="http://www.springframework.org/schema/aop"   
+   	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   	xmlns:context="http://www.springframework.org/schema/context"
+   	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+   	http://www.springframework.org/schema/tx
+   	http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+   	http://www.springframework.org/schema/aop
+   	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+   	http://www.springframework.org/schema/tx
+   	http://www.springframework.org/schema/tx/spring-tx.xsd
+   	http://www.springframework.org/schema/context
+   	http://www.springframework.org/schema/context/spring-context.xsd">
+   	
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> 
+	    <property name="driverClassName" value="${db.driverclass}" />
+		<property name="url" value="${db.jdbcurl}" />
+		<property name="username" value="${db.user}" />
+		<property name="password" value="${db.password}" />
+		<property name="maxActive" value="${db.maxActive}" />
+		<property name="maxIdle" value="${db.maxIdle}" />
+		<property name="maxWait" value="${db.maxWait}" />
+		<property name="poolPreparedStatements" value="true"/>  
+		<property name="validationQuery" value="${db.validationQuery}" />
+	</bean>  
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"  />
+		<property name="mapperLocations" value="classpath*:entity_mapper/*.xml" />
+	</bean>
+ 
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+ 
+   <tx:advice id="txAdvice" transaction-manager="txManager">
+       <tx:attributes>
+           <tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"></tx:method>
+           <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"></tx:method>
+           <tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception"></tx:method>
+           <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"></tx:method>
+           <tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"></tx:method>
+           <tx:method name="execute*" propagation="REQUIRED" rollback-for="Exception"></tx:method>
+           <tx:method name="batch*" propagation="REQUIRED" rollback-for="Exception"></tx:method>
+
+           <tx:method name="*" read-only="true"/>  
+       </tx:attributes>
+   </tx:advice>
+	
+	
+	<aop:config>
+	    <aop:pointcut id="txPointcut" expression="execution(* cloud.app.service..*.*(..))"/>
+	    <aop:advisor advice-ref="txAdvice"  pointcut-ref="txPointcut"/>
+	</aop:config>
+
+	<import resource="applicationContext-myibatis-dao.xml"/>
+	
+</beans>
