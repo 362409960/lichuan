@@ -24,7 +24,7 @@ public class TopicReceiver {
     public static final String DESTINATION = "lee.mq.topic";
     
     
-public static void run() throws Exception {
+    public static void run() throws Exception {
         
         TopicConnection connection = null;
         TopicSession session = null;
