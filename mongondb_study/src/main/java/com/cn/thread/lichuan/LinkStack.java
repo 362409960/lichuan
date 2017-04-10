@@ -44,17 +44,17 @@ public class LinkStack<E> {
 	}
 	//查看栈顶元素但不删除
 	public Node<E> peek(){
-		if(empty()){
+		if (empty()){
 			throw new RuntimeException("空栈异常！");
-		}else{
+		} else{
 			return top;
 		}
 	}
 	//出栈
 	public Node<E> pop(){
-		if(empty()){
+		if (empty()){
 			throw new RuntimeException("空栈异常！");
-		}else{
+		} else{
 			Node<E> node = top;
 			top = node.next;
 			node.next = null;

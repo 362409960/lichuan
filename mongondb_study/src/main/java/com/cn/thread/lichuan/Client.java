@@ -5,19 +5,18 @@ import java.util.Enumeration;
 public class Client {
 
 	public static void main(String[] args) {
-		Stack<String> stack = new Stack<>();
-        stack.push("a");
-        stack.push("b");
-        stack.push("c");
+		LinkQueue<String> queue = new LinkQueue<>();
+		queue.addQueue("a");
+		queue.addQueue("b");
+		queue.addQueue("c");
        // System.out.println(stack.peek());
-   stack.pop();
-      
-        System.out.println(stack.search("b"));
+  
+		
         
-        while(!stack.empty()){
-        	stack.pop();
-        }
-        System.out.println(stack.search("a"));
+    	queue.poll();
+		
+       
+       // System.out.println(queue.search("a"));
 	}
 	
 	
